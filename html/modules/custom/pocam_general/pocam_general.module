@@ -1,0 +1,169 @@
+<?php
+
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\block\Entity\Block;
+use Drupal\taxonomy\Entity\Vocabulary;
+
+/**
+ * Implements hook_token_info().
+ */
+function pocam_general_token_info() {
+  $info['types']['pocam-general'] = array(
+    'name' => t('POCAM'),
+    'description' => t('Tokens related to POCAM.'),
+    'needs-data' => 'format',
+  );
+
+  $info['tokens']['pocam-general']['search-block'] = array(
+    'name' => t('Search block'),
+    'description' => t('Search block'),
+  );
+
+  $info['tokens']['pocam-general']['themes-list'] = array(
+    'name' => t('List of themes'),
+    'description' => t('List of themes. Ex. [pocam-general:themes-list:1], [pocam-general:themes-list:2], [pocam-general:themes-list:3]'),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function pocam_general_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+
+// TODO: remove this.
+//opcache_invalidate(__FILE__, true);
+
+  if ($type == 'pocam-general') {
+    foreach ($tokens as $name => $original) {
+      // Split name to get parameters.
+      $token_name = $name;
+      $param = '';
+      if (strpos($name, ':') !== FALSE) {
+        list($token_name, $param) = explode(':', $name);
+      }
+
+      switch ($token_name) {
+        case 'search-block':
+
+          // For this to work, block is output on the page in a hidden region.
+          // TODO find a better way to approach this.
+          $block = Block::load('exposedformextractspage_1_2');
+          $output = \Drupal::entityTypeManager()
+            ->getViewBuilder('block')
+            ->view($block);
+          $replacements[$original] = render($output);
+          break;
+
+        case 'themes-list':
+          $depth = 2;
+          if (!empty($param) && is_numeric($param)) {
+            $depth = (int) $param;
+          }
+
+          $items = _pocam_general_build_tree('theme', $depth);
+          $output = array(
+            '#theme' => 'item_list',
+            '#items' => $items,
+            '#prefix' => '<div class="theme-wrapper">',
+            '#suffix' => '</div>',
+          );
+          $replacements[$original] = render($output);
+          break;
+
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function pocam_general_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+   if($form['#id'] == 'views-exposed-form-extracts-page-1'){
+     $form['search_api_fulltext']['#placeholder'] = t('Search for phrases or keywords');
+   }
+}
+
+/**
+ * Build tree of links.
+ */
+function _pocam_general_build_tree($voc, $depth = 2) {
+  $links = array();
+  $terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($voc, 0, $depth);
+  $facet_count = _pocam_general_get_facet_count('field_theme');
+  $parents = array();
+
+  foreach ($terms as $term) {
+
+    if (isset($facet_count[$term->tid])) {
+      $text = $term->name . ' (' . $facet_count[$term->tid] . ')';
+      $path = 'internal:/extracts/theme/' . urlencode($term->name) . '-' . $term->tid;
+      $markup = Link::fromTextAndUrl($text, Url::fromUri($path))->toString();
+      if ($term->parents[0] == 0) {
+        $links['p-' . $term->tid] = array(
+          '#markup' => $markup,
+          'children' => array(),
+        );
+      }
+      else {
+        if (isset($links['p-' . $term->parents[0]]['children'])) {
+          $links['p-' . $term->parents[0]]['children'][$term->tid] = array(
+            '#markup' => $markup,
+            'children' => array(),
+          );
+          // TODO: add comment to explain what the rest of the loop is for.
+          $parents[$term->tid] = &$links['p-' . $term->parents[0]]['children'][$term->tid];
+        }
+        else {
+          if (isset($parents[$term->parents[0]])) {
+            $parents[$term->parents[0]]['children'][$term->tid] = array(
+              '#markup' => $markup,
+              'children' => array(),
+            );
+            $parents[$term->tid] = &$parents[$term->tid]['children'][$term->tid];
+          }
+        }
+      }
+    }
+  }
+
+  return $links;
+}
+
+/**
+ * Get facet counts from field.
+ */
+function _pocam_general_get_facet_count($field) {
+  $index = \Drupal\search_api\Entity\Index::load('extracts');
+  $query = $index->query();
+  $query->range(0, 0);
+  $query->setOption('search_api_facets', [
+    $field => [
+      'field' => $field,
+      'limit' => 0,
+      'operator' => 'or',
+      'min_count' => 1,
+      'missing' => FALSE,
+    ],
+  ]);
+  $query->setOption('skip result count', TRUE);
+  $results = $query->execute();
+
+  $facets = $results->getExtraData('search_api_facets');
+  $tids = array();
+  if (!empty($facets[$field])) {
+    foreach ($facets[$field] as $facet) {
+      $tids[intval(str_replace('"', '', $facet['filter']))] = $facet['count'];
+    }
+  }
+
+  return $tids;
+}
