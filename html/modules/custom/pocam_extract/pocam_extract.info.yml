@@ -1,0 +1,10 @@
+name: POCAM Extract
+type: module
+description: 'POCAM Extract'
+package: OCHA
+core: 8.x
+core_version_requirement: ^8 || ^9
+
+dependencies:
+  - drupal:facets
+  - drupal:search_api
