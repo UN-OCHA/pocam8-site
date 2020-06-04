@@ -65,7 +65,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-		"bin-dir": "vendor/bin/",
+    "bin-dir": "vendor/bin/",
         "sort-packages": true
     },
     "autoload": {
