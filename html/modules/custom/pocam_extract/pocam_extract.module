@@ -1,0 +1,112 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_entity_presave.
+ *
+ * Handle taxonomy relationships for theme terms.
+ */
+function pocam_extract_entity_presave(EntityInterface $entity) {
+
+  if ($entity instanceOf Term && $entity->bundle() === 'theme') {
+    // Get original parent for existing terms (new terms don't have an id yet).
+    $term_tid = $entity->id();
+    if (isset($term_tid)) {
+      $query = \Drupal::service('entity_type.manager')
+        ->getStorage('taxonomy_term')
+        ->getQuery()
+        ->condition('tid', $term_tid)
+        ->sort('weight')
+        ->sort('name');
+      $tids = $query->execute();
+
+      $parent_ids = taxonomy_term_load_multiple($tids);
+      $parent_ids = array_keys($parent_ids);
+      $parent_id = reset($parent_ids);
+    }
+    else {
+      $parent_id = 0;
+    }
+
+    // Make sure we have a parent.
+    if (!isset($entity->parent->target_id)) {
+      $term_parent_id = $parent_id;
+    }
+    else {
+      if (is_array($entity->parent)) {
+        $term_parent_id = reset($entity->parent->target_id);
+      }
+      else {
+        $term_parent_id = $entity->parent->target_id;
+      }
+    }
+
+    $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    // Update long name based on direct child if needed.
+    if (!isset($entity->field_long_name->value) || empty($entity->field_long_name->value) || $parent_id != $term_parent_id) {
+      if ($term_parent_id == 0) {
+        $entity->set('field_long_name', $entity->label());
+      }
+      else {
+        if ($parent_id) {
+          $parent = $term_storage->load($parent_id);
+        }
+        elseif ($term_parent_id) {
+          $parent = $term_storage->load($term_parent_id);
+        }
+        if (isset($parent->field_long_name->value)) {
+          $entity->set('field_long_name', $parent->field_long_name->value . ' > ' . $entity->label());
+        }
+        else {
+          $entity->set('field_long_name', '... > ' . $entity->label());
+        }
+      }
+    }
+
+    // Update parent tids based on direct child if needed.
+    if (!empty($term_tid)) {
+      if (!isset($entity->field_parent_tids->value) || empty($entity->field_parent_tids->value) || $parent_id != $term_parent_id) {
+        if ($term_parent_id == 0) {
+          $entity->set('field_parent_tids', $term_tid);
+        }
+        else {
+          $parent = FALSE;
+          if ($parent_id && $parent_id != $term_tid) {
+            $parent = $term_storage->load($parent_id);
+          }
+          elseif ($term_parent_id && $term_parent_id != $term_tid) {
+            $parent = $term_storage->load($term_parent_id);
+          }
+
+          if ($parent) {
+            if (isset($parent->field_parent_tids->value)) {
+              $entity->set('field_parent_tids', $parent->field_parent_tids->value . '|' . $term_tid);
+            }
+            else {
+              $entity->set('field_parent_tids', $term_tid);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ *
+ * Update parent tids based on direct child if needed.
+ */
+function pocam_extract_entity_insert($entity) {
+  if ($entity instanceOf Term && $entity->bundle() === 'theme') {
+    if (!isset($entity->field_parent_tids->value) || empty($entity->field_parent_tids->value)) {
+      // Trigger an update.
+      $entity->save();
+
+      return;
+    }
+  }
+}
+

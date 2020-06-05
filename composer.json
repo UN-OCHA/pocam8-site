@@ -1,6 +1,6 @@
 {
-    "name": "unocha/indicatorregistry8-site",
-    "description": "Registry Indicator 8",
+    "name": "unocha/pocam8-site",
+    "description": "Protection of Civilians Aide Memoire 8",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -34,6 +34,7 @@
         "drupal/search_api": "^1.15",
         "drupal/select2": "^1.7",
         "drupal/social_auth_hid": "^2.2",
+        "drupal/token_filter": "^1.2",
         "drupal/views_data_export": "^1.0",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
@@ -47,6 +48,9 @@
         "drupal/console": "^1.0.2",
         "drupal/devel": "^2.1",
         "drupal/devel_php": "^1.1",
+        "drupal/migrate_manifest": "^1.9",
+        "drupal/migrate_tools": "^4.5",
+        "drupal/migrate_upgrade": "^3.2",
         "drupal/upgrade_rector": "^1.0",
         "drupal/upgrade_status": "^2.0",
         "drush/drush": "^9.0.0",

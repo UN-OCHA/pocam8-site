@@ -134,10 +134,10 @@ $settings['skip_permissions_hardening'] = TRUE;
 
 // Docksal DB connection settings.
 $databases['default']['default'] = array (
-	'database' => 'default',
-	'username' => 'user',
-	'password' => 'user',
-	'host' => 'db',
+	'database' => 'pocam8',
+	'username' => 'pocam8',
+	'password' => 'pocam8',
+	'host' => 'mysql',
 	'driver' => 'mysql',
 );
 
