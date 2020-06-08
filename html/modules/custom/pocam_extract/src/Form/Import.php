@@ -76,7 +76,7 @@ class Import extends FormBase {
     ];
     $form['strategy'] = [
       '#type' => 'radios',
-      '#title' => t('Import strategy'),
+      '#title' => $this->t('Import strategy'),
       '#required' => TRUE,
       '#options' => [
         'overwrite' => 'Remove all extracts and themes first',
@@ -87,7 +87,7 @@ class Import extends FormBase {
 
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => t('Import extracts'),
+      '#value' => $this->t('Import extracts'),
     ];
 
     return $form;
@@ -113,13 +113,17 @@ class Import extends FormBase {
     $validators = ['file_validate_extensions' => ['xlsx']];
     $file = file_save_upload('xlsx', $validators, FALSE, 0);
     if (!$file) {
-      $error = t('File could not be uploaded. Make sure it has .xlsx extension.');
+      $error = $this->t('File could not be uploaded. Make sure it has .xlsx extension.');
       \Drupal::messenger()
         ->addError($error);
       return;
     }
 
     $filename = $this->fileSystem->realpath($file->destination);
+
+    if ($form_state->getValue('strategy') === 'overwrite') {
+      $this->pocam_extract_delete_content();
+    }
 
     $reader = new Xlsx();
     $reader->setReadDataOnly(TRUE);
@@ -336,6 +340,32 @@ class Import extends FormBase {
     return $term;
   }
 
+  /**
+   * Clear extract content and theme terms before import.
+   */
+  private function pocam_extract_delete_content() {
+    $count_nodes = $count_terms = 0;
+    $extracts = $this->entityTypeManager->getStorage('node')->loadByProperties(['type' => 'pocam_extract']);
+    foreach ($extracts as $node) {
+      $count_nodes++;
+      $node->delete();
+    }
+    $themes = $this->entityTypeManager->getStorage('taxonomy_term')->loadByProperties(['vid' => 'theme']);
+    foreach ($themes as $term) {
+      $count_terms++;
+      $term->delete();
+    }
+    $message = $this->t('Removed @count_nodes extracts and @count_terms themes.', [
+      '@count_nodes' => $count_nodes,
+      '@count_terms' => $count_terms,
+    ]);
+    \Drupal::messenger()
+      ->addMessage($message);
+  }
+
+  /**
+   * Give feedback after imports.
+   */
   public static function pocam_extract_import_extract_finished($success, $results, $operations) {
 
     $items = [];

@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\taxonomy\Entity\Term;
 
@@ -57,7 +58,10 @@ function pocam_extract_entity_presave(EntityInterface $entity) {
           $parent = $term_storage->load($term_parent_id);
         }
         if (isset($parent->field_long_name->value)) {
-          $entity->set('field_long_name', $parent->field_long_name->value . ' > ' . $entity->label());
+          // Check term title isn't already included.
+          if (strpos($parent->field_long_name->value, $entity->label()) === FALSE) {
+            $entity->set('field_long_name', $parent->field_long_name->value . ' > ' . $entity->label());
+          }
         }
         else {
           $entity->set('field_long_name', '... > ' . $entity->label());
@@ -110,3 +114,88 @@ function pocam_extract_entity_insert($entity) {
   }
 }
 
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function pocam_extract_entity_extra_field_info() {
+  $extra['node']['pocam_extract']['display']['theme_see_also'] = [
+    'label' => t('See also from theme'),
+    'description' => t('See also links from theme.'),
+    'weight' => 2,
+  ];
+
+  $extra['node']['pocam_extract']['display']['theme_full_tree'] = [
+    'label' => t('Theme including parents'),
+    'description' => t('Theme including parents.'),
+    'weight' => 2,
+  ];
+
+  return $extra;
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function pocam_extract_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  if ($display->getComponent('theme_see_also')) {
+    $build['theme_see_also'] = pocam_extract_theme_see_also($entity, $view_mode);
+  }
+
+  if ($display->getComponent('theme_full_tree')) {
+    $build['theme_full_tree'] = pocam_extract_theme_full_tree($entity, $view_mode);
+  }
+}
+
+/**
+ * Output see also from theme term.
+ */
+function pocam_extract_theme_see_also($entity, $view_mode) {
+  $theme_tid = $entity->field_theme->target_id;
+  if (!isset($theme_tid)) {
+    return;
+  }
+
+  $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $theme = $term_storage->load($theme_tid);
+  if (!$theme) {
+    return;
+  }
+
+  return $theme->field_see_also->view($view_mode);
+}
+
+/**
+ * Output theme including parents.
+ */
+function pocam_extract_theme_full_tree($entity, $view_mode) {
+  $theme_tid = $entity->field_theme->target_id;
+  if (!isset($theme_tid)) {
+    return;
+  }
+
+  $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $theme = $term_storage->load($theme_tid);
+  if (!$theme) {
+    return;
+  }
+
+  // Get all parents and revers.
+  $themes = $term_storage->loadAllParents($theme_tid);
+  //$themes = taxonomy_get_parents_all($node->field_theme[LANGUAGE_NONE][0]['tid']);
+  $themes = array_reverse($themes);
+
+  $items = [];
+  foreach ($themes as $term) {
+    $items[] = $term->name->value;
+  }
+
+  return [
+    '#title' => t('Theme'),
+    '#label_display' => 'above',
+    '#theme' => 'item_list',
+    '#items' => $items,
+    '#prefix' => '<div class="theme-list">',
+    '#suffix' => '</div>',
+  ];
+}

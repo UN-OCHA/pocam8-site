@@ -9,21 +9,21 @@ use Drupal\taxonomy\Entity\Vocabulary;
  * Implements hook_token_info().
  */
 function pocam_general_token_info() {
-  $info['types']['pocam-general'] = array(
+  $info['types']['pocam-general'] = [
     'name' => t('POCAM'),
     'description' => t('Tokens related to POCAM.'),
     'needs-data' => 'format',
-  );
+  ];
 
-  $info['tokens']['pocam-general']['search-block'] = array(
+  $info['tokens']['pocam-general']['search-block'] = [
     'name' => t('Search block'),
     'description' => t('Search block'),
-  );
+  ];
 
-  $info['tokens']['pocam-general']['themes-list'] = array(
+  $info['tokens']['pocam-general']['themes-list'] = [
     'name' => t('List of themes'),
     'description' => t('List of themes. Ex. [pocam-general:themes-list:1], [pocam-general:themes-list:2], [pocam-general:themes-list:3]'),
-  );
+  ];
 
   return $info;
 }
@@ -31,8 +31,8 @@ function pocam_general_token_info() {
 /**
  * Implements hook_tokens().
  */
-function pocam_general_tokens($type, $tokens, array $data = array(), array $options = array()) {
-  $replacements = array();
+function pocam_general_tokens($type, $tokens, array $data = [], array $options = []) {
+  $replacements = [];
 
 // TODO: remove this.
 //opcache_invalidate(__FILE__, true);
@@ -65,12 +65,12 @@ function pocam_general_tokens($type, $tokens, array $data = array(), array $opti
           }
 
           $items = _pocam_general_build_tree('theme', $depth);
-          $output = array(
+          $output = [
             '#theme' => 'item_list',
             '#items' => $items,
             '#prefix' => '<div class="theme-wrapper">',
             '#suffix' => '</div>',
-          );
+          ];
           $replacements[$original] = render($output);
           break;
 
@@ -94,12 +94,12 @@ function pocam_general_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\F
  * Build tree of links.
  */
 function _pocam_general_build_tree($voc, $depth = 2) {
-  $links = array();
+  $links = [];
   $terms = \Drupal::entityTypeManager()
     ->getStorage('taxonomy_term')
     ->loadTree($voc, 0, $depth);
   $facet_count = _pocam_general_get_facet_count('field_theme');
-  $parents = array();
+  $parents = [];
 
   foreach ($terms as $term) {
 
@@ -108,26 +108,26 @@ function _pocam_general_build_tree($voc, $depth = 2) {
       $path = 'internal:/extracts/theme/' . urlencode($term->name) . '-' . $term->tid;
       $markup = Link::fromTextAndUrl($text, Url::fromUri($path))->toString();
       if ($term->parents[0] == 0) {
-        $links['p-' . $term->tid] = array(
+        $links['p-' . $term->tid] = [
           '#markup' => $markup,
-          'children' => array(),
-        );
+          'children' => [],
+        ];
       }
       else {
         if (isset($links['p-' . $term->parents[0]]['children'])) {
-          $links['p-' . $term->parents[0]]['children'][$term->tid] = array(
+          $links['p-' . $term->parents[0]]['children'][$term->tid] = [
             '#markup' => $markup,
-            'children' => array(),
-          );
+            'children' => [],
+          ];
           // TODO: add comment to explain what the rest of the loop is for.
           $parents[$term->tid] = &$links['p-' . $term->parents[0]]['children'][$term->tid];
         }
         else {
           if (isset($parents[$term->parents[0]])) {
-            $parents[$term->parents[0]]['children'][$term->tid] = array(
+            $parents[$term->parents[0]]['children'][$term->tid] = [
               '#markup' => $markup,
-              'children' => array(),
-            );
+              'children' => [],
+            ];
             $parents[$term->tid] = &$parents[$term->tid]['children'][$term->tid];
           }
         }
@@ -158,7 +158,7 @@ function _pocam_general_get_facet_count($field) {
   $results = $query->execute();
 
   $facets = $results->getExtraData('search_api_facets');
-  $tids = array();
+  $tids = [];
   if (!empty($facets[$field])) {
     foreach ($facets[$field] as $facet) {
       $tids[intval(str_replace('"', '', $facet['filter']))] = $facet['count'];
