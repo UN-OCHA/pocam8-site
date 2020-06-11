@@ -113,7 +113,7 @@ exports.sass = sassTask;
 const SVGconfig = {
   shape: {
     id: {
-      generator: function(name, file) {
+      generator: function (name, file) {
         return "cd-icon--" + path.basename(name.replace(/\s+/g, this.whitespace), '.svg');
       }
     }

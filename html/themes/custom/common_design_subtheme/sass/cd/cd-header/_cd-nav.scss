@@ -70,11 +70,9 @@
 
         > a,
         button {
-          &.is-active,
-          &:focus {
-            &::before {
-              background: $implementation-highlight;
-            }
+          &.is-active::before,
+          &:focus::before {
+            background: $implementation-highlight;
           }
         }
       }

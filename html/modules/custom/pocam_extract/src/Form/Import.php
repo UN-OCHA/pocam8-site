@@ -1,23 +1,26 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\pocam_extract\Form\Import.
- */
 namespace Drupal\pocam_extract\Form;
+
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
-use Drupal\Core\Site\Settings;
-use Drupal\Core\Url;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @file
+ * Contains Drupal\pocam_extract\Form\Import.
+ */
+
+/**
+ * Class Import.
+ */
 class Import extends FormBase {
 
   /**
@@ -29,18 +32,25 @@ class Import extends FormBase {
 
   /**
    * Entity Storage.
-   * // TODO: check if we need this.
    *
    * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
+   * Messenger.
+   *
+   * @var Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Class constructor.
    */
-  public function __construct(FileSystem $fileSystem, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(FileSystem $fileSystem, EntityTypeManagerInterface $entityTypeManager, MessengerInterface $messenger) {
     $this->fileSystem = $fileSystem;
     $this->entityTypeManager = $entityTypeManager;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -48,13 +58,10 @@ class Import extends FormBase {
    */
   public static function create(ContainerInterface $container) {
 
-    // TODO: remove this.
-    //opcache_invalidate(__FILE__, true);
-
-
     return new static(
       $container->get('file_system'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('messenger')
     );
   }
 
@@ -79,8 +86,8 @@ class Import extends FormBase {
       '#title' => $this->t('Import strategy'),
       '#required' => TRUE,
       '#options' => [
-        'overwrite' => 'Remove all extracts and themes first',
-        'append' => 'Append extracts and themes',
+        'overwrite' => $this->t('Remove all extracts and themes first'),
+        'append' => $this->t('Append extracts and themes'),
       ],
       '#default_value' => 'append',
     ];
@@ -93,6 +100,9 @@ class Import extends FormBase {
     return $form;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $all_files = $this->getRequest()->files->get('files', []);
     if (!empty($all_files['xlsx'])) {
@@ -114,7 +124,7 @@ class Import extends FormBase {
     $file = file_save_upload('xlsx', $validators, FALSE, 0);
     if (!$file) {
       $error = $this->t('File could not be uploaded. Make sure it has .xlsx extension.');
-      \Drupal::messenger()
+      $this->messenger()
         ->addError($error);
       return;
     }
@@ -122,7 +132,7 @@ class Import extends FormBase {
     $filename = $this->fileSystem->realpath($file->destination);
 
     if ($form_state->getValue('strategy') === 'overwrite') {
-      $this->pocam_extract_delete_content();
+      $this->pocamExtractDeleteContent();
     }
 
     $reader = new Xlsx();
@@ -133,14 +143,12 @@ class Import extends FormBase {
     $operations = [];
 
     $highestRow = $worksheet->getHighestDataRow();
-    // TODO: this limiter is for development, remove it later.
-    //$highestRow = 5;
     for ($row = 3; $row <= $highestRow; ++$row) {
       $range = 'A' . $row . ':F' . $row;
       $contents = $worksheet->rangeToArray($range, NULL, FALSE, FALSE);
       if (!empty(array_filter($contents[0]))) {
         $contents[0][] = $row;
-        $operations[] = ['Drupal\pocam_extract\Form\Import::pocam_extract_import_create', $contents];
+        $operations[] = ['Drupal\pocam_extract\Form\Import::pocamExtractImportCreate', $contents];
       }
     }
 
@@ -149,7 +157,7 @@ class Import extends FormBase {
       'init_message' => $this->t('Initializing.'),
       'progress message' => $this->t('Processed @current out of @total..'),
       'operations' => $operations,
-      'finished' => 'Drupal\pocam_extract\Form\Import::pocam_extract_import_extract_finished',
+      'finished' => 'Drupal\pocam_extract\Form\Import::pocamExtractImportExtractFinished',
     ];
     batch_set($batch);
   }
@@ -160,11 +168,8 @@ class Import extends FormBase {
    * Expects row, from spreadsheet, with columns 0-2 as themes, 3 as text,
    * 4 as title and 5 as 'see also' references.
    */
-  public static function pocam_extract_import_create($row, &$context) {
+  public static function pocamExtractImportCreate($row, &$context) {
     $index = array_pop($row);
-
-    // TODO: remove this.
-    opcache_invalidate(__FILE__, true);
 
     $row = array_map('trim', $row);
 
@@ -195,8 +200,7 @@ class Import extends FormBase {
       // Set node title.
       $node->setTitle('Excerpt from ' . $title);
 
-      // Document type.
-      // Resolution.
+      // Document type: Resolution.
       if (strpos($parts[0], '/RES/') !== FALSE) {
         $node->field_link = [
           'title' => $title,
@@ -213,12 +217,11 @@ class Import extends FormBase {
           'value' => $year,
         ]);
       }
-      // Statement
+      // Document type: Statement.
       else {
-        $data['title'] = Unicode::truncate($text, 76, TRUE, TRUE);
-        $data['field_link'] = [
+        $node->field_link = [
           'title' => $title,
-          'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
+          'uri' => 'https://undocs.org/' . str_replace(',', '', $parts[0]),
         ];
 
         $statement_term = taxonomy_term_load_multiple_by_name('Statement', 'type');
@@ -247,7 +250,7 @@ class Import extends FormBase {
 
     if (!empty($themes)) {
       // Using index (for taxonomy weight) from row number in spreadsheet.
-      $term = Import::pocam_extract_create_theme_term($themes, $index);
+      $term = Import::pocamExtractCreateThemeTerm($themes, $index);
       $node->field_theme->entity = $term;
 
       if (isset($row[5]) && !empty($row[5])) {
@@ -284,7 +287,7 @@ class Import extends FormBase {
   /**
    * Create theme term, or identify the term if it already exists.
    */
-  public static function pocam_extract_create_theme_term($themes, $weight) {
+  public static function pocamExtractCreateThemeTerm($themes, $weight) {
     $parent = FALSE;
 
     foreach ($themes as $theme_name) {
@@ -294,7 +297,6 @@ class Import extends FormBase {
         $short_theme_name = Unicode::truncate($theme_name, 250, TRUE, TRUE);
       }
 
-      // Load term by name
       if (!$parent) {
         $existing = taxonomy_term_load_multiple_by_name($short_theme_name, 'theme');
       }
@@ -343,7 +345,7 @@ class Import extends FormBase {
   /**
    * Clear extract content and theme terms before import.
    */
-  private function pocam_extract_delete_content() {
+  private function pocamExtractDeleteContent() {
     $count_nodes = $count_terms = 0;
     $extracts = $this->entityTypeManager->getStorage('node')->loadByProperties(['type' => 'pocam_extract']);
     foreach ($extracts as $node) {
@@ -359,14 +361,14 @@ class Import extends FormBase {
       '@count_nodes' => $count_nodes,
       '@count_terms' => $count_terms,
     ]);
-    \Drupal::messenger()
+    $this->messenger()
       ->addMessage($message);
   }
 
   /**
    * Give feedback after imports.
    */
-  public static function pocam_extract_import_extract_finished($success, $results, $operations) {
+  public static function pocamExtractImportExtractFinished($success, $results, $operations) {
 
     $items = [];
     // The 'success' parameter means no fatal PHP errors were detected. All
