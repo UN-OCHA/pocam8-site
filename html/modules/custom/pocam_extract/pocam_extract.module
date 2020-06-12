@@ -1,17 +1,22 @@
 <?php
 
+/**
+ * @file
+ * POCAM extracts.
+ */
+
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\taxonomy\Entity\Term;
 
 /**
- * Implements hook_entity_presave.
+ * Implements hook_entity_presave().
  *
  * Handle taxonomy relationships for theme terms.
  */
 function pocam_extract_entity_presave(EntityInterface $entity) {
 
-  if ($entity instanceOf Term && $entity->bundle() === 'theme') {
+  if ($entity instanceof Term && $entity->bundle() === 'theme') {
     // Get original parent for existing terms (new terms don't have an id yet).
     $term_tid = $entity->id();
     if (isset($term_tid)) {
@@ -104,7 +109,7 @@ function pocam_extract_entity_presave(EntityInterface $entity) {
  * Update parent tids based on direct child if needed.
  */
 function pocam_extract_entity_insert($entity) {
-  if ($entity instanceOf Term && $entity->bundle() === 'theme') {
+  if ($entity instanceof Term && $entity->bundle() === 'theme') {
     if (!isset($entity->field_parent_tids->value) || empty($entity->field_parent_tids->value)) {
       // Trigger an update.
       $entity->save();
@@ -180,9 +185,8 @@ function pocam_extract_theme_full_tree($entity, $view_mode) {
     return;
   }
 
-  // Get all parents and revers.
+  // Get all parents and reverse.
   $themes = $term_storage->loadAllParents($theme_tid);
-  //$themes = taxonomy_get_parents_all($node->field_theme[LANGUAGE_NONE][0]['tid']);
   $themes = array_reverse($themes);
 
   $items = [];

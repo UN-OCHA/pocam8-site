@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * @file
+ * POCAM general.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\block\Entity\Block;
-use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\search_api\Entity\Index;
 
 /**
  * Implements hook_token_info().
@@ -33,9 +39,6 @@ function pocam_general_token_info() {
  */
 function pocam_general_tokens($type, $tokens, array $data = [], array $options = []) {
   $replacements = [];
-
-// TODO: remove this.
-//opcache_invalidate(__FILE__, true);
 
   if ($type == 'pocam-general') {
     foreach ($tokens as $name => $original) {
@@ -84,10 +87,10 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function pocam_general_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-   if($form['#id'] == 'views-exposed-form-extracts-page-1'){
-     $form['search_api_fulltext']['#placeholder'] = t('Search for phrases or keywords');
-   }
+function pocam_general_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form['#id'] == 'views-exposed-form-extracts-page-1') {
+    $form['search_api_fulltext']['#placeholder'] = t('Search for phrases or keywords');
+  }
 }
 
 /**
@@ -142,7 +145,7 @@ function _pocam_general_build_tree($voc, $depth = 2) {
  * Get facet counts from field.
  */
 function _pocam_general_get_facet_count($field) {
-  $index = \Drupal\search_api\Entity\Index::load('extracts');
+  $index = Index::load('extracts');
   $query = $index->query();
   $query->range(0, 0);
   $query->setOption('search_api_facets', [
