@@ -45,7 +45,6 @@
         "zaporylie/composer-drupal-optimizations": "^1.0"
     },
     "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "*",
         "drupal/coder": "^8.3",
         "drupal/console": "^1.0.2",
         "drupal/devel": "^2.1",
@@ -82,14 +81,10 @@
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "@install-codestandards"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "install-codestandards": [
-            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
         ],
         "gulp-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
         "gulp-build": "cd html/themes/custom/common_design_subtheme && ./node_modules/.bin/gulp build",
