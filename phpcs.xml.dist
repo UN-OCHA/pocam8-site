@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset name="drupal_core">
   <description>Default PHP CodeSniffer configuration for Drupal core.</description>
-  <file>html/themes/custom</file>
+  <file>.</file>
   <arg name="extensions" value="inc,info,install,module,php,profile,test,theme,js"/>
 
   <!--Exclude third party code.-->
