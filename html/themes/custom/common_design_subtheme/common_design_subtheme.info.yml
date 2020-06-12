@@ -18,6 +18,9 @@ regions:
   header_navigation: Header navigation
   hero: Hero
   highlighted: Highlighted
+  content_top_1: Content top 1
+  content_top_2: Content top 2
+  content_top_3: Content top 3
   content: Content
   sidebar_first: First sidebar
   footer_soft: Soft footer
