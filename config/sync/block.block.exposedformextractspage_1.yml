@@ -1,0 +1,29 @@
+uuid: 431649e0-9924-4ee6-ac03-944c68b7a866
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.extracts
+  module:
+    - system
+    - views
+  theme:
+    - common_design
+id: exposedformextractspage_1
+theme: common_design
+region: content
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:extracts-page_1'
+settings:
+  id: 'views_exposed_filter_block:extracts-page_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /home
+    negate: false
+    context_mapping: {  }

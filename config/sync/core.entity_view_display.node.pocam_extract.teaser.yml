@@ -1,0 +1,33 @@
+uuid: 8f486668-57c7-4b67-a11d-263142594057
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pocam_extract.field_document_type
+    - field.field.node.pocam_extract.field_link
+    - field.field.node.pocam_extract.field_see_also
+    - field.field.node.pocam_extract.field_text
+    - field.field.node.pocam_extract.field_theme
+    - field.field.node.pocam_extract.field_year
+    - node.type.pocam_extract
+  module:
+    - user
+id: node.pocam_extract.teaser
+targetEntityType: node
+bundle: pocam_extract
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_document_type: true
+  field_link: true
+  field_see_also: true
+  field_text: true
+  field_theme: true
+  field_year: true
+  search_api_excerpt: true

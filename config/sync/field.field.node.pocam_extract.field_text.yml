@@ -1,0 +1,21 @@
+uuid: 5ccfeffd-4bbf-43b6-a742-de69eedf99d5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_text
+    - node.type.pocam_extract
+  module:
+    - text
+id: node.pocam_extract.field_text
+field_name: field_text
+entity_type: node
+bundle: pocam_extract
+label: Text
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

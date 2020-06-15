@@ -1,0 +1,19 @@
+uuid: 8700f7b9-b763-433c-b4d0-de8683a0d47b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_long_name
+    - taxonomy.vocabulary.theme
+id: taxonomy_term.theme.field_long_name
+field_name: field_long_name
+entity_type: taxonomy_term
+bundle: theme
+label: Theme
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

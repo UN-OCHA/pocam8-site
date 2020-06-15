@@ -1,0 +1,23 @@
+uuid: 3f4dfdeb-546b-483f-93f7-6d33cb426454
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_see_also
+    - node.type.pocam_extract
+  module:
+    - link
+id: node.pocam_extract.field_see_also
+field_name: field_see_also
+entity_type: node
+bundle: pocam_extract
+label: 'See also'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

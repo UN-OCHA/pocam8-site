@@ -1,0 +1,29 @@
+uuid: 9320bc30-b576-48d2-9853-be86968e0e85
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.year
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: year
+theme: common_design_subtheme
+region: content_top_3
+weight: -6
+provider: null
+plugin: 'facet_block:year'
+settings:
+  id: 'facet_block:year'
+  label: 'Filter by year'
+  provider: facets
+  label_display: visible
+  block_id: year
+visibility:
+  request_path:
+    id: request_path
+    pages: "/extracts\r\n/extracts/*"
+    negate: false
+    context_mapping: {  }

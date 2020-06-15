@@ -1,0 +1,7 @@
+base_url: 'https://auth.humanitarian.id'
+auto_redirect: false
+disable_default: true
+_core:
+  default_config_hash: ZT0ACgdXm4m65rwBVtAR0TGxX6QsMptRkbldivu-7yI
+client_id: pocam-dev
+client_secret: 4o4ZI495CruG0NX7z42C7016qpD431Jl

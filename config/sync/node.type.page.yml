@@ -1,0 +1,20 @@
+uuid: 1ca28b28-0724-49ed-986b-1fc8e7756fe9
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main-menu
+    parent: 'main-menu:0:'
+_core:
+  default_config_hash: KuyA4NHPXcmKAjRtwa0vQc2ZcyrUJy6IlS2TAyMNRbc
+name: 'Basic page'
+type: page
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

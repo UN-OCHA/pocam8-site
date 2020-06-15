@@ -1,0 +1,13 @@
+uuid: 9f78cfaa-9263-4628-9705-c8e966784009
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: btW6TFHajhy7Eo6YUvdFiPh4TcPggo8GBXYctjV6zag
+id: authenticated
+label: 'authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'use hybridauth'

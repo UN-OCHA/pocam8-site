@@ -1,0 +1,19 @@
+uuid: f54fdfdb-b958-4421-8eb2-7cc857c790ec
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_parent_tids
+    - taxonomy.vocabulary.theme
+id: taxonomy_term.theme.field_parent_tids
+field_name: field_parent_tids
+entity_type: taxonomy_term
+bundle: theme
+label: 'Parent tids'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

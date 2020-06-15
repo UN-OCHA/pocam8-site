@@ -1,0 +1,28 @@
+uuid: 8e3de649-1a78-4dbc-94a1-f0bd7564706f
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets_summary.facets_summary.facet_summary
+  module:
+    - facets_summary
+    - system
+  theme:
+    - common_design_subtheme
+id: facet_summary
+theme: common_design_subtheme
+region: content_top_1
+weight: 0
+provider: null
+plugin: 'facets_summary_block:facet_summary'
+settings:
+  id: 'facets_summary_block:facet_summary'
+  label: 'Current search'
+  provider: facets_summary
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: '/extracts/*'
+    negate: false
+    context_mapping: {  }

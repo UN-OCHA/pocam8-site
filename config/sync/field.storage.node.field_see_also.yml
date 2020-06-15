@@ -1,0 +1,19 @@
+uuid: f6f2ba31-e98f-4cd1-a009-b55b042126fd
+langcode: und
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_see_also
+field_name: field_see_also
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

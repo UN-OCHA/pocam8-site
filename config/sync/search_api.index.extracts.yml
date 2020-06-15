@@ -1,0 +1,189 @@
+uuid: 58e7a119-a81b-4d51-87b1-c2031882d6db
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_document_type
+    - field.storage.node.field_theme
+    - field.storage.taxonomy_term.field_long_name
+    - field.storage.node.field_year
+    - field.storage.node.field_text
+    - field.storage.taxonomy_term.field_see_also
+    - field.storage.node.field_see_also
+    - field.storage.node.field_link
+    - search_api.server.local
+  module:
+    - taxonomy
+    - search_api
+    - node
+id: extracts
+name: Extracts
+description: ''
+read_only: false
+field_settings:
+  field_document_type:
+    label: 'Document type'
+    datasource_id: 'entity:node'
+    property_path: field_document_type
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_document_type
+  field_long_name:
+    label: 'Theme » Taxonomy term » Theme'
+    datasource_id: 'entity:node'
+    property_path: 'field_theme:entity:field_long_name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_theme
+        - field.storage.taxonomy_term.field_long_name
+      module:
+        - taxonomy
+  field_theme:
+    label: Theme
+    datasource_id: 'entity:node'
+    property_path: field_theme
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_theme
+  field_year:
+    label: Year
+    datasource_id: 'entity:node'
+    property_path: field_year
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_year
+  name:
+    label: 'Theme » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_theme:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_theme
+      module:
+        - taxonomy
+  name_1:
+    label: 'Document type » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_document_type:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_document_type
+      module:
+        - taxonomy
+  processed:
+    label: 'Text » Processed text'
+    datasource_id: 'entity:node'
+    property_path: 'field_text:processed'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_text
+  title:
+    label: 'Theme » Taxonomy term » See also » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_theme:entity:field_see_also:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_theme
+        - field.storage.taxonomy_term.field_see_also
+      module:
+        - taxonomy
+  title_1:
+    label: 'See also » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_see_also:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_see_also
+  title_2:
+    label: 'Link » Link text'
+    datasource_id: 'entity:node'
+    property_path: 'field_link:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_link
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - pocam_extract
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  entity_status: {  }
+  hierarchy:
+    fields:
+      field_document_type: taxonomy_term-parent
+      field_theme: taxonomy_term-parent
+    weights:
+      preprocess_index: -45
+  highlight:
+    highlight: always
+    highlight_partial: true
+    excerpt: true
+    excerpt_length: 256
+    exclude_fields: {  }
+    prefix: '<strong class="highlight">'
+    suffix: '</strong>'
+    weights:
+      postprocess_query: 0
+  html_filter:
+    all_fields: false
+    fields:
+      - processed
+    title: false
+    alt: false
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      strong: 2
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+  ignorecase:
+    all_fields: true
+    fields:
+      - field_long_name
+      - name
+      - name_1
+      - processed
+      - title
+      - title_1
+      - title_2
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+  language_with_fallback: {  }
+  rendered_item: {  }
+  tokenizer:
+    all_fields: true
+    fields:
+      - field_long_name
+    spaces: ''
+    overlap_cjk: 0
+    minimum_word_size: '1'
+    weights:
+      preprocess_index: -6
+      preprocess_query: -6
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: local

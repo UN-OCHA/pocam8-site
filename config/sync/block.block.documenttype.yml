@@ -1,0 +1,29 @@
+uuid: c53f77b3-4da6-4609-b82f-de6bdfd00cef
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.document_type
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: documenttype
+theme: common_design_subtheme
+region: content_top_3
+weight: -8
+provider: null
+plugin: 'facet_block:document_type'
+settings:
+  id: 'facet_block:document_type'
+  label: 'Filter by document type'
+  provider: facets
+  label_display: visible
+  block_id: documenttype
+visibility:
+  request_path:
+    id: request_path
+    pages: "/extracts\r\n/extracts/*"
+    negate: false
+    context_mapping: {  }

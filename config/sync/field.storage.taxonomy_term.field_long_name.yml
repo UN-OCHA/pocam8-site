@@ -1,0 +1,19 @@
+uuid: 07cd5f5d-9078-4066-95d8-31d9251bc3ec
+langcode: und
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.field_long_name
+field_name: field_long_name
+entity_type: taxonomy_term
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

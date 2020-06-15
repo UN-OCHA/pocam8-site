@@ -1,0 +1,26 @@
+uuid: 1e6e112b-6bfc-48db-9f72-f95b42798a65
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_document_type
+    - node.type.pocam_extract
+    - taxonomy.vocabulary.type
+id: node.pocam_extract.field_document_type
+field_name: field_document_type
+entity_type: node
+bundle: pocam_extract
+label: 'Document type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler_settings:
+    sort:
+      field: _none
+    target_bundles:
+      type: type
+  handler: 'default:taxonomy_term'
+field_type: entity_reference
