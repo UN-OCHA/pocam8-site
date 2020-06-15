@@ -1,5 +1,5 @@
 pocam_extract.import_form:
-  path: '/import-extracts'
+  path: 'admin/config/pocam/import-extracts'
   defaults:
     _form: '\Drupal\pocam_extract\Form\Import'
     _title: 'Import Extracts'

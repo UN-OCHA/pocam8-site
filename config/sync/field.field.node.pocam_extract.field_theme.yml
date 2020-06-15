@@ -1,0 +1,26 @@
+uuid: b1d36de6-0b54-4112-9589-8ae961f673af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_theme
+    - node.type.pocam_extract
+    - taxonomy.vocabulary.theme
+id: node.pocam_extract.field_theme
+field_name: field_theme
+entity_type: node
+bundle: pocam_extract
+label: Theme
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler_settings:
+    sort:
+      field: _none
+    target_bundles:
+      theme: theme
+  handler: 'default:taxonomy_term'
+field_type: entity_reference

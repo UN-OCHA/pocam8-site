@@ -1,0 +1,195 @@
+uuid: 3670c7a7-4ea2-43c9-9fac-75921d4e49f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.pocam_extract.field_document_type
+    - field.field.node.pocam_extract.field_link
+    - field.field.node.pocam_extract.field_see_also
+    - field.field.node.pocam_extract.field_text
+    - field.field.node.pocam_extract.field_theme
+    - field.field.node.pocam_extract.field_year
+    - node.type.pocam_extract
+  module:
+    - layout_builder
+    - link
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: true
+    sections:
+      -
+        layout_id: layout_twocol_section
+        layout_settings:
+          label: body
+          column_widths: 50-50
+        components:
+          3884965d-e001-4264-a683-889e8343af23:
+            uuid: 3884965d-e001-4264-a683-889e8343af23
+            region: first
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:pocam_extract:field_text'
+              formatter:
+                label: hidden
+                type: text_default
+                settings: {  }
+                third_party_settings: {  }
+            additional: {  }
+            weight: 0
+          46b65fc4-259a-4fa4-835f-d3d93b71084b:
+            uuid: 46b65fc4-259a-4fa4-835f-d3d93b71084b
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:pocam_extract:field_year'
+              formatter:
+                label: above
+                type: number_integer
+                settings:
+                  prefix_suffix: true
+                  thousand_separator: ''
+                third_party_settings: {  }
+            additional: {  }
+            weight: 0
+          f5cdf645-859f-4326-bbd5-af13b122854a:
+            uuid: f5cdf645-859f-4326-bbd5-af13b122854a
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:pocam_extract:field_document_type'
+              formatter:
+                label: above
+                type: entity_reference_label
+                settings:
+                  link: true
+                third_party_settings: {  }
+            additional: {  }
+            weight: 1
+          cb17daef-7301-48a9-a990-c35d98377cb0:
+            uuid: cb17daef-7301-48a9-a990-c35d98377cb0
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:pocam_extract:field_link'
+              formatter:
+                label: above
+                type: link
+                settings:
+                  trim_length: 80
+                  url_only: false
+                  url_plain: false
+                  rel: ''
+                  target: ''
+                third_party_settings: {  }
+            additional: {  }
+            weight: 4
+          a78b9917-5245-40e9-a14d-a02540fc0a4a:
+            uuid: a78b9917-5245-40e9-a14d-a02540fc0a4a
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:pocam_extract:theme_full_tree'
+            additional: {  }
+            weight: 3
+          fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be:
+            uuid: fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:pocam_extract:theme_see_also'
+            additional: {  }
+            weight: 5
+        third_party_settings: {  }
+id: node.pocam_extract.default
+targetEntityType: node
+bundle: pocam_extract
+mode: default
+content:
+  field_document_type:
+    label: above
+    weight: 1
+    type: entity_reference_label
+    settings:
+      link: true
+    third_party_settings: {  }
+    region: content
+  field_link:
+    label: above
+    weight: 4
+    type: link
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    region: content
+  field_see_also:
+    type: link
+    weight: 5
+    region: content
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+  field_text:
+    label: hidden
+    weight: 0
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_theme:
+    type: entity_reference_label
+    weight: 3
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_year:
+    label: above
+    weight: 6
+    type: number_integer
+    settings:
+      prefix_suffix: true
+      thousand_separator: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  theme_full_tree:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: first
+  theme_see_also:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: first
+hidden:
+  search_api_excerpt: true

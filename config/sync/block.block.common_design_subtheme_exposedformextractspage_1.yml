@@ -1,0 +1,29 @@
+uuid: d9a6e045-d549-4ffc-858c-ac012962b58e
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.extracts
+  module:
+    - system
+    - views
+  theme:
+    - common_design_subtheme
+id: common_design_subtheme_exposedformextractspage_1
+theme: common_design_subtheme
+region: content_top_2
+weight: -6
+provider: null
+plugin: 'views_exposed_filter_block:extracts-page_1'
+settings:
+  id: 'views_exposed_filter_block:extracts-page_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: "/extracts\r\n/extracts/*"
+    negate: false
+    context_mapping: {  }

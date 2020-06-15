@@ -1,0 +1,53 @@
+uuid: a5167797-efb1-4008-9855-2ef2ea712262
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.theme.field_long_name
+    - field.field.taxonomy_term.theme.field_parent_tids
+    - field.field.taxonomy_term.theme.field_see_also
+    - taxonomy.vocabulary.theme
+  module:
+    - link
+    - text
+id: taxonomy_term.theme.default
+targetEntityType: taxonomy_term
+bundle: theme
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_long_name:
+    label: above
+    weight: 1
+    type: basic_string
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_parent_tids:
+    label: above
+    weight: 2
+    type: string
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    region: content
+  field_see_also:
+    label: above
+    weight: 0
+    type: link
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  search_api_excerpt: true

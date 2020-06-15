@@ -1,0 +1,16 @@
+uuid: e1c60de5-c117-4d6c-be16-47896e395007
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    parent: 'main-menu:0:'
+name: Extract
+type: pocam_extract
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

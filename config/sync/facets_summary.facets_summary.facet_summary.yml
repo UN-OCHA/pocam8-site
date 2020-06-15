@@ -1,0 +1,42 @@
+uuid: 4e129399-2693-48e7-bb3c-f933bb1209d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.index.extracts
+    - views.view.extracts
+  module:
+    - search_api
+id: facet_summary
+name: 'Current Search'
+facets:
+  document_type:
+    checked: true
+    label: 'Document type'
+    separator: ', '
+    weight: 0
+    show_count: false
+  theme:
+    checked: true
+    label: Theme
+    separator: ', '
+    weight: 0
+    show_count: false
+  year:
+    checked: true
+    label: Year
+    separator: ', '
+    weight: 0
+    show_count: false
+facet_source_id: 'search_api:views_page__extracts__page_1'
+processor_configs:
+  hide_when_not_rendered:
+    processor_id: hide_when_not_rendered
+    weights:
+      build: '45'
+    settings: {  }
+  show_count:
+    processor_id: show_count
+    weights:
+      build: '5'
+    settings: {  }
