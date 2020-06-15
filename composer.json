@@ -39,6 +39,7 @@
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
         "phpoffice/phpspreadsheet": "^1.11",
+        "squizlabs/php_codesniffer": "*",
         "unocha/common_design": "^2.7.5",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
