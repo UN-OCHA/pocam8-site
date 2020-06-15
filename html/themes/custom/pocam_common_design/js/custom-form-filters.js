@@ -8,8 +8,7 @@
       var filters = context.querySelector('.region-content-top-3');
       if (filters != null) {
         var regionClass = filters.getAttribute('class');
-        console.log('regionClass', regionClass);
-        filters.setAttribute('class', regionClass + ' toggle-hide');
+        //filters.setAttribute('class', regionClass + ' toggle-hide');
 
         var button = document.createElement('button');
         button.setAttribute('class', 'toggle-button');
@@ -18,11 +17,11 @@
           var currentClass = filters.getAttribute('class');
           if (currentClass == regionClass) {
             filters.setAttribute('class', regionClass + ' toggle-hide');
-            button.textContent = 'Hide filters';
+            button.textContent = 'Add filters';
           }
           else {
             filters.setAttribute('class', regionClass);
-            button.textContent = 'Add filters';
+            button.textContent = 'Hide filters';
           }
           event.preventDefault();
         });
