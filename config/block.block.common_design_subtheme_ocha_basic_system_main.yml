@@ -1,4 +1,4 @@
-uuid: b05e58fa-0406-4f74-863c-674a051375e1
+uuid: 39bb53ad-53ec-4101-aa7f-21a51cb6ede9
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ _core:
 id: common_design_subtheme_ocha_basic_system_main
 theme: common_design_subtheme
 region: content
-weight: -2
+weight: 1
 provider: null
 plugin: system_main_block
 settings:

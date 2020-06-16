@@ -1,21 +1,24 @@
-uuid: d7fb7d3c-2a57-4343-8d57-7beee7d397d9
+uuid: 5996f804-5cb7-4416-ba19-985c50bf92b6
 langcode: en
 status: true
 dependencies:
   module:
     - ctools
+    - system
   theme:
-    - common_design_subtheme
-id: pagetitle
-theme: common_design_subtheme
+    - pocam_common_design
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: pocam_common_design_ocha_basic_system_main
+theme: pocam_common_design
 region: content
-weight: -3
+weight: -2
 provider: null
-plugin: page_title_block
+plugin: system_main_block
 settings:
-  id: page_title_block
-  label: 'Page title'
-  provider: core
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
   label_display: '0'
 visibility:
   'entity_bundle:node':

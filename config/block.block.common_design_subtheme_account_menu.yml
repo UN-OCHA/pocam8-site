@@ -1,4 +1,4 @@
-uuid: 26bff8da-f628-4464-8ded-131eafd0f8cb
+uuid: 24c96e37-afda-450b-9b5d-dbc8f867ac0c
 langcode: en
 status: true
 dependencies:
@@ -13,7 +13,7 @@ _core:
 id: common_design_subtheme_account_menu
 theme: common_design_subtheme
 region: header_top
-weight: -6
+weight: 0
 provider: null
 plugin: 'system_menu_block:account'
 settings:

@@ -5,6 +5,9 @@ module:
   block: 0
   block_content: 0
   breakpoint: 0
+  chosen: 0
+  chosen_field: 0
+  chosen_lib: 0
   ckeditor: 0
   color: 0
   config: 0
@@ -72,10 +75,10 @@ module:
 theme:
   stable: 0
   classy: 0
-  bartik: 0
   seven: 0
   common_design: 0
   common_design_subtheme: 0
+  pocam_common_design: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

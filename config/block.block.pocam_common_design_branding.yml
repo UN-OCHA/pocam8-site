@@ -1,17 +1,17 @@
-uuid: a5341587-645f-4890-b34b-2ed91b2f7ef4
+uuid: 62b52623-b2cb-484d-93de-e3626dda6940
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
+    - pocam_common_design
 _core:
   default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
-id: bartik_branding
-theme: bartik
-region: header
-weight: 0
+id: pocam_common_design_branding
+theme: pocam_common_design
+region: header_logo
+weight: -6
 provider: null
 plugin: system_branding_block
 settings:

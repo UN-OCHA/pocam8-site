@@ -1,4 +1,4 @@
-uuid: deb5d10d-c0e6-4d84-9c44-167ef5014ef1
+uuid: a60119f9-ae61-4c54-a701-96e0ddf8b18e
 langcode: en
 status: true
 dependencies:
@@ -7,21 +7,19 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
-_core:
-  default_config_hash: ChCx7DYNUrPTt5uiRdQAPDKJQMc-_SyAQTrZh8H0o-c
-id: bartik_main_menu
-theme: bartik
-region: primary_menu
+    - pocam_common_design
+id: mainmenu
+theme: pocam_common_design
+region: header_navigation
 weight: 0
 provider: null
 plugin: 'system_menu_block:main'
 settings:
   id: 'system_menu_block:main'
-  label: 'Main navigation'
+  label: 'Main menu'
   provider: system
-  label_display: '0'
+  label_display: visible
   level: 1
-  depth: 1
+  depth: 0
   expand_all_items: false
 visibility: {  }

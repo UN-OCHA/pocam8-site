@@ -1,4 +1,4 @@
-uuid: 65a547a4-a66e-48e0-b532-2f29cfa95484
+uuid: 7b573524-21d7-4e23-b4cb-d84b9640cef9
 langcode: en
 status: true
 dependencies:
@@ -7,13 +7,13 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - pocam_common_design
 _core:
   default_config_hash: 8zRjTNbfNAJ94lQpZDu6MkyD87GYJ2zpH9VQPVmRbcM
-id: bartik_footer
-theme: bartik
-region: footer_fifth
-weight: 0
+id: pocam_common_design_footer
+theme: pocam_common_design
+region: footer_navigation
+weight: -5
 provider: null
 plugin: 'system_menu_block:footer'
 settings:

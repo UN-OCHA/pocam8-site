@@ -1,17 +1,17 @@
-uuid: e24ce62e-1543-4d79-b551-2260ddf26cad
+uuid: c3cbb843-fa15-4efc-bd11-5ab4904c9d64
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
+    - pocam_common_design
 _core:
   default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
-id: bartik_messages
-theme: bartik
-region: highlighted
-weight: 0
+id: pocam_common_design_messages
+theme: pocam_common_design
+region: content
+weight: -7
 provider: null
 plugin: system_messages_block
 settings:

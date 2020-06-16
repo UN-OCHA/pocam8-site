@@ -1,4 +1,4 @@
-uuid: 9ac9265b-7b10-410a-813b-1d7c8cbcea65
+uuid: 9be4a9c7-7ede-46b9-8cce-6e176cc4f9ee
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: common_design_subtheme_messages
 theme: common_design_subtheme
 region: content
-weight: -7
+weight: -5
 provider: null
 plugin: system_messages_block
 settings:

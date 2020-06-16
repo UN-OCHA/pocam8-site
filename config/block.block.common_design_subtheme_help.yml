@@ -1,4 +1,4 @@
-uuid: e87a9495-8e55-47ab-8fc5-c13261b03afc
+uuid: 64f21b8d-1c66-46db-8a9e-7326c0f30e5a
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: common_design_subtheme_help
 theme: common_design_subtheme
 region: content
-weight: -5
+weight: -2
 provider: null
 plugin: help_block
 settings:

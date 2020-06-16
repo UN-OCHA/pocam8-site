@@ -1,15 +1,15 @@
-uuid: abd64495-7abd-489b-92cd-114df4f8a8c7
+uuid: 43926f47-3a6b-4612-b69f-7caa66327241
 langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
+    - pocam_common_design
 _core:
   default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
-id: bartik_local_tasks
-theme: bartik
+id: pocam_common_design_local_tasks
+theme: pocam_common_design
 region: content
-weight: -40
+weight: -5
 provider: null
 plugin: local_tasks_block
 settings:

@@ -1,4 +1,4 @@
-uuid: afc39bb4-82ae-4d59-9a26-03413934ab09
+uuid: fdc7b849-c9bf-4d1c-9e36-16afaa2e7560
 langcode: en
 status: true
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - pocam_common_design
 _core:
   default_config_hash: 8a31Ywc1t2zlddGd3bmDrFMefWqgSK2E02ceFdr-bfc
-id: bartik_account_menu
-theme: bartik
-region: secondary_menu
+id: pocam_common_design_account_menu
+theme: pocam_common_design
+region: header_top
 weight: 0
 provider: null
 plugin: 'system_menu_block:account'

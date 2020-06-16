@@ -1,4 +1,4 @@
-uuid: 8e3de649-1a78-4dbc-94a1-f0bd7564706f
+uuid: b2b53ec2-e1cf-42a8-947f-5584c77249f9
 langcode: en
 status: true
 dependencies:
@@ -8,21 +8,21 @@ dependencies:
     - facets_summary
     - system
   theme:
-    - common_design_subtheme
-id: facet_summary
-theme: common_design_subtheme
+    - pocam_common_design
+id: currentsearch
+theme: pocam_common_design
 region: content_top_1
 weight: 0
 provider: null
 plugin: 'facets_summary_block:facet_summary'
 settings:
   id: 'facets_summary_block:facet_summary'
-  label: 'Current search'
+  label: 'Current Search'
   provider: facets_summary
   label_display: visible
 visibility:
   request_path:
     id: request_path
-    pages: '/extracts/*'
+    pages: "/extracts\r\n/extracts/*"
     negate: false
     context_mapping: {  }
