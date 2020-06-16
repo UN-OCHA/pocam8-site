@@ -52,9 +52,7 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
       switch ($token_name) {
         case 'search-block':
 
-          // For this to work, block is output on the page in a hidden region.
-          // TODO find a better way to approach this.
-          $block = Block::load('exposedformextractspage_1_2');
+          $block = Block::load('exposedformextractspage_1');
           $output = \Drupal::entityTypeManager()
             ->getViewBuilder('block')
             ->view($block);
@@ -108,8 +106,14 @@ function _pocam_general_build_tree($voc, $depth = 2) {
 
     if (isset($facet_count[$term->tid])) {
       $text = $term->name . ' (' . $facet_count[$term->tid] . ')';
-      $path = 'internal:/extracts/theme/' . urlencode($term->name) . '-' . $term->tid;
-      $markup = Link::fromTextAndUrl($text, Url::fromUri($path))->toString();
+
+      // These for use with 'facets_pretty_paths'.
+      /* $path = 'internal:/extracts/theme/' . */
+      /*   urlencode($term->name) . '-' . $term->tid; */
+      /* $markup = Link::fromTextAndUrl($text, Url::fromUri($path))->toString(); */
+      $path = 'internal:/extracts';
+      $params = ['query' => ['theme' => ['theme:' . $term->tid]]];
+      $markup = Link::fromTextAndUrl($text, Url::fromUri($path, $params))->toString();
       if ($term->parents[0] == 0) {
         $links['p-' . $term->tid] = [
           '#markup' => $markup,
