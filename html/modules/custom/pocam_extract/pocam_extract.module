@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\taxonomy\Entity\Term;
 
 /**
@@ -149,6 +150,32 @@ function pocam_extract_node_view(array &$build, EntityInterface $entity, EntityV
 
   if ($display->getComponent('theme_full_tree')) {
     $build['theme_full_tree'] = pocam_extract_theme_full_tree($entity, $view_mode);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Retain facet values when a search term is introduced.
+ */
+function pocam_extract_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if ($form_state->get('view')->id() !== 'extracts') {
+    return;
+  }
+  $facet_query = \Drupal::request()->query->filter('theme');
+  if (empty($facet_query)) {
+    return;
+  }
+
+  // Iterate through facet query parameters.
+  foreach ($facet_query as $key => $value) {
+    // Add hidden form field for facet parameter.
+    $form['theme[' . $key . ']'] = [
+      '#type' => 'hidden',
+      '#value' => $value,
+      '#weight' => -1,
+    ];
   }
 }
 

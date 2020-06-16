@@ -62,16 +62,19 @@ third_party_settings:
             uuid: f5cdf645-859f-4326-bbd5-af13b122854a
             region: second
             configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
               id: 'field_block:node:pocam_extract:field_document_type'
+              label: 'Document type'
+              provider: layout_builder
+              label_display: '0'
               formatter:
                 label: above
                 type: entity_reference_label
                 settings:
-                  link: true
+                  link: false
                 third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
             additional: {  }
             weight: 1
           cb17daef-7301-48a9-a990-c35d98377cb0:

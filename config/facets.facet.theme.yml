@@ -6,11 +6,7 @@ dependencies:
     - search_api.index.extracts
     - views.view.extracts
   module:
-    - facets_pretty_paths
     - search_api
-third_party_settings:
-  facets_pretty_paths:
-    coder: taxonomy_term_coder
 id: theme
 name: Theme
 url_alias: theme
@@ -26,6 +22,9 @@ widget:
     default_option_label: Choose
 query_operator: and
 use_hierarchy: true
+hierarchy:
+  type: taxonomy
+  config: {  }
 expand_hierarchy: true
 enable_parent_when_child_gets_disabled: false
 hard_limit: 0
@@ -35,7 +34,7 @@ processor_configs:
   term_weight_widget_order:
     processor_id: term_weight_widget_order
     weights:
-      sort: 60
+      sort: -10
     settings:
       sort: ASC
   translate_entity:
@@ -47,7 +46,7 @@ processor_configs:
     processor_id: url_processor_handler
     weights:
       pre_query: 50
-      build: 15
+      build: 5
     settings: {  }
 empty_behavior:
   behavior: none
