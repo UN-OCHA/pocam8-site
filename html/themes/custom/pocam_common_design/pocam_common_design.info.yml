@@ -1,6 +1,6 @@
-name:  OCHA Common Design sub theme
+name:  POCAM Common Design sub theme
 type: theme
-description: OCHA Common Design sub theme
+description: POCAM Common Design sub theme
 core: 8.x
 # Defines the base theme
 base theme: common_design
