@@ -1,4 +1,4 @@
-uuid: d9a6e045-d549-4ffc-858c-ac012962b58e
+uuid: 97b3fc33-7146-4187-81f3-1e27ab9a68f2
 langcode: en
 status: true
 dependencies:
@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: common_design_subtheme_exposedformextractspage_1
 theme: common_design_subtheme
-region: content_top_2
-weight: -6
+region: content
+weight: 0
 provider: null
 plugin: 'views_exposed_filter_block:extracts-page_1'
 settings:
@@ -24,6 +24,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/extracts\r\n/extracts/*"
+    pages: /home
     negate: false
     context_mapping: {  }

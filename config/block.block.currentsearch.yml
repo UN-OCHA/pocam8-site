@@ -1,26 +1,25 @@
-uuid: cf60001a-664d-4330-9e8f-05830f6b4229
+uuid: b2b53ec2-e1cf-42a8-947f-5584c77249f9
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.theme
+    - facets_summary.facets_summary.facet_summary
   module:
-    - facets
+    - facets_summary
     - system
   theme:
     - pocam_common_design
-id: theme
+id: currentsearch
 theme: pocam_common_design
-region: content_top_3
-weight: -5
+region: content_top_1
+weight: 0
 provider: null
-plugin: 'facet_block:theme'
+plugin: 'facets_summary_block:facet_summary'
 settings:
-  id: 'facet_block:theme'
-  label: Theme
-  provider: facets
+  id: 'facets_summary_block:facet_summary'
+  label: 'Current Search'
+  provider: facets_summary
   label_display: visible
-  block_id: theme
 visibility:
   request_path:
     id: request_path

@@ -1,15 +1,15 @@
-uuid: 0d6d31c5-edc6-43ff-ba86-0bc42bbe33b4
+uuid: 62b52623-b2cb-484d-93de-e3626dda6940
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - common_design_subtheme
+    - pocam_common_design
 _core:
   default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
-id: common_design_subtheme_branding
-theme: common_design_subtheme
+id: pocam_common_design_branding
+theme: pocam_common_design
 region: header_logo
 weight: -6
 provider: null

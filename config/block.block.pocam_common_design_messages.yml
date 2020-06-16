@@ -1,17 +1,17 @@
-uuid: 9be4a9c7-7ede-46b9-8cce-6e176cc4f9ee
+uuid: c3cbb843-fa15-4efc-bd11-5ab4904c9d64
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - common_design_subtheme
+    - pocam_common_design
 _core:
   default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
-id: common_design_subtheme_messages
-theme: common_design_subtheme
+id: pocam_common_design_messages
+theme: pocam_common_design
 region: content
-weight: -5
+weight: -7
 provider: null
 plugin: system_messages_block
 settings:

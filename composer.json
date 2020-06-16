@@ -25,6 +25,7 @@
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_denied": "^1.0",
+        "drupal/chosen": "^2.9",
         "drupal/core": "^8.8.0",
         "drupal/dream_block_manager": "^1.0",
         "drupal/facets": "^1.4",
@@ -87,9 +88,9 @@
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
-        "gulp-prepare": "cd html/themes/custom/common_design_subtheme && npm install",
-        "gulp-build": "cd html/themes/custom/common_design_subtheme && ./node_modules/.bin/gulp build",
-        "gulp-cleanup": "cd html/themes/custom/common_design_subtheme && rm -rf ./node_modules",
+        "gulp-prepare": "cd html/themes/custom/pocam_common_design && npm install",
+        "gulp-build": "cd html/themes/custom/pocam_common_design && ./node_modules/.bin/gulp build",
+        "gulp-cleanup": "cd html/themes/custom/pocam_common_design && rm -rf ./node_modules",
         "gulp": [
             "@gulp-prepare",
             "@gulp-build",
@@ -110,7 +111,8 @@
             "html/libraries/{$name}": [
                 "type:drupal-library",
                 "type:bower-asset",
-                "type:npm-asset"
+                "type:npm-asset",
+                "harvesthq/chosen"
             ],
             "html/modules/contrib/{$name}": ["type:drupal-module"],
             "html/profiles/contrib/{$name}": ["type:drupal-profile"],

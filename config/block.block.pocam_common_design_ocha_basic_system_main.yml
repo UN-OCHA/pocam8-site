@@ -1,4 +1,4 @@
-uuid: 39bb53ad-53ec-4101-aa7f-21a51cb6ede9
+uuid: 5996f804-5cb7-4416-ba19-985c50bf92b6
 langcode: en
 status: true
 dependencies:
@@ -6,13 +6,13 @@ dependencies:
     - ctools
     - system
   theme:
-    - common_design_subtheme
+    - pocam_common_design
 _core:
   default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
-id: common_design_subtheme_ocha_basic_system_main
-theme: common_design_subtheme
+id: pocam_common_design_ocha_basic_system_main
+theme: pocam_common_design
 region: content
-weight: 1
+weight: -2
 provider: null
 plugin: system_main_block
 settings:

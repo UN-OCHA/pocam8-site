@@ -1,0 +1,25 @@
+{% embed '@common_design/page.html.twig' %}
+
+  {% block header %}
+    {% include '@pocam_common_design/cd/cd-header/cd-header.html.twig' %}
+  {% endblock %}
+
+  {% block main %}
+    <main role="main" {{ attributes.addClass(layout_classes) }}>
+      <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+
+      <div class="cd-layout-content">
+        {{ page.content_top_1 }}
+        {{ page.content_top_2 }}
+        {{ page.content_top_3 }}
+        {{ page.content }}
+      </div>{# /.cd-layout-content #}
+
+    </main>
+  {% endblock %}
+
+  {% block footer %}
+    {% include '@pocam_common_design/cd/cd-footer/cd-footer.html.twig' %}
+  {% endblock %}
+
+{% endembed %}

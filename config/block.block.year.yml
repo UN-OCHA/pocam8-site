@@ -1,4 +1,4 @@
-uuid: 9320bc30-b576-48d2-9853-be86968e0e85
+uuid: af314175-e85c-4acd-9c05-0dbfcf11161b
 langcode: en
 status: true
 dependencies:
@@ -8,16 +8,16 @@ dependencies:
     - facets
     - system
   theme:
-    - common_design_subtheme
+    - pocam_common_design
 id: year
-theme: common_design_subtheme
+theme: pocam_common_design
 region: content_top_3
 weight: -6
 provider: null
 plugin: 'facet_block:year'
 settings:
   id: 'facet_block:year'
-  label: 'Filter by year'
+  label: Year
   provider: facets
   label_display: visible
   block_id: year

@@ -1,4 +1,4 @@
-uuid: 426de7f9-cbcb-4f03-8d51-0eeaa06b2038
+uuid: 7b573524-21d7-4e23-b4cb-d84b9640cef9
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   module:
     - system
   theme:
-    - common_design_subtheme
+    - pocam_common_design
 _core:
   default_config_hash: 8zRjTNbfNAJ94lQpZDu6MkyD87GYJ2zpH9VQPVmRbcM
-id: common_design_subtheme_footer
-theme: common_design_subtheme
+id: pocam_common_design_footer
+theme: pocam_common_design
 region: footer_navigation
 weight: -5
 provider: null
