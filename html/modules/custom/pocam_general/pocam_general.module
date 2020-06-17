@@ -107,13 +107,8 @@ function _pocam_general_build_tree($voc, $depth = 2) {
     if (isset($facet_count[$term->tid])) {
       $text = $term->name . ' (' . $facet_count[$term->tid] . ')';
 
-      // These for use with 'facets_pretty_paths'.
-      /* $path = 'internal:/extracts/theme/' . */
-      /*   urlencode($term->name) . '-' . $term->tid; */
-      /* $markup = Link::fromTextAndUrl($text, Url::fromUri($path))->toString(); */
-      $path = 'internal:/extracts';
-      $params = ['query' => ['theme' => ['theme:' . $term->tid]]];
-      $markup = Link::fromTextAndUrl($text, Url::fromUri($path, $params))->toString();
+      $path = 'internal:/extracts/theme/' . urlencode($term->name) . '-' . $term->tid;
+      $markup = Link::fromTextAndUrl($text, Url::fromUri($path))->toString();
       if ($term->parents[0] == 0) {
         $links['p-' . $term->tid] = [
           '#markup' => $markup,

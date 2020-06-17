@@ -163,19 +163,12 @@ function pocam_extract_form_views_exposed_form_alter(&$form, FormStateInterface 
   if ($form_state->get('view')->id() !== 'extracts') {
     return;
   }
-  $facet_query = \Drupal::request()->query->filter('theme');
-  if (empty($facet_query)) {
-    return;
-  }
-
-  // Iterate through facet query parameters.
-  foreach ($facet_query as $key => $value) {
-    // Add hidden form field for facet parameter.
-    $form['theme[' . $key . ']'] = [
-      '#type' => 'hidden',
-      '#value' => $value,
-      '#weight' => -1,
-    ];
+  if (\Drupal::moduleHandler()->moduleExists('facets_pretty_paths')) {
+    $current_path = \Drupal::request()->getRequestUri();
+    $current_route_name = \Drupal::service('current_route_match')->getRouteName();
+    if ($current_route_name) {
+      $form['#action'] = $current_path;
+    }
   }
 }
 

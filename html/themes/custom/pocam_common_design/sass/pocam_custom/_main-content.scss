@@ -304,6 +304,11 @@ h1.page-title,
       display: inline;
     }
   }
+
+  .facet-item__status,
+  .search-string__status {
+    padding-right: 4px;
+  }
 }
 
 // Theme list
