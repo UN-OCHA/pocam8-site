@@ -6,7 +6,11 @@ dependencies:
     - search_api.index.extracts
     - views.view.extracts
   module:
+    - facets_pretty_paths
     - search_api
+third_party_settings:
+  facets_pretty_paths:
+    coder: taxonomy_term_coder
 id: document_type
 name: 'Document type'
 url_alias: type
@@ -42,13 +46,13 @@ processor_configs:
   translate_entity:
     processor_id: translate_entity
     weights:
-      build: 5
+      build: -10
     settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:
-      pre_query: 50
-      build: 15
+      pre_query: 5
+      build: -10
     settings: {  }
 empty_behavior:
   behavior: none
