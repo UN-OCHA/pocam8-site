@@ -8,7 +8,7 @@
       var filters = context.querySelector('.region-content-top-3');
       if (filters != null) {
         var regionClass = filters.getAttribute('class');
-        //filters.setAttribute('class', regionClass + ' toggle-hide');
+        filters.setAttribute('class', regionClass + ' toggle-hide');
 
         var button = document.createElement('button');
         button.setAttribute('class', 'toggle-button');

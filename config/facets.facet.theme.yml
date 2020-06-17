@@ -16,10 +16,12 @@ show_only_one_result: false
 field_identifier: field_theme
 facet_source_id: 'search_api:views_page__extracts__page_1'
 widget:
-  type: dropdown
+  type: select2
   config:
     show_numbers: true
-    default_option_label: Choose
+    width: 100%
+    autocomplete: false
+    match_operator: CONTAINS
 query_operator: and
 use_hierarchy: true
 hierarchy:
