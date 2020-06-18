@@ -29,7 +29,7 @@ function pocam_extract_entity_presave(EntityInterface $entity) {
         ->sort('name');
       $tids = $query->execute();
 
-      $parent_ids = taxonomy_term_load_multiple($tids);
+      $parent_ids = Term::loadMultiple($tids);
       $parent_ids = array_keys($parent_ids);
       $parent_id = reset($parent_ids);
     }

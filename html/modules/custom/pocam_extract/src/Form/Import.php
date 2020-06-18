@@ -293,7 +293,7 @@ class Import extends FormBase {
     foreach ($themes as $theme_name) {
       // Make sure term name is not too long.
       $short_theme_name = $theme_name;
-      if (Unicode::strlen($theme_name) > 250) {
+      if (mb_strlen($theme_name) > 250) {
         $short_theme_name = Unicode::truncate($theme_name, 250, TRUE, TRUE);
       }
 

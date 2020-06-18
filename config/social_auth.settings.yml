@@ -2,9 +2,9 @@ auth:
   social_auth_hid:
     route: social_auth_hid.redirect_to_hid
     img_path: modules/contrib/social_auth_hid/img/hid_logo.png
-post_login: /user
+post_login: /
 redirect_user_form: false
-disable_admin_login: true
+disable_admin_login: false
 disabled_roles:
   administrator: '0'
   editor: '0'
