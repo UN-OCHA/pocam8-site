@@ -5,8 +5,6 @@
  * POCAM extracts.
  */
 
-namespace Drupal\pocam_extract;
-
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -142,9 +140,9 @@ function pocam_extract_entity_extra_field_info() {
 }
 
 /**
- * Implements hook_node_view().
+ * Implements hook_entity_view().
  */
-function pocam_extract_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+function pocam_extract_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   if ($display->getComponent('theme_see_also')) {
     $build['theme_see_also'] = pocam_extract_theme_see_also($entity, $view_mode);
@@ -179,7 +177,7 @@ function pocam_extract_form_views_exposed_form_alter(&$form, FormStateInterface 
  */
 function pocam_extract_search_api_processor_info_alter(array &$processors) {
   if (!empty($processors['highlight'])) {
-    $processors['highlight']['class'] = 'Plugin\PocamExtractHighlight';
+    $processors['highlight']['class'] = 'Drupal\pocam_extract\Plugin\PocamExtractHighlight';
   }
 }
 

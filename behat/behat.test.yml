@@ -3,7 +3,7 @@ default:
     default:
       contexts:
         - FeatureContext:
-            screenshots: %paths.base%/screenshots/
+            screenshots: '%paths.base%/screenshots/'
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext

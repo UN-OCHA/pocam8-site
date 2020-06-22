@@ -1,3 +1,6 @@
+### TODO: this directory is copied from cerf8 and is not yet working for POCAM
+
+
 ## Setup - scripts/setup.sh
 
 ```
