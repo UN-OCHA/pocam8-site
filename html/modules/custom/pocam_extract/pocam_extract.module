@@ -5,6 +5,8 @@
  * POCAM extracts.
  */
 
+namespace Drupal\pocam_extract;
+
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -169,6 +171,15 @@ function pocam_extract_form_views_exposed_form_alter(&$form, FormStateInterface 
     if ($current_route_name) {
       $form['#action'] = $current_path;
     }
+  }
+}
+
+/**
+ * Implements hook_search_api_processor_info_alter().
+ */
+function pocam_extract_search_api_processor_info_alter(array &$processors) {
+  if (!empty($processors['highlight'])) {
+    $processors['highlight']['class'] = 'Plugin\PocamExtractHighlight';
   }
 }
 
