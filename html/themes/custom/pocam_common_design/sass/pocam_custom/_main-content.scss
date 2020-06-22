@@ -170,6 +170,17 @@ h1.page-title,
   }
 }
 
+.path-frontpage #views-exposed-form-extracts-page-1 {
+  .form--inline {
+    display: block;
+    margin: auto;
+  }
+
+  .form-item {
+    border: 1px solid #ccc;
+  }
+}
+
 .no-js .select2-widget {
   width: 100%;
 }
