@@ -171,13 +171,19 @@ h1.page-title,
 }
 
 .path-frontpage #views-exposed-form-extracts-page-1 {
+
   .form--inline {
-    display: block;
+    display: flex;
     margin: auto;
+    max-width: 26rem;
   }
 
-  .form-item {
+  .form-item input {
     border: 1px solid #ccc;
+  }
+
+  .form-actions {
+    margin-left: 0;
   }
 }
 
@@ -245,6 +251,13 @@ h1.page-title,
 
 .block-facets {
   margin-top: 1em;
+
+  h2 {
+    color: $cd-default-text-color;
+    font-family: $cd-heading-font;
+    font-weight: 700;
+    @include font-size($cd-font-size-base);
+  }
 }
 
 .block-facets-summary {
@@ -330,11 +343,4 @@ h1.page-title,
     margin-bottom: 20px;
     display: block;
   }
-}
-
-.block-facets h2 {
-  color: $cd-default-text-color;
-  font-family: $cd-heading-font;
-  font-weight: 700;
-  @include font-size($cd-font-size-base);
 }
