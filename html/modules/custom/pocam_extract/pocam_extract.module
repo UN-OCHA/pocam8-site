@@ -157,18 +157,30 @@ function pocam_extract_entity_view(array &$build, EntityInterface $entity, Entit
  * Implements hook_form_FORM_ID_alter().
  *
  * Retain facet values when a search term is introduced.
+ *
+ * Looks like this is the wrong place for this. Facets deals with this, but
+ * is crossed with facets pretty paths.
+ * For the search string, just remove all query parameters in the path if
+ * pretty_paths is enabled:
+ * line 75, build, html/modules/contrib/facets/modules/facets_summary
+ * /src/Plugin/facets_summary/processor/ResetStringProcessor.php
+ * if (!\Drupal::moduleHandler()->moduleExists('facets_pretty_paths')) {
+ * $url->setOptions(['query' => $query_params]);
+ * }
+ * Haven't found the same for the facets removal, yet.
+ * Plus, the facet adding includes the '?q=' when it shouldn't.
+ * This looks an issue with facets_pretty_paths.
  */
 function pocam_extract_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
-  if ($form_state->get('view')->id() !== 'extracts') {
+  $current_route_name = \Drupal::service('current_route_match')->getRouteName();
+  if ($current_route_name !== 'view.extracts.page_1' || $form_state->get('view')->id() !== 'extracts') {
     return;
   }
   if (\Drupal::moduleHandler()->moduleExists('facets_pretty_paths')) {
     $current_path = \Drupal::request()->getRequestUri();
-    $current_route_name = \Drupal::service('current_route_match')->getRouteName();
-    if ($current_route_name) {
-      $form['#action'] = $current_path;
-    }
+    $current_path = explode("?q=", $current_path)[0];
+    $form['#action'] = $current_path;
   }
 }
 
