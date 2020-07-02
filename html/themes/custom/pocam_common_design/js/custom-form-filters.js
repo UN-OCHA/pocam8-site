@@ -1,4 +1,4 @@
-(function ($, Drupal) {
+(function (Drupal) {
   'use strict';
 
   Drupal.behaviors.pocamToggleFilters = {
@@ -7,21 +7,19 @@
 
       var filters = context.querySelector('.region-content-top-3');
       if (filters != null) {
-        var regionClass = filters.getAttribute('class');
-        filters.setAttribute('class', regionClass + ' toggle-hide');
+        filters.classList.add('toggle-hide');
 
         var button = document.createElement('button');
-        button.setAttribute('class', 'toggle-button');
+        button.classList.add('toggle-button');
         button.textContent = 'Add filters';
         button.addEventListener('click', function (event) {
-          var currentClass = filters.getAttribute('class');
-          if (currentClass == regionClass) {
-            filters.setAttribute('class', regionClass + ' toggle-hide');
-            button.textContent = 'Add filters';
+          if (filters.classList.contains('toggle-hide')) {
+            filters.classList.remove('toggle-hide');
+            button.textContent = 'Hide filters';
           }
           else {
-            filters.setAttribute('class', regionClass);
-            button.textContent = 'Hide filters';
+            filters.classList.add('toggle-hide');
+            button.textContent = 'Add filters';
           }
           event.preventDefault();
         });
@@ -31,8 +29,7 @@
           searchBar.appendChild(button);
         }
       }
-
     }
   };
 
-})(jQuery, Drupal);
+})(Drupal);
