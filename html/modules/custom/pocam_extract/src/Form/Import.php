@@ -231,7 +231,7 @@ class Import extends FormBase {
         $year_parts = explode('/', $parts[0]);
         $year = (int) $year_parts[2];
         $node->set('field_year', [
-          'field_year_value' => $year,
+          'value' => $year,
         ]);
       }
     }
