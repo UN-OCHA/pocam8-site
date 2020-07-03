@@ -1,0 +1,5 @@
+pocam_extract.admin:
+  title: 'Import POCAM extracts'
+  description: 'Renew or refresh POCAM extracts in bulk'
+  parent: system.admin_config_development
+  route_name: pocam_extract.import_form
