@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Contains pocam_general install.
+ */
+
+/**
+ * Switch install profile.
+ */
+function pocam_general_update_8001() {
+  $old = 'standard';
+  $new = 'minimal';
+
+  // Install stark theme.
+  \Drupal::service('theme_installer')->install(['stark'], TRUE);
+
+  // Grab config.
+  $config = \Drupal::configFactory()->getEditable('core.extension');
+
+  // Update profile entry.
+  $config->set('profile', $new);
+
+  // Remove old profile from active config.
+  $modules = $config->get('module');
+  if (isset($modules[$old])) {
+    unset($modules[$old]);
+    $config->set('module', $modules);
+  }
+
+  $config->save();
+  drupal_flush_all_caches();
+
+  // Install new profile.
+  \Drupal::service('module_installer')->install([$new], TRUE);
+
+  // Uninstall old profile.
+  \Drupal::service('module_installer')->uninstall([$old]);
+
+  // Remove schema entry for old_profile.
+  $sc = \Drupal::keyValue('system.schema');
+  if ($sc->get($old)) {
+    $sc->delete($old);
+  }
+  drupal_flush_all_caches();
+
+  // Reset profile files.
+  \Drupal::state()->delete('system.profile.files');
+}
