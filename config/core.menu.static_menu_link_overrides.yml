@@ -6,11 +6,11 @@ definitions:
     expanded: false
     weight: 0
   user__page:
-    enabled: false
     menu_name: account
-    parent: ''
-    expanded: false
+    parent: 'menu_link_content:d3ddc462-02be-4361-814e-89f1169c0fe3'
     weight: -10
+    expanded: false
+    enabled: true
   node__add_page:
     enabled: false
     menu_name: tools
