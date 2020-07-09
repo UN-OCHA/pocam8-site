@@ -1,4 +1,4 @@
-uuid: cf60001a-664d-4330-9e8f-05830f6b4229
+uuid: 54d3a268-b592-4821-a6f1-0ba5d1e10e2e
 langcode: en
 status: true
 dependencies:
@@ -8,11 +8,11 @@ dependencies:
     - facets
     - system
   theme:
-    - common_design_subtheme
-id: theme
-theme: common_design_subtheme
+    - stark
+id: stark_theme
+theme: stark
 region: sidebar_first
-weight: -5
+weight: -6
 provider: null
 plugin: 'facet_block:theme'
 settings:

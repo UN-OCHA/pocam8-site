@@ -1,4 +1,4 @@
-uuid: b2b53ec2-e1cf-42a8-947f-5584c77249f9
+uuid: 6b88ab1e-9c97-4f9f-b630-a0b29404b438
 langcode: en
 status: true
 dependencies:
@@ -8,11 +8,11 @@ dependencies:
     - facets_summary
     - system
   theme:
-    - common_design_subtheme
-id: currentsearch
-theme: common_design_subtheme
-region: highlighted
-weight: -7
+    - stark
+id: stark_currentsearch
+theme: stark
+region: sidebar_first
+weight: 0
 provider: null
 plugin: 'facets_summary_block:facet_summary'
 settings:

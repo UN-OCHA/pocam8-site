@@ -1,26 +1,26 @@
-uuid: cf60001a-664d-4330-9e8f-05830f6b4229
+uuid: f26f6673-2f55-473d-b066-0db966be2343
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.theme
+    - facets.facet.year
   module:
     - facets
     - system
   theme:
-    - common_design_subtheme
-id: theme
-theme: common_design_subtheme
+    - stark
+id: stark_year
+theme: stark
 region: sidebar_first
 weight: -5
 provider: null
-plugin: 'facet_block:theme'
+plugin: 'facet_block:year'
 settings:
-  id: 'facet_block:theme'
-  label: Theme
+  id: 'facet_block:year'
+  label: Year
   provider: facets
   label_display: visible
-  block_id: theme
+  block_id: year
 visibility:
   request_path:
     id: request_path

@@ -1,0 +1,29 @@
+uuid: 8f511868-9dfd-4e86-b047-314128085c4c
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.extracts
+  module:
+    - system
+    - views
+  theme:
+    - stark
+id: stark_exposedformextractspage_1
+theme: stark
+region: sidebar_first
+weight: -9
+provider: null
+plugin: 'views_exposed_filter_block:extracts-page_1'
+settings:
+  id: 'views_exposed_filter_block:extracts-page_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: "/extracts\r\n/extracts/*"
+    negate: false
+    context_mapping: {  }

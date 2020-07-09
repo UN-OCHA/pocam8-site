@@ -1,17 +1,17 @@
-uuid: a60119f9-ae61-4c54-a701-96e0ddf8b18e
+uuid: e60d9308-b5fe-4684-b8ea-50b2f196fa93
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - system.menu.main
   module:
     - system
   theme:
-    - common_design_subtheme
-id: mainmenu
-theme: common_design_subtheme
-region: header_logo
-weight: -7
+    - stark
+id: stark_mainmenu
+theme: stark
+region: sidebar_first
+weight: 0
 provider: null
 plugin: 'system_menu_block:main'
 settings:
