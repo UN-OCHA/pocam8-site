@@ -1,0 +1,31 @@
+uuid: 7b6a2982-78dc-4032-ae85-aaadcb247053
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - system
+  theme:
+    - stark
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: stark_ocha_basic_system_main
+theme: stark
+region: content
+weight: -2
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      page: page
+      pocam_extract: pocam_extract
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

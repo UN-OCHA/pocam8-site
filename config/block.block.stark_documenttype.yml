@@ -1,26 +1,26 @@
-uuid: cf60001a-664d-4330-9e8f-05830f6b4229
+uuid: dabdaf63-c1d0-40c6-a9a0-415d5ea41e06
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.theme
+    - facets.facet.document_type
   module:
     - facets
     - system
   theme:
-    - common_design_subtheme
-id: theme
-theme: common_design_subtheme
+    - stark
+id: stark_documenttype
+theme: stark
 region: sidebar_first
-weight: -5
+weight: -7
 provider: null
-plugin: 'facet_block:theme'
+plugin: 'facet_block:document_type'
 settings:
-  id: 'facet_block:theme'
-  label: Theme
+  id: 'facet_block:document_type'
+  label: 'Document type'
   provider: facets
   label_display: visible
-  block_id: theme
+  block_id: documenttype
 visibility:
   request_path:
     id: request_path

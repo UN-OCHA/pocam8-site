@@ -1,0 +1,31 @@
+uuid: 5996f804-5cb7-4416-ba19-985c50bf92b6
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - system
+  theme:
+    - common_design_subtheme
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: common_design_subtheme_ocha_basic_system_main
+theme: common_design_subtheme
+region: content
+weight: -4
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      page: page
+      pocam_extract: pocam_extract
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

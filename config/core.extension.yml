@@ -65,7 +65,7 @@ theme:
   classy: 0
   seven: 0
   common_design: 0
-  pocam_common_design: 0
+  common_design_subtheme: 0
   stark: 0
 profile: minimal
 _core:

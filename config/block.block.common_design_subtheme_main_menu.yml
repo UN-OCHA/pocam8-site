@@ -1,6 +1,6 @@
-uuid: a60119f9-ae61-4c54-a701-96e0ddf8b18e
+uuid: 4fc239a5-617f-4881-ac60-522ffc439e9a
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - system.menu.main
@@ -8,18 +8,20 @@ dependencies:
     - system
   theme:
     - common_design_subtheme
-id: mainmenu
+_core:
+  default_config_hash: ChCx7DYNUrPTt5uiRdQAPDKJQMc-_SyAQTrZh8H0o-c
+id: common_design_subtheme_main_menu
 theme: common_design_subtheme
-region: header_logo
+region: header_navigation
 weight: -7
 provider: null
 plugin: 'system_menu_block:main'
 settings:
   id: 'system_menu_block:main'
-  label: 'Main menu'
+  label: 'Main navigation'
   provider: system
-  label_display: visible
+  label_display: '0'
   level: 1
-  depth: 0
+  depth: 1
   expand_all_items: false
 visibility: {  }
