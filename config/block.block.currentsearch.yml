@@ -11,8 +11,8 @@ dependencies:
     - common_design_subtheme
 id: currentsearch
 theme: common_design_subtheme
-region: highlighted
-weight: -7
+region: sidebar_first
+weight: -8
 provider: null
 plugin: 'facets_summary_block:facet_summary'
 settings:
