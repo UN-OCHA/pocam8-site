@@ -1,0 +1,46 @@
+//——————————————————————————————————————————————————————————————————————————————
+// Common Design: Main Navigation
+//
+// Overridden from base theme as we only have one menu item, so replacing
+// with a dropdown for thin windows is not helpful.
+//——————————————————————————————————————————————————————————————————————————————
+.cd-nav__btn {
+  display: none;
+}
+
+.cd-site-header__nav-holder {
+  nav {
+    display: block;
+  }
+
+  .cd-nav > ul {
+    display: flex;
+  }
+
+  .cd-nav > .menu {
+    @supports (display: flex) {
+      flex: 1 0 auto;
+    }
+
+    > .menu-item {
+      border-right: 1px solid $cd-border-color;
+
+      &:first-child {
+        border-left: 1px solid $cd-border-color;
+      }
+
+      &:last-child {
+        > ul.menu {
+          left: auto;
+          right: -1px;
+        }
+      }
+
+      @include max-width(lg) {
+        > a {
+          padding: 20px 14px;
+        }
+      }
+    }
+  }
+}
