@@ -7,9 +7,14 @@
   }
 }
 
+// Search highlighting.
 strong.highlight {
   background-color: #fff000;
-  padding: 0 0.1em;
+}
+
+// Limit search box in sidebar.
+.cd-layout-sidebar-first .cd-search--inline__input {
+  padding: 0;
 }
 
 // Stop select2 from breaking layout.
@@ -21,12 +26,9 @@ strong.highlight {
 .select2-selection--single,
 .select2-selection__multiple,
 .select2-search__field {
-  width: 100% !important;
+  width: auto !important;
 }
 
 .select2-selection__choice {
-  max-width: 100%;
-  overflow: ellipsis;
-  word-wrap: normal !important;
   white-space: normal;
 }

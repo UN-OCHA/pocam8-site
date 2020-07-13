@@ -27,7 +27,7 @@
     max-width: 26rem;
   }
 
-  input[type='text'] {
+  .node__content input[type='text'] {
     @include font-size($cd-font-size-medium);
     font-family: $cd-font;
     text-align: left;
