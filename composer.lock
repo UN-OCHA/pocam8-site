@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "552dfdf9cdd9cfac4269f5e78bda8b27",
@@ -3430,7 +3430,9 @@
             "version": "4.0.13",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/select2/-/select2-4.0.13.tgz"
+                "url": "https://registry.npmjs.org/select2/-/select2-4.0.13.tgz",
+                "reference": null,
+                "shasum": null
             },
             "type": "npm-asset",
             "license": [
@@ -5828,16 +5830,16 @@
         },
         {
             "name": "unocha/common_design",
-            "version": "v2.8.0",
+            "version": "v2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UN-OCHA/common_design.git",
-                "reference": "a9f15b9892140d336bf570b404d166f9e32b3666"
+                "reference": "bacc37ff6d6598d8988ae74222dc92bf3a4bfa03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/a9f15b9892140d336bf570b404d166f9e32b3666",
-                "reference": "a9f15b9892140d336bf570b404d166f9e32b3666",
+                "url": "https://api.github.com/repos/UN-OCHA/common_design/zipball/bacc37ff6d6598d8988ae74222dc92bf3a4bfa03",
+                "reference": "bacc37ff6d6598d8988ae74222dc92bf3a4bfa03",
                 "shasum": ""
             },
             "require": {
@@ -5848,7 +5850,7 @@
             "license": [
                 "GPL-2.0-only"
             ],
-            "time": "2020-07-07T12:20:44+00:00"
+            "time": "2020-07-14T14:19:21+00:00"
         },
         {
             "name": "webflo/drupal-finder",
