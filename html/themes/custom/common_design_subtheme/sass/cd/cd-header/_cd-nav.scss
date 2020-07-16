@@ -2,104 +2,58 @@
 // Common Design: Main Navigation
 //——————————————————————————————————————————————————————————————————————————————
 
-.cd-site-header__nav-holder {
+.cd-site-header__nav-holder .cd-nav {
 
-  .cd-nav {
-    @include z-index(main-menu); // zindex may need adjusting depending on other site content.
-    --dropdown: false;
-    height: $cd-site-header-height;
-    max-width: none;
-    padding: 0;
-    position: relative;
-    left: 0;
-    right: auto;
-    top: auto;
-    width: auto;
-
-    > ul {
-      background: transparent;
-      display: flex;
-    }
+  > ul {
+    background: transparent;
+    display: flex;
   }
 
-  .cd-nav > .menu {
-    @supports (display: flex) {
-      flex: 1 0 auto;
+  .menu .menu-item {
+    border-right: 1px solid $cd-border-color;
+
+    &:first-child {
+      border-left: 1px solid $cd-border-color;
     }
 
-    > .menu-item {
-      border-right: 1px solid $cd-border-color;
+    &.menu-item--active-trail a::before {
+      background: $cd-highlight-red;
+    }
 
-      &:first-child {
-        border-left: 1px solid $cd-border-color;
-      }
+    > a {
+      align-items: center;
+      background: transparent;
+      display: flex;
+      height: $cd-site-header-height;
+      padding: 0 14px;
+      position: relative;
+      transition: background 0.3s ease;
 
-      &:last-child {
-        > ul.menu {
-          left: auto;
-          right: -1px;
-        }
-      }
-
-      &.menu-item--active-trail a::before,
-      &.menu-item--active-trail button::before {
-        background: $cd-highlight-red;
-      }
-
-      > a,
-      button {
-        align-items: center;
+      &::before {
+        content: '';
         background: transparent;
-        display: flex;
-        height: $cd-site-header-height;
-        padding: 0 14px;
-        position: relative;
+        height: 3px;
+        left: -1px;
+        position: absolute;
+        right: -1px;
         transition: background 0.3s ease;
+        width: calc(100% + 2px);
+        top: 60px;
+      }
 
+      &:hover {
+        background: $cd-mid-bg-color;
+      }
+
+      &:focus {
+        background: $cd-white-bg-color;
+      }
+
+      &.is-active,
+      &:focus {
         &::before {
-          bottom: -3px;
-          content: '';
-          background: transparent;
-          height: 3px;
-          left: -1px;
-          position: absolute;
-          right: -1px;
-          transition: background 0.3s ease;
-          width: calc(100% + 2px);
-          top: 60px;
+          background: $cd-highlight-red;
         }
-
-        &:hover {
-          background: $cd-mid-bg-color;
-        }
-
-        &:focus {
-          background: $cd-white-bg-color;
-        }
-
-        &.is-active,
-        &:focus {
-          &::before {
-            background: $cd-highlight-red;
-          }
-        }
-      }
-    }
-
-    > li > ul {
-      a,
-      button {
-        &:hover {
-          background: $cd-mid-bg-color;
-        }
-
-        &.is-active {
-          border-left: 3px solid $cd-highlight-red;
-        }
-      }
-
-      > li.menu-item--active-trail .is-active {
-        border-left: 3px solid $cd-highlight-red;
       }
     }
   }
