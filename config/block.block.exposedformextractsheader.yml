@@ -1,0 +1,23 @@
+uuid: 08a69150-2ad9-4b1a-8abb-bcae6e5c44ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.extracts
+  module:
+    - views
+  theme:
+    - common_design_subtheme
+id: exposedformextractsheader
+theme: common_design_subtheme
+region: header_search
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:extracts-header'
+settings:
+  id: 'views_exposed_filter_block:extracts-header'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+visibility: {  }
