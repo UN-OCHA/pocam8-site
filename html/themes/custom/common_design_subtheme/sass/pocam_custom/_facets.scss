@@ -10,10 +10,6 @@
   }
 }
 
-/* .block-facets h2 { */
-/*   @extend .cd-heading-3; */
-/* } */
-
 .block-facets ul {
   margin: 0;
   padding: 0;
@@ -64,54 +60,6 @@
 .block-facets .select2-container .select2-selection--single .select2-selection__rendered,
 .block-facets .select2-container .select2-selection--multiple .select2-selection__rendered {
   white-space: unset;
-}
-
-//@TODO this, better.
-#cd-filters-dropdown-toggler {
-  -webkit-appearance: none;
-  border-radius: 0;
-  box-shadow: none;
-  border: 0;
-  padding: 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  background: $implementation-primary-dark;
-  color: $cd-light-grey;
-  transition: background 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  &:hover,
-  &:focus {
-    background: $implementation-primary;
-    color: $cd-white;
-  }
-
-  &:focus {
-    outline: 3px solid $implementation-highlight;
-  }
-
-  svg {
-    fill: $cd-white;
-    width: 2rem;
-    height: 2rem;
-    padding: 0 0.5rem 0 0;
-  }
-
-  &:hover svg,
-  &:focus svg {
-    fill: $cd-white;
-  }
-
-  @include tablet {
-    display: none;
-
-    + .cd-dropdown[data-cd-hidden="true"] {
-      display: block;
-    }
-  }
 }
 
 .block-facets-summary {
