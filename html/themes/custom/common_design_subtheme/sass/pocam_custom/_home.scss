@@ -55,6 +55,9 @@
     background: $cd-ocha-blue;
     line-height: 42px;
     border-radius: 0 4px 4px 0;
+    border: 0;
+    color: $cd-white;
+    text-transform: uppercase;
   }
 
   .btn--browse {

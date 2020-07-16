@@ -33,6 +33,45 @@ strong.highlight {
   white-space: normal;
 }
 
+.cd-layout-sidebar-first {
+  .form--inline {
+    display: flex;
+  }
+
+  input[type='text'] {
+    @include font-size($cd-font-size-medium);
+    font-family: $cd-font;
+    text-align: left;
+    padding: 22px 10px;
+    border: 1px solid $cd-ocha-blue;
+    color: $cd-ocha-blue;
+    transition: .3s ease;
+    cursor: pointer;
+    height: 42px;
+    width: 100%;
+
+    &::placeholder {
+      color: $cd-dark-grey;
+      font-style: italic;
+    }
+
+    // IE11 alignment fix.
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      line-height: unset;
+    }
+  }
+
+  .form-actions input[type='submit'] {
+    padding: 2px 12px;
+    background: $cd-ocha-blue;
+    line-height: 42px;
+    border-radius: 0 4px 4px 0;
+    border: 0;
+    color: $cd-white;
+    text-transform: uppercase;
+  }
+}
+
 // Handle filter.
 .cd-filter__btn {
   background: $implementation-primary-dark;
