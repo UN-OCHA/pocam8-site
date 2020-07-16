@@ -14,11 +14,30 @@ function common_design_subtheme_form_alter(&$form, FormStateInterface $form_stat
   // To use this for Views exposed forms, copy the form alter hook into your
   // subtheme and add the relevant Views IDs to this array in your subtheme.
   $includeView = [
-    'views-exposed-form-extracts-header',
+    'views-exposed-form-extracts-page-1',
   ];
 
   // If in array above, add search--inline attributes.
   if (in_array($form['#id'], $includeView)) {
+    // TODO: find a better way.
+    // We have inline-search forms in the headers and on a couple of pages.
+    // We only want to target the form in the header, but it's not clear which
+    // that is. Trial and error shows they're processed in the same order each
+    // time, but this is flimsy.
+    if (\Drupal::service('path.matcher')->isFrontPage()) {
+      // Token processed before the header search.
+      if ($form['form_id']['#id'] === 'edit-views-exposed-form') {
+        return;
+      }
+    }
+    elseif (strpos(\Drupal::service('path.current')->getPath(), '/extracts') === 0) {
+      // Sidebar search is processed last (the three facets also get tagged).
+      if ($form['form_id']['#id'] === 'edit-views-exposed-form--5') {
+        $form['search']['#placeholder'] = t('Search');
+        return;
+      }
+    }
+
     // This is for a Views exposed form INLINE search block.
     // There are templates needed for this. Replace cd-search.html.twig
     // with cd-search--inline.html.twig in cd-site-header.html.twig.

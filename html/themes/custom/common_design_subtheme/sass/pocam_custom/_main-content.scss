@@ -39,9 +39,6 @@ strong.highlight {
   }
 
   input[type='text'] {
-    @include font-size($cd-font-size-medium);
-    font-family: $cd-font;
-    text-align: left;
     padding: 22px 10px;
     border: 1px solid $cd-ocha-blue;
     color: $cd-ocha-blue;
