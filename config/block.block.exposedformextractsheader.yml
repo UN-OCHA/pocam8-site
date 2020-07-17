@@ -1,4 +1,4 @@
-uuid: fcbf540d-6339-4e48-bea1-40478a85f894
+uuid: a2450328-cc01-4aa8-8b9d-4f3686d3f6a2
 langcode: en
 status: true
 dependencies:
@@ -8,14 +8,14 @@ dependencies:
     - views
   theme:
     - common_design_subtheme
-id: exposedformextractspage_1_3
+id: exposedformextractsheader
 theme: common_design_subtheme
 region: header_search
 weight: 0
 provider: null
-plugin: 'views_exposed_filter_block:extracts-page_1'
+plugin: 'views_exposed_filter_block:extracts-header'
 settings:
-  id: 'views_exposed_filter_block:extracts-page_1'
+  id: 'views_exposed_filter_block:extracts-header'
   label: ''
   provider: views
   label_display: visible

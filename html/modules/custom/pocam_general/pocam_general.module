@@ -87,7 +87,12 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
  */
 function pocam_general_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form['#id'] == 'views-exposed-form-extracts-page-1') {
-    $form['search']['#placeholder'] = t('Search for phrases or keywords');
+    if (\Drupal::service('path.matcher')->isFrontPage()) {
+      $form['search']['#placeholder'] = t('Search for phrases or keywords');
+    }
+    else {
+      $form['search']['#placeholder'] = t('Search');
+    }
   }
 }
 
