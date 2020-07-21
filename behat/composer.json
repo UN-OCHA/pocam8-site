@@ -1,9 +1,0 @@
-{
-  "require": {
-    "drush/drush": "^9.0",
-    "drupal/drupal-extension": "^4.1"
-  },
-  "config": {
-    "bin-dir": "bin/"
-  }
-}
