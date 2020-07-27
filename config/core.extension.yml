@@ -45,6 +45,7 @@ module:
   select2: 0
   select2_facets: 0
   shortcut: 0
+  simple_sitemap: 0
   social_api: 0
   social_auth: 0
   social_auth_hid: 0
