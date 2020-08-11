@@ -7,6 +7,11 @@
   }
 }
 
+// Table width:
+.views-field-field-link {
+  width: 20%;
+}
+
 // Search highlighting.
 .highlight {
   background-color: #fff000;
@@ -133,4 +138,9 @@
       }
     }
   }
+}
+
+// Add a bit of space in two column layout.
+.layout__region--second {
+  padding-left: 16px;
 }
