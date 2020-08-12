@@ -41,6 +41,11 @@ function common_design_subtheme_form_alter(&$form, FormStateInterface $form_stat
     $form['actions']['submit']['#attributes']['value'][] = 'Search';
     $form['#action'] = "/extracts";
   }
+
+  // This to make the searchbox work on ie11.
+  if ($form['#id'] === 'views-exposed-form-extracts-page-1') {
+    $form['search']['#attributes']['class'][] = 'cd-search--inline__input';
+  }
 }
 
 /**

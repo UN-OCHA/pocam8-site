@@ -31,13 +31,17 @@
     @include font-size($cd-font-size-medium);
     font-family: $cd-font;
     text-align: left;
-    padding: 22px 10px;
+    padding: 0 10px;
     border: 1px solid $cd-ocha-blue;
     color: $cd-ocha-blue;
     transition: .3s ease;
     cursor: pointer;
     height: 42px;
     width: 100%;
+
+    @media all and (-ms-high-contrast: none) {
+      width: 98%;
+    }
 
     &::placeholder {
       color: $cd-dark-grey;
