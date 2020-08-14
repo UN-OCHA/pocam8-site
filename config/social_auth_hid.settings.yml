@@ -3,5 +3,8 @@ auto_redirect: true
 disable_default: true
 _core:
   default_config_hash: ZT0ACgdXm4m65rwBVtAR0TGxX6QsMptRkbldivu-7yI
-client_id: pocam-dev
-client_secret: 4o4ZI495CruG0NX7z42C7016qpD431Jl
+client_id: REPLACE_ME
+client_secret: REPLACE_ME
+disable_password_fields: 1
+disable_email_field: 1
+disable_user_field: 1
