@@ -27,7 +27,7 @@
         "drupal/admin_denied": "^1.0",
         "drupal/core": "^8.8.0",
         "drupal/dream_block_manager": "^1.0",
-        "drupal/facets": "^1.4",
+        "drupal/facets": "^1.5",
         "drupal/facets_pretty_paths": "^1.0",
         "drupal/field_group": "^3.0",
         "drupal/maintenance200": "^1.0",
@@ -41,7 +41,7 @@
         "oomphinc/composer-installers-extender": "^1.1",
         "phpoffice/phpspreadsheet": "^1.11",
         "squizlabs/php_codesniffer": "*",
-        "unocha/common_design": "^2.8.2",
+        "unocha/common_design": "^2.8.3",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
         "zaporylie/composer-drupal-optimizations": "^1.0"
