@@ -36,7 +36,7 @@
     color: $cd-ocha-blue;
     transition: .3s ease;
     cursor: pointer;
-    height: 42px;
+    height: 44px;
     width: 100%;
 
     @media all and (-ms-high-contrast: none) {
@@ -55,11 +55,11 @@
   }
 
   .form-actions input[type='submit'] {
-    padding: 2px 12px;
+    padding: 0 12px;
     background: $cd-ocha-blue;
-    line-height: 42px;
+    line-height: 44px;
     border-radius: 0 4px 4px 0;
-    border: 0;
+    border: 1px solid $cd-ocha-blue;
     color: $cd-white;
     text-transform: uppercase;
   }
