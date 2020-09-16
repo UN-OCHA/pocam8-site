@@ -29,6 +29,7 @@
 
   .node__content input[type='text'] {
     @include font-size($cd-font-size-medium);
+    box-sizing: content-box;
     font-family: $cd-font;
     text-align: left;
     padding: 0 10px;
