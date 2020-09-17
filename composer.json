@@ -25,7 +25,7 @@
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_denied": "^1.0",
-        "drupal/core": "^8.8.0",
+        "drupal/core": "^8.9",
         "drupal/dream_block_manager": "^1.0",
         "drupal/facets": "^1.5",
         "drupal/facets_pretty_paths": "^1.0",
