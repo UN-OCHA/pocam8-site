@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 
 /**
- * Class Import.
+ * Class that imports a thing.
  */
 class Import extends FormBase {
 
@@ -148,7 +148,10 @@ class Import extends FormBase {
       $contents = $worksheet->rangeToArray($range, NULL, FALSE, FALSE);
       if (!empty(array_filter($contents[0]))) {
         $contents[0][] = $row;
-        $operations[] = ['Drupal\pocam_extract\Form\Import::pocamExtractImportCreate', $contents];
+        $operations[] = [
+          'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
+          $contents,
+        ];
       }
     }
 
