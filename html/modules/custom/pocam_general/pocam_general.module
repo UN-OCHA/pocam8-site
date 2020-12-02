@@ -126,7 +126,7 @@ function _pocam_general_build_tree($voc, $depth = 2) {
             '#markup' => $markup,
             'children' => [],
           ];
-          // TODO: add comment to explain what the rest of the loop is for.
+          // @todo Add comment to explain what the rest of the loop is for.
           $parents[$term->tid] = &$links['p-' . $term->parents[0]]['children'][$term->tid];
         }
         else {
