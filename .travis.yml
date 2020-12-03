@@ -38,14 +38,14 @@ before_script:
   # Composer.
   - sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
   - source $HOME/.bashrc
-  - composer self-update
+  - composer self-update --1
 
   # Ensure the PHP environment is ready.
   - phpenv rehash
 
   # Code sniff
   - cd $TRAVIS_BUILD_DIR
-  - composer install
+  - composer install --dev
 
   # LightHouseBot
   # - npm i --save-dev https://github.com/GoogleChromeLabs/lighthousebot
@@ -61,8 +61,8 @@ script:
   - set +e
 
   # PHP CS
-  # - ./vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer
-  - ./vendor/bin/phpcs --config-set installed_paths html/modules/contrib/coder/coder_sniffer
+  - ./vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer
+  # - ./vendor/bin/phpcs --config-set installed_paths html/modules/contrib/coder/coder_sniffer
   - set -e
   - test ! -d ./html/modules/custom || ./vendor/bin/phpcs -p --report=full ./html/modules/custom
   - test ! -d ./html/themes/custom || ./vendor/bin/phpcs -p --report=full ./html/themes/custom

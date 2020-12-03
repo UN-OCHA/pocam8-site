@@ -21,13 +21,14 @@
     ],
     "require": {
         "php": ">=7.2",
-        "composer/installers": "^1.2",
+        "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.6.5",
-        "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_denied": "^1.0",
-        "drupal/core": "^8.9",
+        "drupal/core-composer-scaffold": "^8.8",
+        "drupal/core-dev": "^8.8",
+        "drupal/core-recommended": "^8.8",
         "drupal/dream_block_manager": "^1.0",
-        "drupal/facets": "^1.5",
+        "drupal/facets": "^1.6",
         "drupal/facets_pretty_paths": "^1.0",
         "drupal/field_group": "^3.0",
         "drupal/maintenance200": "^1.0",
@@ -37,10 +38,12 @@
         "drupal/social_auth_hid": "^2.2",
         "drupal/token_filter": "^1.2",
         "drupal/views_data_export": "^1.0",
+        "drush/drush": "^10.3",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
         "phpoffice/phpspreadsheet": "^1.11",
         "squizlabs/php_codesniffer": "*",
+        "symfony/flex": "^1.10",
         "unocha/common_design": "^2.8.3",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
@@ -56,9 +59,8 @@
         "drupal/migrate_upgrade": "^3.2",
         "drupal/upgrade_rector": "^1.0",
         "drupal/upgrade_status": "^2.0",
-        "drush/drush": "^9.0.0",
         "phpmd/phpmd": "^2.6",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^7.5.20",
         "weitzman/drupal-test-traits": "^1.3",
         "weitzman/logintrait": "^1.1"
     },
@@ -68,8 +70,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-    "bin-dir": "vendor/bin/",
-        "sort-packages": true
+      "platform": {
+        "php": "7.3"
+      },
+      "bin-dir": "vendor/bin/",
+      "sort-packages": true
     },
     "autoload": {
         "classmap": [
@@ -100,7 +105,7 @@
 
     },
     "extra": {
-		"enable-patching": true,
+    "enable-patching": true,
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
@@ -124,7 +129,18 @@
             "initial": {
                 ".editorconfig": "../.editorconfig",
                 ".gitattributes": "../.gitattributes"
+            },
+            "locations": {
+                "web-root": "html/"
             }
+        },
+        "merge-plugin": {
+            "include": [
+                "html/core/composer.json"
+            ],
+            "recurse": true,
+            "replace": false,
+            "merge-extra": false
         }
     }
 }
