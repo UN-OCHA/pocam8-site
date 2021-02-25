@@ -14,7 +14,7 @@
 
   .intro,
   h2 {
-    color: $cd-dark-grey;
+    color: $cd-grey--dark;
   }
 
   form {
@@ -45,7 +45,7 @@
     }
 
     &::placeholder {
-      color: $cd-dark-grey;
+      color: $cd-grey--dark;
       font-style: italic;
     }
 

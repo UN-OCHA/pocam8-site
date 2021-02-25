@@ -10,12 +10,6 @@
   }
 
   .menu .menu-item {
-    border-right: 1px solid $cd-border-color;
-
-    &:first-child {
-      border-left: 1px solid $cd-border-color;
-    }
-
     &.menu-item--active-trail a::before {
       background: $cd-highlight-red;
     }
@@ -32,7 +26,7 @@
       &::before {
         content: '';
         background: transparent;
-        height: 3px;
+        height: 6px;
         left: -1px;
         position: absolute;
         right: -1px;
@@ -42,11 +36,11 @@
       }
 
       &:hover {
-        background: $cd-mid-bg-color;
+        background: $cd-blue-grey;
       }
 
       &:focus {
-        background: $cd-white-bg-color;
+        background: $cd-white;
       }
 
       &.is-active,
