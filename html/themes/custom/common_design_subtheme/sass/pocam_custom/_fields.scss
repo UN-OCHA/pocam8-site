@@ -1,0 +1,10 @@
+.field--name-body p,
+.field--name-body ul {
+  max-width: var(--cd-max-content-width);
+}
+
+.path-frontpage .field--name-body {
+  max-width: var(--cd-max-content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
