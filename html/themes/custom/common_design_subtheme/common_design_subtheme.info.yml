@@ -9,7 +9,6 @@ logo: 'img/logos/logo.svg'
 # Defines libraries group in which we can add css/js.
 libraries:
 - common_design_subtheme/global-styling
-- common_design/cd-utilities
 
 # Regions
 regions:
@@ -19,6 +18,7 @@ regions:
   header_navigation: Header navigation
   hero: Hero
   highlighted: Highlighted
+  page_title: Page title
   content: Content
   sidebar_first: First sidebar
   sidebar_second: Second sidebar
