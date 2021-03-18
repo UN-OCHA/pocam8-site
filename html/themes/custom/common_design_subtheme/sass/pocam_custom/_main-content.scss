@@ -84,5 +84,7 @@
 
 // Add a bit of space in two column layout.
 .layout__region--second {
-  padding-left: 2rem;
+  @media (min-width: 640px) {
+    padding-left: 2rem;
+  }
 }
