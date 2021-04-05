@@ -8,12 +8,9 @@
 }
 
 // Table width to prevent over-enthusiastic word-breaking.
-.views-field-field-link {
-  width: 20%;
-}
-@media (max-width: 576px) {
-  .cd-table--responsive td {
-    width: 100%;
+@media (min-width: 576px) {
+  .views-field-field-link {
+    min-width: 20%;
   }
 }
 
