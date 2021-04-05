@@ -3,7 +3,7 @@
     margin-bottom: 40px;
   }
 
-  .form--inline {
+  .cd-form--inline {
     display: flex;
     margin: auto;
     max-width: 26rem;
@@ -44,11 +44,9 @@
 
     .form-actions input[type='submit'] {
       padding: 0 12px;
-      background: $cd-ocha-blue;
       line-height: 44px;
       border-radius: 0 4px 4px 0;
       border: 1px solid $cd-ocha-blue;
-      color: $cd-white;
       text-transform: uppercase;
     }
   }

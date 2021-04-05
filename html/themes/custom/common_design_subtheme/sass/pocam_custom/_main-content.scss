@@ -7,19 +7,19 @@
   }
 }
 
-// Table width:
+// Table width to prevent over-enthusiastic word-breaking.
 .views-field-field-link {
   width: 20%;
+}
+@media (max-width: 576px) {
+  .cd-table--responsive td {
+    width: 100%;
+  }
 }
 
 // Search highlighting.
 .highlight {
   background-color: #fff000;
-}
-
-// Limit search box in sidebar.
-.cd-layout-sidebar-first .cd-search--inline__input {
-  padding: 0;
 }
 
 // Stop select2 from breaking layout.
@@ -39,8 +39,8 @@
 }
 
 .cd-layout-sidebar-first {
-  .form--inline {
-    display: flex;
+  .cd-form--inline {
+    margin-bottom: 2rem;
   }
 
   input[type='text'] {
@@ -79,12 +79,5 @@
     border: 1px solid $cd-ocha-blue;
     color: $cd-white;
     text-transform: uppercase;
-  }
-}
-
-// Add a bit of space in two column layout.
-.layout__region--second {
-  @media (min-width: 640px) {
-    padding-left: 2rem;
   }
 }
