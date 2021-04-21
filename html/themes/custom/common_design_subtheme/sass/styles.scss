@@ -4,14 +4,13 @@
 // Imports everything in the `cd` folder and ensures that the templates provided
 // in this theme for the Header/Footer will carry Common Design branding.
 //——————————————————————————————————————————————————————————————————————————————
-@import 'cd/cd';
-
+@import "cd/cd";
 
 //——————————————————————————————————————————————————————————————————————————————
 // Components
 //——————————————————————————————————————————————————————————————————————————————
 
-@import 'pocam_custom/main-content';
-@import 'pocam_custom/home';
-@import 'pocam_custom/facets';
-@import 'pocam_custom/fields';
+@import "pocam_custom/main-content";
+@import "pocam_custom/home";
+@import "pocam_custom/facets";
+@import "pocam_custom/fields";

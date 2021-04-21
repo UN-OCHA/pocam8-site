@@ -2,8 +2,8 @@
 .node--type-page .item-list {
 
   li a {
-    margin-bottom: 20px;
     display: block;
+    margin-bottom: 20px;
   }
 }
 
@@ -43,20 +43,21 @@
     display: flex;
   }
 
-  input[type='text'] {
+  input[type="text"] {
     box-sizing: content-box;
-    padding: 0 10px;
-    border: 1px solid $cd-ocha-blue;
-    color: $cd-ocha-blue;
-    height: 44px;
     width: 100%;
-    @media all and (-ms-high-contrast: none) {
-      width: 98%;
-    }
+    height: 44px;
+    padding: 0 10px;
+    color: $cd-ocha-blue;
+    border: 1px solid $cd-ocha-blue;
 
     &::placeholder {
       color: $cd-grey--dark;
       font-style: italic;
+    }
+
+    @media all and (-ms-high-contrast: none) {
+      width: 98%;
     }
 
     // IE11 alignment fix.
@@ -65,20 +66,20 @@
     }
   }
 
-  .cd-search--inline__input[type='search']:focus,
-  .cd-search--inline__input[type='text']:focus {
+  .cd-search--inline__input[type="search"]:focus,
+  .cd-search--inline__input[type="text"]:focus {
     border: 1px solid $cd-ocha-blue;
     outline: 2px solid $implementation-highlight;
   }
 
-  .form-actions input[type='submit'] {
+  .form-actions input[type="submit"] {
     padding: 0 12px;
+    text-transform: uppercase;
+    color: $cd-white;
+    border: 1px solid $cd-ocha-blue;
+    border-radius: 0 4px 4px 0;
     background: $cd-ocha-blue;
     line-height: 44px;
-    border-radius: 0 4px 4px 0;
-    border: 1px solid $cd-ocha-blue;
-    color: $cd-white;
-    text-transform: uppercase;
   }
 }
 
