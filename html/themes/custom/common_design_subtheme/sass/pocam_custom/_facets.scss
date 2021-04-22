@@ -1,15 +1,3 @@
-.block-facets {
-  .form-item,
-  .form-actions {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-.block-facets select {
-  width: 100%;
-}
-
 // Various overrides to control select2 elements widths when options are wider than parent element.
 .block-facets .select2-container {
   overflow: hidden;

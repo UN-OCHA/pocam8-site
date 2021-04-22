@@ -1,25 +1,19 @@
 // Theme list
-.node--type-page .item-list {
-
-  li a {
-    display: block;
-    margin-bottom: 20px;
-  }
+.node--type-page li a {
+  display: block;
+  margin-bottom: 20px;
 }
 
-// Table width:
-.views-field-field-link {
-  width: 20%;
+// Table width to prevent over-enthusiastic word-breaking.
+@media (min-width: 576px) {
+  .views-field-field-link {
+    min-width: 20%;
+  }
 }
 
 // Search highlighting.
 .highlight {
   background-color: #fff000;
-}
-
-// Limit search box in sidebar.
-.cd-layout-sidebar-first .cd-search--inline__input {
-  padding: 0;
 }
 
 // Stop select2 from breaking layout.
@@ -39,8 +33,8 @@
 }
 
 .cd-layout-sidebar-first {
-  .form--inline {
-    display: flex;
+  .cd-form--inline {
+    margin-bottom: 2rem;
   }
 
   input[type="text"] {
@@ -80,12 +74,5 @@
     border-radius: 0 4px 4px 0;
     background: $cd-ocha-blue;
     line-height: 44px;
-  }
-}
-
-// Add a bit of space in two column layout.
-.layout__region--second {
-  @media (min-width: 640px) {
-    padding-left: 2rem;
   }
 }
