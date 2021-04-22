@@ -4,7 +4,7 @@ ENV  NODE_ENV=$BRANCH_ENVIRONMENT
 COPY . /srv/www
 WORKDIR /srv/www
 RUN composer install --quiet --no-dev --prefer-dist && \
-    composer run gulp && \
+    composer run sass && \
     mkdir -p html/sites/default && \
     cp -a docker/settings.php docker/services.yml html/sites/default
 

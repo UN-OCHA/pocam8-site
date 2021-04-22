@@ -11,9 +11,8 @@
   }
 
   // Logo for mobile.
-  // sass-lint:disable no-duplicate-properties
   @include max-width(md) {
-    background: url('/themes/custom/common_design_subtheme/img/logos/poc-logo-mobile.svg') center no-repeat;
-    background: linear-gradient(transparent, transparent), url('/themes/custom/common_design_subtheme/img/logos/poc-logo-mobile.svg') center no-repeat;
+    background: url("/themes/custom/common_design_subtheme/img/logos/poc-logo-mobile.svg") center no-repeat;
+    background: linear-gradient(transparent, transparent), url("/themes/custom/common_design_subtheme/img/logos/poc-logo-mobile.svg") center no-repeat;
   }
 }
