@@ -5,29 +5,29 @@
 
   .cd-form--inline {
     display: flex;
-    margin: auto;
     max-width: 26rem;
+    margin: auto;
   }
 
   article {
-    input[type='text'] {
-      font-size: $cd-font-size--base;
+    input[type="text"] {
       box-sizing: content-box;
-      font-family: $cd-font;
-      text-align: left;
-      padding: 0 10px;
-      border: 1px solid $cd-ocha-blue;
-      color: $cd-ocha-blue;
-      height: 44px;
       width: 100%;
-
-      @media all and (-ms-high-contrast: none) {
-        width: 98%;
-      }
+      height: 44px;
+      padding: 0 10px;
+      text-align: left;
+      color: $cd-ocha-blue;
+      border: 1px solid $cd-ocha-blue;
+      font-family: $cd-font;
+      font-size: $cd-font-size--base;
 
       &::placeholder {
         color: $cd-grey--dark;
         font-style: italic;
+      }
+
+      @media all and (-ms-high-contrast: none) {
+        width: 98%;
       }
 
       // IE11 alignment fix.
@@ -36,18 +36,18 @@
       }
     }
 
-    .cd-search--inline__input[type='search']:focus,
-    .cd-search--inline__input[type='text']:focus {
+    .cd-search--inline__input[type="search"]:focus,
+    .cd-search--inline__input[type="text"]:focus {
       border: 1px solid $cd-ocha-blue;
       outline: 2px solid $implementation-highlight;
     }
 
-    .form-actions input[type='submit'] {
+    .form-actions input[type="submit"] {
       padding: 0 12px;
-      line-height: 44px;
-      border-radius: 0 4px 4px 0;
-      border: 1px solid $cd-ocha-blue;
       text-transform: uppercase;
+      border: 1px solid $cd-ocha-blue;
+      border-radius: 0 4px 4px 0;
+      line-height: 44px;
     }
   }
 }
