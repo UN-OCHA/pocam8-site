@@ -7,14 +7,12 @@
 
 Dev site: https://d8.dev.poc-aide-memoire-unocha-org.ahconu.org/
 
-Production site: (this version not yet deployed here) https://poc-aide-memoire.unocha.org
+Production site: https://poc-aide-memoire.unocha.org
 
 This version is a Drupal8 upgrade of the Drupal7 POCAM site. It should be
 identical but for some default D7->D8 common-design styling changes.
 
-The code is adapted from the D7 version. Drupal
-[migrate module](https://www.drupal.org/project/migrate) was used to import
-some configuration - content types mainly - and then removed.
+The code is adapted from the D7 version.
 
 ## Development
 
@@ -48,3 +46,21 @@ can go in either column B or C.
 As there is only one menu item in the main menu, this does not swap it out for
 a dropdown menu on thinner screens. Some overriding of CSS is necessary for
 this, in the `_cd_nav.scss` file.
+
+## Deployment notes
+
+As seen in https://jenkins.aws.ahconu.org/view/PoCAM/job/pocam-prod-deploy/11/console
+there are a couple of things to note in deployments.
+
+`drush cim` shows:
++------------+--------------------------+-----------+
+| Collection | Config                   | Operation |
++------------+--------------------------+-----------+
+|            | social_auth_hid.settings | Update    |
++------------+--------------------------+-----------+
+
+This can be ignored, as configuration uses placeholder values which are
+overridden in the environment.
+
+Also, an error that needs looking at:
+` [error]  The directory //srv/www/shared/config/staging/ does not exist.`
