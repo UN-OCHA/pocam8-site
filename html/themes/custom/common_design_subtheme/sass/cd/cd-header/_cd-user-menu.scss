@@ -1,19 +1,25 @@
 //——————————————————————————————————————————————————————————————————————————————
-// Common Design: Sites Menu ('OCHA Services')
+// Common Design: User Menu
+//
+// Includes user-centered settings and/or actions.
+//
 //——————————————————————————————————————————————————————————————————————————————
-.cd-ocha-dropdown__heading {
-  color: $cd-white;
-}
+.cd-user-menu {
+  &--no-language-switcher {
+    li:last-child a {
+      padding-right: 0;
 
-.cd-ocha-dropdown__link {
-  a {
-    &:focus {
-      outline: 3px solid $implementation-highlight;
+      &::after {
+        content: none;
+      }
     }
   }
 }
 
-.cd-ocha-dropdown__see-all {
-  background: $implementation-highlight;
-  color: $cd-default-text-color;
+.region-header-top .menu {
+  @extend .cd-user-menu;
+
+  // If there's no language switcher in the Global Header, uncomment this line
+  // to apply special treatment to the last link in the list.
+  @extend .cd-user-menu--no-language-switcher;
 }

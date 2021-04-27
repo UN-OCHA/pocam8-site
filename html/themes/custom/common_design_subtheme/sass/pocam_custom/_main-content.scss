@@ -1,25 +1,19 @@
 // Theme list
-.node--type-page .item-list {
-
-  li a {
-    margin-bottom: 20px;
-    display: block;
-  }
+.node--type-page li a {
+  display: block;
+  margin-bottom: 20px;
 }
 
-// Table width:
-.views-field-field-link {
-  width: 20%;
+// Table width to prevent over-enthusiastic word-breaking.
+@media (min-width: 576px) {
+  .views-field-field-link {
+    min-width: 20%;
+  }
 }
 
 // Search highlighting.
 .highlight {
   background-color: #fff000;
-}
-
-// Limit search box in sidebar.
-.cd-layout-sidebar-first .cd-search--inline__input {
-  padding: 0;
 }
 
 // Stop select2 from breaking layout.
@@ -39,26 +33,25 @@
 }
 
 .cd-layout-sidebar-first {
-  .form--inline {
-    display: flex;
+  .cd-form--inline {
+    margin-bottom: 2rem;
   }
 
-  input[type='text'] {
+  input[type="text"] {
     box-sizing: content-box;
-    padding: 0 10px;
-    border: 1px solid $cd-ocha-blue;
-    color: $cd-ocha-blue;
-    transition: .3s ease;
-    cursor: pointer;
-    height: 44px;
     width: 100%;
-    @media all and (-ms-high-contrast: none) {
-      width: 98%;
-    }
+    height: 44px;
+    padding: 0 10px;
+    color: $cd-ocha-blue;
+    border: 1px solid $cd-ocha-blue;
 
     &::placeholder {
-      color: $cd-dark-grey;
+      color: $cd-grey--dark;
       font-style: italic;
+    }
+
+    @media all and (-ms-high-contrast: none) {
+      width: 98%;
     }
 
     // IE11 alignment fix.
@@ -67,84 +60,19 @@
     }
   }
 
-  .form-actions input[type='submit'] {
+  .cd-search--inline__input[type="search"]:focus,
+  .cd-search--inline__input[type="text"]:focus {
+    border: 1px solid $cd-ocha-blue;
+    outline: 2px solid $implementation-highlight;
+  }
+
+  .form-actions input[type="submit"] {
     padding: 0 12px;
+    text-transform: uppercase;
+    color: $cd-white;
+    border: 1px solid $cd-ocha-blue;
+    border-radius: 0 4px 4px 0;
     background: $cd-ocha-blue;
     line-height: 44px;
-    border-radius: 0 4px 4px 0;
-    border: 1px solid $cd-ocha-blue;
-    color: $cd-white;
-    text-transform: uppercase;
   }
-}
-
-// Handle filter.
-.cd-filter__btn {
-  background: $implementation-primary-dark;
-  color: $cd-light-grey;
-  -webkit-appearance: none;
-  border-radius: 0;
-  box-shadow: none;
-  border: 0;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  transition: background 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  svg {
-    width: 2rem;
-    height: 2rem;
-    padding: 0 0 0 0.5rem;
-  }
-
-  &:hover,
-  &:focus {
-    background: $implementation-primary;
-  }
-
-  &:focus {
-    outline: 3px solid $implementation-highlight;
-  }
-
-  &[aria-expanded] .cd-icon--arrow-down {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  @include tablet {
-    // This is needed for IE11
-    // No support for CSS custom properties means
-    // --dropdown: false; property on nav container is not recognised
-    // so the cd-dropdown.js creates a toggler button on desktop
-    // This hides it when that happens.
-    @media all and (-ms-high-contrast: none) {
-      display: none;
-    }
-  }
-}
-
-.cd-filter {
-  @include tablet {
-    --dropdown: false;
-
-    // This is needed for IE11
-    // No support for CSS custom properties means
-    // --dropdown: false; property on nav container is not recognised
-    // so the cd-dropdown.js does not run the updateToggler function
-    // which toggles the data-cd-hidden attribute.
-    // This displays the nav regardless of that attribute value.
-    @media all and (-ms-high-contrast: none) {
-      &[data-cd-hidden='true'] {
-        display: block;
-      }
-    }
-  }
-}
-
-// Add a bit of space in two column layout.
-.layout__region--second {
-  padding-left: 16px;
 }
