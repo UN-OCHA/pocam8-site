@@ -21,6 +21,7 @@
     ],
     "require": {
         "php": ">=7.2",
+        "composer/composer": "^1.10.22",
         "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.6.5",
         "drupal/admin_denied": "^1.0",
@@ -42,7 +43,7 @@
         "drush/drush": "^10.3",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
-        "phpoffice/phpspreadsheet": "^1.11",
+        "phpoffice/phpspreadsheet": "^1.16",
         "squizlabs/php_codesniffer": "*",
         "symfony/flex": "^1.10",
         "unocha/common_design": "^4.0.0",
