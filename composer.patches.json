@@ -1,7 +1,7 @@
 {
   "patches": {
     "drupal/facets": {
-      "https://www.drupal.org/project/facets/issues/3005040": "https://www.drupal.org/files/issues/2018-10-09/facets-hierarchy-allow-different-types-3005040-7.patch",
+      "https://www.drupal.org/project/facets/issues/3005040": "https://www.drupal.org/files/issues/2021-05-13/facets-hierarchy-allow-different-types-3005040-13.patch",
       "https://www.drupal.org/project/facets/issues/2979223": "https://www.drupal.org/files/issues/2020-12-02/2979223--39.patch"
     },
     "drupal/select2": {
