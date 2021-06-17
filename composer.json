@@ -28,7 +28,7 @@
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-dev": "^8.8",
         "drupal/core-recommended": "^8.8",
-        "drupal/ctools": "^3.6.0",
+        "drupal/ctools": "^3.7",
         "drupal/dream_block_manager": "^1.0",
         "drupal/facets": "^1.8.0",
         "drupal/facets_pretty_paths": "^1.0",
