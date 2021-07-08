@@ -53,6 +53,9 @@
     "myclabs/php-enum": {
         "version": "1.7.6"
     },
+    "npm-asset/select2": {
+        "version": "4.0.13"
+    },
     "php": {
         "version": "7.3"
     },
