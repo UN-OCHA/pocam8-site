@@ -20,6 +20,9 @@
     "drupal/facets": {
         "version": "1.5.0"
     },
+    "drupal/google_tag": {
+        "version": "1.4.0"
+    },
     "drupal/select2": {
         "version": "1.9.0"
     },
