@@ -34,6 +34,7 @@
         "drupal/facets": "^1.8.0",
         "drupal/facets_pretty_paths": "^1.1",
         "drupal/field_group": "^3.0",
+        "drupal/google_tag": "^1.4",
         "drupal/maintenance200": "^1.0",
         "drupal/search_api": "^1.19",
         "drupal/select2": "^1.13",
