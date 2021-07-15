@@ -1,6 +1,6 @@
 <?php
 
-// @codingStandardsIgnoreFile
+// phpcs:ignoreFile
 
 /**
  * The UN-OCHA section.
