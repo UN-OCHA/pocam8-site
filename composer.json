@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "composer/composer": "^2.1",
         "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.6.5",
@@ -39,9 +39,9 @@
         "drupal/search_api": "^1.19",
         "drupal/select2": "^1.13",
         "drupal/simple_sitemap": "^3.10",
-        "drupal/social_api": "^2.0-rc4",
-        "drupal/social_auth": "^2.0-rc4",
-        "drupal/social_auth_hid": "2.x-dev",
+        "drupal/social_api": "^3.0",
+        "drupal/social_auth": "^3.0",
+        "drupal/social_auth_hid": "^2.6",
         "drupal/token": "^1.9",
         "drupal/token_filter": "^1.2",
         "drupal/views_data_export": "^1.0",
@@ -53,8 +53,7 @@
         "symfony/flex": "^1.10",
         "unocha/common_design": "^4.0.0",
         "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3",
-        "zaporylie/composer-drupal-optimizations": "^1.0"
+        "webmozart/path-util": "^2.3"
     },
     "require-dev": {
         "drupal/coder": "^8.3",
@@ -73,7 +72,7 @@
     "prefer-stable": true,
     "config": {
       "platform": {
-        "php": "7.3"
+        "php": "7.4"
       },
       "bin-dir": "vendor/bin/",
       "sort-packages": true
