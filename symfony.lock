@@ -17,6 +17,9 @@
     "dnoegel/php-xdg-base-dir": {
         "version": "v0.1.1"
     },
+    "drupal-composer/preserve-paths": {
+        "version": "0.1.6"
+    },
     "drupal/core-dev": {
         "version": "8.9.10"
     },
