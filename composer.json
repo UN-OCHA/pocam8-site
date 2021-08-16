@@ -72,11 +72,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-      "platform": {
-        "php": "7.4"
-      },
-      "bin-dir": "vendor/bin/",
-      "sort-packages": true
+        "platform": {
+          "php": "7.4"
+        },
+        "bin-dir": "vendor/bin/",
+        "sort-packages": true
     },
     "autoload": {
         "classmap": [
@@ -107,7 +107,7 @@
 
     },
     "extra": {
-    "enable-patching": true,
+        "enable-patching": true,
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
