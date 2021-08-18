@@ -21,29 +21,34 @@
     ],
     "require": {
         "php": ">=7.4",
+        "composer/composer": "^2.1",
         "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.7",
         "drupal-composer/preserve-paths": "^0.1.6",
-        "drupal/admin_denied": "^1.0",
-        "drupal/core-composer-scaffold": "^8.9",
-        "drupal/core-dev": "^8.9",
-        "drupal/core-recommended": "^8.9",
+        "drupal/admin_denied": "^1.1",
+        "drupal/core-composer-scaffold": "^9.2.1",
+        "drupal/core-dev": "^9.2.1",
+        "drupal/core-project-message": "^9.2.1",
+        "drupal/core-recommended": "^9.2.1",
         "drupal/ctools": "^3.7",
         "drupal/dream_block_manager": "^1.0",
         "drupal/facets": "^1.8.0",
-        "drupal/facets_pretty_paths": "^1.0",
+        "drupal/facets_pretty_paths": "^1.1",
         "drupal/field_group": "^3.0",
         "drupal/google_tag": "^1.4",
         "drupal/maintenance200": "^1.0",
-        "drupal/search_api": "^1.15",
-        "drupal/select2": "^1.7",
-        "drupal/simple_sitemap": "^3.7",
-        "drupal/social_auth_hid": "^2.2",
+        "drupal/search_api": "^1.19",
+        "drupal/select2": "^1.13",
+        "drupal/simple_sitemap": "^3.10",
+        "drupal/social_api": "^3.0",
+        "drupal/social_auth": "^3.0",
+        "drupal/social_auth_hid": "^2.6",
+        "drupal/token": "^1.9",
         "drupal/token_filter": "^1.2",
         "drupal/views_data_export": "^1.0",
         "drush/drush": "^10.3",
         "npm-asset/select2": "^4.0",
-        "oomphinc/composer-installers-extender": "^2.0",
+        "oomphinc/composer-installers-extender": "^2.0.0",
         "phpoffice/phpspreadsheet": "^1.16",
         "squizlabs/php_codesniffer": "*",
         "symfony/flex": "^1.10",
@@ -54,15 +59,10 @@
     "require-dev": {
         "drupal/coder": "^8.3",
         "drupal/console": "^1.0.2",
-        "drupal/devel": "^2.1",
-        "drupal/devel_php": "^1.1",
-        "drupal/migrate_manifest": "^1.9",
-        "drupal/migrate_tools": "^4.5",
-        "drupal/migrate_upgrade": "^3.2",
-        "drupal/upgrade_rector": "^1.0",
-        "drupal/upgrade_status": "^2.0",
+        "drupal/devel": "^4.1.1",
+        "drupal/upgrade_status": "^3.7",
         "phpmd/phpmd": "^2.6",
-        "phpunit/phpunit": "^7.5.20",
+        "phpunit/phpunit": "^8",
         "weitzman/drupal-test-traits": "^1.3",
         "weitzman/logintrait": "^1.1"
     },
@@ -72,11 +72,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-      "platform": {
-        "php": "7.4"
-      },
-      "bin-dir": "vendor/bin/",
-      "sort-packages": true
+        "platform": {
+          "php": "7.4"
+        },
+        "bin-dir": "vendor/bin/",
+        "sort-packages": true
     },
     "autoload": {
         "classmap": [
@@ -107,7 +107,7 @@
 
     },
     "extra": {
-    "enable-patching": true,
+        "enable-patching": true,
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
@@ -127,10 +127,6 @@
             "html/themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/Commands/{$name}": ["type:drupal-drush"]
         },
-        "preserve-paths": [
-            "html/modules/custom",
-            "html/themes/custom"
-        ],
         "drupal-scaffold": {
             "initial": {
                 ".editorconfig": "../.editorconfig",
