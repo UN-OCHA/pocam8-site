@@ -38,6 +38,7 @@
         "drupal/google_tag": "^1.4",
         "drupal/maintenance200": "^1.0",
         "drupal/search_api": "^1.19",
+        "drupal/seckit": "^2.0",
         "drupal/select2": "^1.13",
         "drupal/simple_sitemap": "^3.10",
         "drupal/social_api": "^3.0",
