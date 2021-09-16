@@ -44,6 +44,7 @@
     "lodash": ">=4.17.21",
     "minimist": "^1.2.5",
     "puppeteer": "^9.1.1",
+    "set-value": ">=4.0.1",
     "svg-sprite": "^1.5.1",
     "trim": ">=0.0.3",
     "trim-newlines": ">=3.0.1",
