@@ -10,17 +10,10 @@ storage: folder
 folder: ../config_dev
 module:
   config_filter: 0
-  config_split: 0
   dblog: 0
   devel: 0
   stage_file_proxy: 0
   views_ui: 0
 theme: {  }
-complete_list:
-  - config_split.config_split.config_dev
-  - dblog.settings
-  - devel.settings
-  - devel.toolbar.settings
-  - stage_file_proxy.settings
-  - views.view.watchdog
+complete_list: {  }
 partial_list: {  }
