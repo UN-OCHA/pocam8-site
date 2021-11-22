@@ -20,6 +20,11 @@ Docksal settings may need adjustment.
 Testing uses [Drupal-test-traits](https://gitlab.com/weitzman/drupal-test-traits). It is very minimal at the moment. @TODO - more tests.
 Everything else should be similar to other DSS D8 sites.
 
+For local development, add this line to settings.local.php:
+`$config['config_split.config_split.config_dev']['status'] = TRUE;`
+After importing a fresh database, run `drush cim` to enable devel, database log
+stage_file_proxy and views_ui.
+
 ## Content Management
 
 Documentation at: https://docs.google.com/document/d/1TrAEXdeVtBR7SIspsKprOTqPgmfX-cs-1PvRqVw3Ogc/edit#

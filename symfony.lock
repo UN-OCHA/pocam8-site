@@ -20,6 +20,12 @@
     "drupal-composer/preserve-paths": {
         "version": "0.1.6"
     },
+    "drupal/config_filter": {
+        "version": "2.2.0"
+    },
+    "drupal/config_split": {
+        "version": "2.0.0-beta4"
+    },
     "drupal/core-dev": {
         "version": "8.9.10"
     },
@@ -47,11 +53,17 @@
     "drupal/migrate_upgrade": {
         "version": "3.2.0"
     },
+    "drupal/seckit": {
+        "version": "2.0.0"
+    },
     "drupal/select2": {
         "version": "1.9.0"
     },
     "drupal/simple_sitemap": {
         "version": "3.7.0"
+    },
+    "drupal/stage_file_proxy": {
+        "version": "1.1.0"
     },
     "drupal/upgrade_rector": {
         "version": "1.0.0-alpha7"
@@ -73,6 +85,9 @@
     },
     "justinrainbow/json-schema": {
         "version": "5.2.10"
+    },
+    "kint-php/kint": {
+        "version": "3.3"
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.0"
