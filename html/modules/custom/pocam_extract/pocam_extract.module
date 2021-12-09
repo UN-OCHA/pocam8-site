@@ -24,8 +24,8 @@ function pocam_extract_entity_presave(EntityInterface $entity) {
       /** @var \Drupal\taxonomy\Entity\Term $term */
       foreach ($entity->get('field_theme')->referencedEntities() as $term) {
         $tids[] = $term->id();
-      /** @var \Drupal\taxonomy\Entity\Term[] $ancestors */
-      $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($term->id());
+        /** @var \Drupal\taxonomy\Entity\Term[] $ancestors */
+        $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($term->id());
         foreach ($ancestors as $ancestor) {
           $tids[] = $ancestor->id();
         }
