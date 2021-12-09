@@ -8,6 +8,7 @@
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 
 /**
@@ -16,7 +17,25 @@ use Drupal\taxonomy\Entity\Term;
  * Handle taxonomy relationships for theme terms.
  */
 function pocam_extract_entity_presave(EntityInterface $entity) {
+  if ($entity instanceof Node && $entity->bundle() === 'pocam_extract') {
+    // Collect all theme term Ids.
+    if ($entity->hasField('field_theme') && $entity->hasField('field_all_themes')) {
+      $tids = [];
+      /** @var \Drupal\taxonomy\Entity\Term $term */
+      foreach ($entity->get('field_theme')->referencedEntities() as $term) {
+        $tids[] = $term->id();
+      /** @var \Drupal\taxonomy\Entity\Term[] $ancestors */
+      $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($term->id());
+        foreach ($ancestors as $ancestor) {
+          $tids[] = $ancestor->id();
+        }
+      }
 
+      $tids = array_unique($tids);
+      $entity->set('field_all_themes', $tids);
+    }
+    return;
+  }
   if ($entity instanceof Term && $entity->bundle() === 'theme') {
     // Get original parent for existing terms (new terms don't have an id yet).
     $term_tid = $entity->id();

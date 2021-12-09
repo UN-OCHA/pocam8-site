@@ -5,6 +5,8 @@
  * Contains pocam_general install.
  */
 
+use Drupal\node\Entity\Node;
+
 /**
  * Switch install profile.
  */
@@ -46,4 +48,19 @@ function pocam_general_update_8001() {
 
   // Reset profile files.
   \Drupal::state()->delete('system.profile.files');
+}
+
+/**
+ * Re-save all extracts.
+ */
+function pocam_general_update_8002() {
+  $extract_nids = \Drupal::entityQuery('node')
+    ->condition('type', 'pocam_extract')
+    ->execute();
+
+  // Load all the extracts.
+  $extracts = Node::loadMultiple($extract_nids);
+  foreach ($extracts as $extract) {
+    $extract->save();
+  }
 }
