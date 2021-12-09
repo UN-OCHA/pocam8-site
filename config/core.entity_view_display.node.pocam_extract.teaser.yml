@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.pocam_extract.field_all_themes
     - field.field.node.pocam_extract.field_document_type
     - field.field.node.pocam_extract.field_link
     - field.field.node.pocam_extract.field_see_also
@@ -23,7 +24,18 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  theme_full_tree:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  theme_see_also:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
 hidden:
+  field_all_themes: true
   field_document_type: true
   field_link: true
   field_see_also: true
