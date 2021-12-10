@@ -14,6 +14,7 @@ dependencies:
   module:
     - link
     - lunr
+    - lunr_filters
     - node
     - serialization
     - taxonomy
@@ -140,14 +141,14 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_document_type:
-          id: field_document_type
-          table: node__field_document_type
-          field: field_document_type
+        field_text:
+          id: field_text
+          table: node__field_text
+          field: field_text
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Text
           exclude: false
           alter:
             alter_text: false
@@ -180,69 +181,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_entity_id
-          settings: {  }
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
-        field_year:
-          id: field_year
-          table: node__field_year
-          field: field_year
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -251,7 +190,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: number_unformatted
+          type: text_default
           settings: {  }
           group_column: value
           group_columns: {  }
@@ -384,14 +323,14 @@ display:
           absolute: false
           entity_type: node
           plugin_id: entity_link
-        field_text:
-          id: field_text
-          table: node__field_text
-          field: field_text
+        field_document_type:
+          id: field_document_type
+          table: node__field_document_type
+          field: field_document_type
           relationship: none
           group_type: group
           admin_label: ''
-          label: Text
+          label: ''
           exclude: false
           alter:
             alter_text: false
@@ -424,7 +363,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -432,10 +371,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: text_default
-          settings: {  }
-          group_column: value
+          click_sort_column: target_id
+          type: entity_reference_entity_view
+          settings:
+            view_mode: default
+          group_column: target_id
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -498,6 +438,68 @@ display:
           type: entity_reference_entity_id
           settings: {  }
           group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        field_year:
+          id: field_year
+          table: node__field_year
+          field: field_year
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_unformatted
+          settings: {  }
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -787,52 +789,85 @@ display:
         - 'config:field.storage.node.field_link'
         - 'config:field.storage.node.field_text'
         - 'config:field.storage.node.field_year'
-  extracts_lunr_search:
-    display_plugin: lunr_search_index
-    id: extracts_lunr_search
-    display_title: 'Lunr search index'
-    position: 1
+  lunr_filters_search_index:
+    display_plugin: lunr_filters_search_index
+    id: lunr_filters_search_index
+    display_title: 'Lunr filters search index'
+    position: 2
     display_options:
       display_extenders: {  }
-      path: extracts_lunr_search
+      path: lunr_filters_extracts_index
+      row:
+        type: lunr_filters_search_index_row
+        options:
+          field_options:
+            title:
+              index: '1'
+              boost: '4'
+              alias: ''
+              display: 0
+              raw_output: 0
+            field_text:
+              index: '1'
+              boost: '1'
+              display: '1'
+              alias: text
+              raw_output: 0
+            field_link:
+              boost: '1'
+              display: '1'
+              alias: ''
+              index: 0
+              raw_output: 0
+            view_node:
+              boost: '1'
+              display: '1'
+              alias: ''
+              index: 0
+              raw_output: 0
+            field_document_type:
+              index: '1'
+              boost: '1'
+              alias: ''
+              display: 0
+              raw_output: 0
+            field_all_themes:
+              index: '1'
+              boost: '1'
+              alias: ''
+              display: 0
+              raw_output: 0
+            field_year:
+              index: '1'
+              boost: '1'
+              alias: ''
+              display: 0
+              raw_output: 0
       pager:
         type: full
         options:
-          items_per_page: 50
-          offset: 0
-          id: 0
-          total_pages: null
+          items_per_page: '50'
+          offset: '0'
+          id: '0'
+          total_pages: ''
           tags:
             previous: '‹ Previous'
             next: 'Next ›'
             first: '« First'
             last: 'Last »'
           expose:
-            items_per_page: false
+            items_per_page: 0
             items_per_page_label: 'Items per page'
             items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
+            items_per_page_options_all: 0
             items_per_page_options_all_label: '- All -'
-            offset: false
+            offset: 0
             offset_label: Offset
-          quantity: 9
-      row:
-        type: lunr_search_index_row
-        options:
-          field_options:
-            title:
-              alias: ''
-              raw_output: false
-            body:
-              alias: ''
-              raw_output: false
-            nothing:
-              alias: html
-              raw_output: false
-      rendering_language: '***LANGUAGE_language_interface***'
+          quantity: '9'
     cache_metadata:
       max-age: -1
       contexts:
+        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
