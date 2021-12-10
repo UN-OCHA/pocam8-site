@@ -29,6 +29,8 @@ module:
   layout_builder: 0
   layout_discovery: 0
   link: 0
+  lunr: 0
+  lunr_filters: 0
   maintenance200: 0
   menu_ui: 0
   minimal: 0
@@ -46,6 +48,7 @@ module:
   seckit: 0
   select2: 0
   select2_facets: 0
+  serialization: 0
   shortcut: 0
   simple_sitemap: 0
   social_api: 0
