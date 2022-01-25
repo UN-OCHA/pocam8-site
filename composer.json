@@ -41,10 +41,10 @@
         "drupal/search_api": "^1.19",
         "drupal/seckit": "^2.0",
         "drupal/select2": "^1.13",
-        "drupal/simple_sitemap": "^3.10",
+        "drupal/simple_sitemap": "^4.0",
         "drupal/social_api": "^3.0",
         "drupal/social_auth": "^3.0",
-        "drupal/social_auth_hid": "^2.6",
+        "drupal/social_auth_hid": "^3.0",
         "drupal/token": "^1.9",
         "drupal/token_filter": "^1.2",
         "drupal/views_data_export": "^1.0",
@@ -81,7 +81,17 @@
           "php": "8.0"
         },
         "bin-dir": "vendor/bin/",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal-composer/preserve-paths": true,
+            "drupal/core-composer-scaffold": true,
+            "drupal/core-project-message": true,
+            "drupal/console-extend-plugin": true,
+            "oomphinc/composer-installers-extender": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "classmap": [
@@ -89,12 +99,6 @@
         ]
     },
     "scripts": {
-        "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
