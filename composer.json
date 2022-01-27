@@ -49,6 +49,7 @@
         "drupal/social_auth_hid": "^3.0",
         "drupal/token": "^1.9",
         "drupal/token_filter": "^1.2",
+        "drupal/tome": "^1.5",
         "drupal/views_data_export": "^1.0",
         "drush/drush": "^10.3",
         "npm-asset/select2": "^4.0",
