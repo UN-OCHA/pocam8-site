@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * POCAM tome.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_pocam_general_build_path_alter().
+ */
+function pocam_tome_pocam_general_build_path_alter(&$path, array $context) {
+  $path = 'internal:/extracts?field_all_themes=' . $context['term']->tid;
+}

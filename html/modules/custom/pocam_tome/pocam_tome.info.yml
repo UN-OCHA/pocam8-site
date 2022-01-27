@@ -1,0 +1,8 @@
+name: POCAM Tome
+type: module
+description: 'POCAM Tomify'
+package: OCHA
+core_version_requirement: ^8 || ^9
+
+dependencies:
+  - drupal:lunr_filters
