@@ -25,6 +25,13 @@ function pocam_tome_form_views_exposed_form_alter(&$form, FormStateInterface $fo
 }
 
 /**
+ * Implements template_preprocess_page().
+ */
+function pocam_tome_preprocess_page(&$variables) {
+  unset($variables['page']['facets']);
+}
+
+/**
  * Implements hook_block_build_alter().
  */
 function pocam_tome_block_build_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
@@ -35,9 +42,7 @@ function pocam_tome_block_build_alter(array &$build, \Drupal\Core\Block\BlockPlu
 
   $blocks_to_disable = [
     'account',
-    'extracts-header',
     'facet_summary',
-    'extracts-page_1',
     'document_type',
     'theme',
     'year',

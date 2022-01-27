@@ -21,6 +21,22 @@ class PocamConfigOverrider implements ConfigFactoryOverrideInterface {
       $config = \Drupal::configFactory()->getEditable('views.view.extracts')->getRawData();
       $config['display']['page_1']['display_options']['path'] = 'extracts-disabled';
       $overrides['views.view.extracts'] = $config;
+      return $overrides;
+    }
+
+    if (in_array('system.performance', $names)) {
+      $config = \Drupal::configFactory()->getEditable('system.performance')->getRawData();
+      $config['css']['preprocess'] = TRUE;
+      $config['js']['preprocess'] = TRUE;
+      $overrides['system.performance'] = $config;
+      return $overrides;
+    }
+
+    if (in_array('system.logging', $names)) {
+      $config = \Drupal::configFactory()->getEditable('system.logging')->getRawData();
+      $config['error_level'] = 'hide';
+      $overrides['system.logging'] = $config;
+      return $overrides;
     }
 
     return $overrides;
