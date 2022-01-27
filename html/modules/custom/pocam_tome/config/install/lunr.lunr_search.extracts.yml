@@ -1,0 +1,18 @@
+uuid: f0d7aa17-1fd5-4381-9dd1-381ba0f2fdac
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.extracts_lunr_search
+  module:
+    - views
+id: extracts
+label: Extracts
+path: /extracts
+view_id: extracts_lunr_search
+view_display_id: lunr_filters_search_index
+index_fields:
+  title:
+    boost: 5
+display_field: text
+results_per_page: 25
