@@ -6,6 +6,8 @@ dependencies:
     - views.view.extracts_lunr_search
   module:
     - views
+_core:
+  default_config_hash: gW7wBZ1b46BFUZdBRLxs4VfimB0F0xHEH3JHn2tPMO8
 id: extracts
 label: Extracts
 path: /extracts
