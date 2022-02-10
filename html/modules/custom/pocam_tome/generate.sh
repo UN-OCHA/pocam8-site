@@ -25,4 +25,4 @@ mv static/export/indicators/index.html static/export/indicators/index.csv
 zip -r pocam_static.zip static/
 
 # Disable modules.
-$drush pm-uninstall tome_base lunr -y
+$drush pm-uninstall tome_base lunr serialization -y
