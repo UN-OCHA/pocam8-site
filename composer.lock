@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f360b1ba63b40f79f99ffaafaa9cfa70",
+    "content-hash": "3faef010aca26af925ae2899fd0f57f8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3169,17 +3169,17 @@
         },
         {
             "name": "drupal/lunr_filters",
-            "version": "1.0.6",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/lunr_filters.git",
-                "reference": "1.0.6"
+                "reference": "1.1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/lunr_filters-1.0.6.zip",
-                "reference": "1.0.6",
-                "shasum": "74893a6b702df39bcbca76428aab6ff89e6158ce"
+                "url": "https://ftp.drupal.org/files/projects/lunr_filters-1.1.3.zip",
+                "reference": "1.1.3",
+                "shasum": "eee6c9bea2d2c1d78f93b2d3a78448bf0a46dc8d"
             },
             "require": {
                 "drupal/core": "^8 || ^9",
@@ -3189,8 +3189,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.6",
-                    "datestamp": "1641301525",
+                    "version": "1.1.3",
+                    "datestamp": "1644231553",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3924,6 +3924,181 @@
             "homepage": "https://www.drupal.org/project/token_filter",
             "support": {
                 "source": "https://git.drupalcode.org/project/token_filter"
+            }
+        },
+        {
+            "name": "drupal/tome",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/tome.git",
+                "reference": "8.x-1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/tome-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "f35954286be047b2967aaff0cb0174c0535c154f"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9",
+                "drupal/tome_static": "*",
+                "drupal/tome_sync": "*"
+            },
+            "require-dev": {
+                "drupal/ctools": "*",
+                "drupal/pathauto": "*",
+                "drupal/redirect": "*",
+                "drupal/token": "*",
+                "drupal/tome_base": "*",
+                "drupal/tome_static": "*",
+                "drupal/tome_sync": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1643208108",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "larowlan",
+                    "homepage": "https://www.drupal.org/user/395439"
+                },
+                {
+                    "name": "samuel.mortenson",
+                    "homepage": "https://www.drupal.org/user/2582268"
+                }
+            ],
+            "description": "Everything you need to do everything statically.",
+            "homepage": "https://www.drupal.org/project/tome",
+            "support": {
+                "source": "https://git.drupalcode.org/project/tome"
+            }
+        },
+        {
+            "name": "drupal/tome_base",
+            "version": "1.5.0",
+            "require": {
+                "drupal/core": "^8 || ^9",
+                "drupal/tome": "^1"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1643208108",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "larowlan",
+                    "homepage": "https://www.drupal.org/user/395439"
+                },
+                {
+                    "name": "samuel.mortenson",
+                    "homepage": "https://www.drupal.org/user/2582268"
+                }
+            ],
+            "description": "Contains shared services and traits between Tome Sync and Tome Static.",
+            "homepage": "https://www.drupal.org/project/tome",
+            "support": {
+                "source": "https://git.drupalcode.org/project/tome"
+            }
+        },
+        {
+            "name": "drupal/tome_static",
+            "version": "1.5.0",
+            "require": {
+                "drupal/core": "^8 || ^9",
+                "drupal/tome": "^1",
+                "drupal/tome_base": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1643208108",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "larowlan",
+                    "homepage": "https://www.drupal.org/user/395439"
+                },
+                {
+                    "name": "samuel.mortenson",
+                    "homepage": "https://www.drupal.org/user/2582268"
+                }
+            ],
+            "description": "Exports an entire Drupal site to static HTML.",
+            "homepage": "https://www.drupal.org/project/tome",
+            "support": {
+                "source": "https://git.drupalcode.org/project/tome"
+            }
+        },
+        {
+            "name": "drupal/tome_sync",
+            "version": "1.5.0",
+            "require": {
+                "drupal/core": "^8 || ^9",
+                "drupal/tome": "^1",
+                "drupal/tome_base": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1643208108",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "larowlan",
+                    "homepage": "https://www.drupal.org/user/395439"
+                },
+                {
+                    "name": "samuel.mortenson",
+                    "homepage": "https://www.drupal.org/user/2582268"
+                }
+            ],
+            "description": "Allows Drupal to installed from flat files and keeps content in sync.",
+            "homepage": "https://www.drupal.org/project/tome",
+            "support": {
+                "source": "https://git.drupalcode.org/project/tome"
             }
         },
         {

@@ -1,0 +1,11 @@
+services:
+  pocam_tome.exclude_path_subscriber:
+    class: Drupal\pocam_tome\EventSubscriber\PocamExcludePathSubscriber
+    tags:
+      - { name: event_subscriber }
+  pocam_tome.PocamConfigOverrider:
+    class: Drupal\pocam_tome\Config\PocamConfigOverrider
+    arguments:
+      - '@config.factory'
+    tags:
+      - {name: config.factory.override, priority: 5}
