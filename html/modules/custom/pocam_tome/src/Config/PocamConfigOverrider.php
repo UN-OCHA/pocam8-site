@@ -3,6 +3,7 @@
 namespace Drupal\pocam_tome\Config;
 
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigFactoryOverrideInterface;
 use Drupal\Core\Config\StorageInterface;
 
@@ -12,20 +13,37 @@ use Drupal\Core\Config\StorageInterface;
 class PocamConfigOverrider implements ConfigFactoryOverrideInterface {
 
   /**
+   * The configuration storage service.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * Constructs a new ConfigurableLanguageManager object.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory service.
+   */
+  public function __construct(ConfigFactoryInterface $config_factory) {
+    $this->configFactory = $config_factory;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function loadOverrides($names) {
     $overrides = [];
 
     if (in_array('views.view.extracts', $names)) {
-      $config = \Drupal::configFactory()->getEditable('views.view.extracts')->getRawData();
+      $config = $this->configFactory->getEditable('views.view.extracts')->getRawData();
       $config['display']['page_1']['display_options']['path'] = 'extracts-disabled';
       $overrides['views.view.extracts'] = $config;
       return $overrides;
     }
 
     if (in_array('system.performance', $names)) {
-      $config = \Drupal::configFactory()->getEditable('system.performance')->getRawData();
+      $config = $this->configFactory->getEditable('system.performance')->getRawData();
       $config['css']['preprocess'] = TRUE;
       $config['js']['preprocess'] = TRUE;
       $overrides['system.performance'] = $config;
@@ -33,7 +51,7 @@ class PocamConfigOverrider implements ConfigFactoryOverrideInterface {
     }
 
     if (in_array('system.logging', $names)) {
-      $config = \Drupal::configFactory()->getEditable('system.logging')->getRawData();
+      $config = $this->configFactory->getEditable('system.logging')->getRawData();
       $config['error_level'] = 'hide';
       $overrides['system.logging'] = $config;
       return $overrides;

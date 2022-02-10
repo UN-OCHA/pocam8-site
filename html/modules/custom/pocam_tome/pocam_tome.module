@@ -5,6 +5,7 @@
  * POCAM tome.
  */
 
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -34,7 +35,7 @@ function pocam_tome_preprocess_page(&$variables) {
 /**
  * Implements hook_block_build_alter().
  */
-function pocam_tome_block_build_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+function pocam_tome_block_build_alter(array &$build, BlockPluginInterface $block) {
   $id = $block->getDerivativeId();
   if (empty($id)) {
     return;
