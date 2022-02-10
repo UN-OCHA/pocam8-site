@@ -1,0 +1,6 @@
+pocam_tome:
+  js:
+    js/pocam_tome.theme.js: {}
+  css:
+    theme:
+      css/pocam_tome.css: {}

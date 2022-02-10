@@ -54,3 +54,10 @@ function pocam_tome_block_build_alter(array &$build, \Drupal\Core\Block\BlockPlu
 
   $build['#access'] = FALSE;
 }
+
+/**
+ * Implements hook_lunr_search_page_alter().
+ */
+function pocam_tome_lunr_search_page_alter(&$build, $lunr_search) {
+  $build['#attached']['library'][] = 'pocam_tome/pocam_tome';
+}
