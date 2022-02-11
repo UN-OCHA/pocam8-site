@@ -1,4 +1,4 @@
-dist: bionic
+dist: focal
 language: php
 cache:
   directories:
@@ -9,7 +9,7 @@ cache:
 #   chrome: stable
 
 php:
-  - 7.4
+  - 8.0
 
 mysql:
   database: drupal
