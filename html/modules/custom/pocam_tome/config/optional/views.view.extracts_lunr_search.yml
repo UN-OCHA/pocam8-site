@@ -20,7 +20,7 @@ dependencies:
     - text
     - user
 _core:
-  default_config_hash: Ezdi0HEkvVlF7trjDbtJ9t6-YF0AAeJyr7L3MHYdjC0
+  default_config_hash: _1r5BQPmLQitGwT9EFvA3JKaq2AmDGgCShL9Nt0pBqk
 id: extracts_lunr_search
 label: 'Extracts Lunr search'
 module: views
@@ -804,7 +804,7 @@ display:
             title:
               index: '1'
               boost: '4'
-              alias: ''
+              alias: title
               display: 0
               raw_output: 0
             field_text:
@@ -816,13 +816,13 @@ display:
             field_link:
               boost: '1'
               display: '1'
-              alias: ''
+              alias: link
               index: 0
               raw_output: 0
             view_node:
               boost: '1'
               display: '1'
-              alias: ''
+              alias: view
               index: 0
               raw_output: 0
             field_document_type:
