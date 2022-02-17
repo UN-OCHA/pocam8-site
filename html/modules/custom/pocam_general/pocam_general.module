@@ -46,7 +46,7 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
       $token_name = $name;
       $param = '';
       if (strpos($name, ':') !== FALSE) {
-        list($token_name, $param) = explode(':', $name);
+        [$token_name, $param] = explode(':', $name);
       }
 
       switch ($token_name) {
