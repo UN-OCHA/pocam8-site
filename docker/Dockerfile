@@ -1,4 +1,4 @@
-FROM public.ecr.aws/unocha/unified-builder:7.4-stable as builder
+FROM public.ecr.aws/unocha/unified-builder:8.0-stable as builder
 ARG  BRANCH_ENVIRONMENT
 ENV  NODE_ENV=$BRANCH_ENVIRONMENT
 COPY . /srv/www
@@ -9,7 +9,7 @@ RUN composer self-update && \
     mkdir -p html/sites/default && \
     cp -a docker/settings.php docker/services.yml html/sites/default
 
-FROM public.ecr.aws/unocha/php-k8s:7.4-NR-stable
+FROM public.ecr.aws/unocha/php-k8s:8.0-NR-stable
 
 ARG VCS_REF
 ARG VCS_URL
