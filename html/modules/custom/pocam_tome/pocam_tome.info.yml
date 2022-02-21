@@ -1,0 +1,10 @@
+name: POCAM Tome
+type: module
+description: 'POCAM Tomify'
+package: OCHA
+core_version_requirement: ^8 || ^9
+
+dependencies:
+  - tome:tome_static
+  - lunr_filters:lunr_filters
+  - pocam_general:pocam_general

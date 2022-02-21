@@ -1,0 +1,29 @@
+uuid: e73c84f9-b911-46de-92bf-8b9797e541ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_all_themes
+    - node.type.pocam_extract
+    - taxonomy.vocabulary.theme
+id: node.pocam_extract.field_all_themes
+field_name: field_all_themes
+entity_type: node
+bundle: pocam_extract
+label: 'All themes'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      theme: theme
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

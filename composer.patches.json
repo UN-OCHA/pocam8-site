@@ -6,6 +6,9 @@
     },
     "drupal/select2": {
       "https://www.drupal.org/project/select2/issues/3078085": "https://www.drupal.org/files/issues/2020-06-17/hierarchical-facet-widget-3078085-3.patch"
+    },
+    "drupal/azure_storage": {
+      "https://www.drupal.org/project/azure_storage/issues/3261907": "https://git.drupalcode.org/project/azure_storage/-/merge_requests/1.diff"
     }
   }
 }
