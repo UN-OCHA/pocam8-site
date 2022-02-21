@@ -20,6 +20,9 @@
     "composer/spdx-licenses": {
         "version": "1.5.4"
     },
+    "dealerdirect/phpcodesniffer-composer-installer": {
+        "version": "v0.7.2"
+    },
     "dnoegel/php-xdg-base-dir": {
         "version": "v0.1.1"
     },
@@ -131,6 +134,9 @@
     "php": {
         "version": "7.3"
     },
+    "phpstan/phpdoc-parser": {
+        "version": "1.2.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -157,6 +163,9 @@
     },
     "sirbrillig/phpcs-variable-analysis": {
         "version": "v2.9.0"
+    },
+    "slevomat/coding-standard": {
+        "version": "7.0.18"
     },
     "symfony/class-loader": {
         "version": "v3.4.41"
