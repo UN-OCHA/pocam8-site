@@ -18,12 +18,12 @@ plugin: 'facet_block:document_type'
 settings:
   id: 'facet_block:document_type'
   label: 'Document type'
-  provider: facets
   label_display: visible
+  provider: facets
   block_id: documenttype
 visibility:
   request_path:
     id: request_path
-    pages: "/extracts\r\n/extracts/*"
     negate: false
     context_mapping: {  }
+    pages: "/extracts\r\n/extracts/*"
