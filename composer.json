@@ -52,6 +52,7 @@
         "drupal/token_filter": "^1.2",
         "drupal/tome": "^1.5",
         "drupal/tome_static_azure": "1.0.x-dev",
+        "drupal/user_expire": "^1.0",
         "drupal/views_data_export": "^1.0",
         "drush/drush": "^10.3",
         "npm-asset/select2": "^4.0",

@@ -143,14 +143,26 @@
     "drupal/tome": {
         "version": "1.5.0"
     },
+    "drupal/tome_base": {
+        "version": "1.5.0"
+    },
+    "drupal/tome_static": {
+        "version": "1.5.0"
+    },
     "drupal/tome_static_azure": {
         "version": "1.0.x-dev"
+    },
+    "drupal/tome_sync": {
+        "version": "1.5.0"
     },
     "drupal/upgrade_rector": {
         "version": "1.0.0-alpha7"
     },
     "drupal/upgrade_status": {
         "version": "3.13.0"
+    },
+    "drupal/user_expire": {
+        "version": "1.0.0"
     },
     "drupal/views_data_export": {
         "version": "1.0.0"
