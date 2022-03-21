@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains pocam_general install.
+ */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Re-save all extracts.
+ */
+function pocam_tome_install() {
+  $extract_nids = \Drupal::entityQuery('node')
+    ->condition('type', 'pocam_extract')
+    ->notExists('field_all_themes')
+    ->execute();
+
+  // Load all the extracts.
+  $extracts = Node::loadMultiple($extract_nids);
+  foreach ($extracts as $extract) {
+    $extract->save();
+  }
+}

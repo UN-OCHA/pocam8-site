@@ -18,11 +18,11 @@ plugin: 'facets_summary_block:facet_summary'
 settings:
   id: 'facets_summary_block:facet_summary'
   label: 'Current Search'
-  provider: facets_summary
   label_display: visible
+  provider: facets_summary
 visibility:
   request_path:
     id: request_path
-    pages: "/extracts\r\n/extracts/*"
     negate: false
     context_mapping: {  }
+    pages: "/extracts\r\n/extracts/*"

@@ -27,6 +27,7 @@
         "drupal-composer/preserve-paths": "^0.1.6",
         "drupal/admin_denied": "^1.1",
         "drupal/azure_storage": "^2.0",
+        "drupal/build_hooks": "^3.3",
         "drupal/config_split": "^2.0.0-beta4",
         "drupal/core-composer-scaffold": "^9.3",
         "drupal/core-dev": "^9.3",
@@ -60,7 +61,7 @@
         "slevomat/coding-standard": "^7.0",
         "squizlabs/php_codesniffer": "*",
         "symfony/flex": "^1.10",
-        "unocha/common_design": "^4.0.0",
+        "unocha/common_design": "^5.0.0",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
     },

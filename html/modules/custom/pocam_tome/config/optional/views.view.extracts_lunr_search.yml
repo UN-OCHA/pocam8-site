@@ -20,7 +20,7 @@ dependencies:
     - text
     - user
 _core:
-  default_config_hash: _1r5BQPmLQitGwT9EFvA3JKaq2AmDGgCShL9Nt0pBqk
+  default_config_hash: AkuT6tk6QtADl4mOoFIdxCjg-0Y5T2OKf39IupHbid0
 id: extracts_lunr_search
 label: 'Extracts Lunr search'
 module: views
