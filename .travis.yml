@@ -8,6 +8,9 @@ cache:
 php:
   - 8.0
 
+env:
+  - NODE_VERSION="16.14"
+
 # Make sure we have a recent version of docker-compose and chrome.
 addons:
   apt:
@@ -23,7 +26,10 @@ mysql:
 services:
   - docker
 
-#install:
+# Add the specified nodejs via nvm, as Travis can only specify a single language.
+install:
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
 #  - test -n "${SSH_AGENT_PID}" && ssh-agent -k
 
 before_script:
