@@ -36,6 +36,7 @@ module:
   maintenance200: 0
   menu_ui: 0
   minimal: 0
+  mysql: 0
   node: 0
   options: 0
   page_cache: 0
