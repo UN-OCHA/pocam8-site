@@ -380,23 +380,71 @@ class Import extends FormBase {
    * Clear extract content and theme terms before import.
    */
   private function pocamExtractDeleteContent() {
-    $count_nodes = $count_terms = 0;
-    $extracts = $this->entityTypeManager->getStorage('node')->loadByProperties(['type' => 'pocam_extract']);
+    $query = $this->entityTypeManager->getStorage('node')->getQuery();
+    $query->condition('type', 'pocam_extract');
+    $extract_ids = $query->execute();
+
+    if (!empty($extract_ids)) {
+      $operations = [];
+      $chunks = array_chunk($extract_ids, 50);
+      foreach($chunks as $chunk) {
+        $operations[] = [
+          'Drupal\pocam_extract\Form\Import::pocamExtractDeleteExtracts',
+          [$chunk],
+        ];
+      }
+    }
+
+    $batch = [
+      'title' => $this->t('Deleting and importing extracts.'),
+      'init_message' => $this->t('Initializing.'),
+      'progress message' => $this->t('Processed @current out of @total..'),
+      'operations' => $operations,
+    ];
+    batch_set($batch);
+
+    $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery();
+    $query->condition('vid', 'theme');
+    $term_ids = $query->execute();
+
+    if (!empty($term_ids)) {
+      $operations = [];
+      $chunks = array_chunk($term_ids, 25);
+      foreach($chunks as $chunk) {
+        $operations[] = [
+          'Drupal\pocam_extract\Form\Import::pocamExtractDeleteThemes',
+          [$chunk],
+        ];
+      }
+    }
+
+    $batch = [
+      'title' => $this->t('Deleting and importing extracts.'),
+      'init_message' => $this->t('Initializing.'),
+      'progress message' => $this->t('Processed @current out of @total..'),
+      'operations' => $operations,
+    ];
+    batch_set($batch);
+  }
+
+  /**
+   * Delete extracts in batch.
+   */
+  public static function pocamExtractDeleteExtracts($extract_ids, &$context) {
+    $extracts = \Drupal::service('entity_type.manager')->getStorage('node')->loadMultiple($extract_ids);
     foreach ($extracts as $node) {
-      $count_nodes++;
       $node->delete();
     }
-    $themes = $this->entityTypeManager->getStorage('taxonomy_term')->loadByProperties(['vid' => 'theme']);
-    foreach ($themes as $term) {
-      $count_terms++;
+  }
+
+  /**
+   * Delete themes in batch.
+   */
+  public static function pocamExtractDeleteThemes($term_ids, &$context) {
+    $extracts = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadMultiple($term_ids);
+    foreach ($extracts as $term) {
       $term->delete();
     }
-    $message = $this->t('Removed @count_nodes extracts and @count_terms themes.', [
-      '@count_nodes' => $count_nodes,
-      '@count_terms' => $count_terms,
-    ]);
-    $this->messenger()
-      ->addMessage($message);
   }
 
   /**
