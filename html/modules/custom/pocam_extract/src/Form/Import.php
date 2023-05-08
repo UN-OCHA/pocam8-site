@@ -387,7 +387,7 @@ class Import extends FormBase {
     if (!empty($extract_ids)) {
       $operations = [];
       $chunks = array_chunk($extract_ids, 50);
-      foreach($chunks as $chunk) {
+      foreach ($chunks as $chunk) {
         $operations[] = [
           'Drupal\pocam_extract\Form\Import::pocamExtractDeleteExtracts',
           [$chunk],
@@ -410,7 +410,7 @@ class Import extends FormBase {
     if (!empty($term_ids)) {
       $operations = [];
       $chunks = array_chunk($term_ids, 25);
-      foreach($chunks as $chunk) {
+      foreach ($chunks as $chunk) {
         $operations[] = [
           'Drupal\pocam_extract\Form\Import::pocamExtractDeleteThemes',
           [$chunk],
