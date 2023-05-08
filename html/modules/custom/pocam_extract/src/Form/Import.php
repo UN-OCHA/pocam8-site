@@ -119,8 +119,9 @@ class Import extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
     $validators = ['file_validate_extensions' => ['xlsx']];
+
+    /** @var \Drupal\file\FileInterface $file */
     $file = file_save_upload('xlsx', $validators, FALSE, 0);
     if (!$file) {
       $error = $this->t('File could not be uploaded. Make sure it has .xlsx extension.');
@@ -129,28 +130,42 @@ class Import extends FormBase {
       return;
     }
 
-    $filename = $this->fileSystem->realpath($file->destination);
+    $filename = $this->fileSystem->realpath($file->getFileUri());
 
     if ($form_state->getValue('strategy') === 'overwrite') {
       $this->pocamExtractDeleteContent();
     }
 
     $reader = new Xlsx();
-    $reader->setReadDataOnly(TRUE);
+    // Needed to be able to handle merged cells.
+    $reader->setReadDataOnly(FALSE);
     $spreadsheet = $reader->load($filename);
 
+    // Use the first sheet.
     $worksheet = $spreadsheet->getActiveSheet();
-    $operations = [];
 
     $highestRow = $worksheet->getHighestDataRow();
-    for ($row = 3; $row <= $highestRow; ++$row) {
-      $range = 'A' . $row . ':F' . $row;
-      $contents = $worksheet->rangeToArray($range, NULL, FALSE, FALSE);
-      if (!empty(array_filter($contents[0]))) {
-        $contents[0][] = $row;
+    $columns = range(1, 6);
+
+    for ($row = 2; $row <= $highestRow; ++$row) {
+      $contents = [];
+      foreach ($columns as $column) {
+        $cell = $worksheet->getCellByColumnAndRow($column, $row);
+        $value = $cell->getValue();
+
+        if (($range = $cell->getMergeRange()) && !$cell->isMergeRangeValueCell()) {
+          $first_in_range_coordinates = strtok($range, ':');
+          $value = $worksheet->getCell($first_in_range_coordinates)->getValue();
+        }
+
+        $contents[] = $value;
+      }
+
+      if (!empty($contents)) {
+        $contents[] = $row;
         $operations[] = [
           'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
-          $contents,
+          [$contents],
         ];
       }
     }
@@ -172,11 +187,13 @@ class Import extends FormBase {
    * 4 as title and 5 as 'see also' references.
    */
   public static function pocamExtractImportCreate($row, &$context) {
+    // Use index for taxonomy weight.
     $index = array_pop($row);
 
     $row = array_map('trim', $row);
 
     // Text.
+    $text = '';
     if (isset($row[3]) && !empty($row[3])) {
       // Replace ellipse.
       $text = str_replace('…', '...', $row[3]);
@@ -205,20 +222,30 @@ class Import extends FormBase {
 
       // Document type: Resolution.
       if (strpos($parts[0], '/RES/') !== FALSE) {
-        $node->field_link = [
-          'title' => $title,
-          'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
-        ];
+        if (isset($parts[1])) {
+          $node->field_link = [
+            'title' => $title,
+            'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
+          ];
+        }
+        else {
+          $node->field_link = [
+            'title' => $title,
+            'uri' => 'https://undocs.org/' . $parts[0],
+          ];
+        }
 
         $resolution_term = taxonomy_term_load_multiple_by_name('Resolution', 'type');
         $node->field_document_type->entity = array_pop($resolution_term);
 
         // Year.
-        $year = str_replace(['(', ')', ','], '', $parts[1]);
-        $year = (int) trim($year);
-        $node->set('field_year', [
-          'value' => $year,
-        ]);
+        if (isset($parts[1])) {
+          $year = str_replace(['(', ')', ','], '', $parts[1]);
+          $year = (int) trim($year);
+          $node->set('field_year', [
+            'value' => $year,
+          ]);
+        }
       }
       // Document type: Statement.
       else {
@@ -237,6 +264,10 @@ class Import extends FormBase {
           'value' => $year,
         ]);
       }
+    }
+    else {
+      $context['skipped'][] = $row;
+      return;
     }
 
     // Theme field.
@@ -372,7 +403,6 @@ class Import extends FormBase {
    * Give feedback after imports.
    */
   public static function pocamExtractImportExtractFinished($success, $results, $operations) {
-
     $items = [];
     // The 'success' parameter means no fatal PHP errors were detected. All
     // other error management should be handled using 'results'.
