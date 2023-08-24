@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "composer/composer": "^2.1",
         "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.7",
@@ -83,9 +83,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "platform": {
-          "php": "8.0"
-        },
         "bin-dir": "vendor/bin/",
         "sort-packages": true,
         "allow-plugins": {
