@@ -1,9 +1,12 @@
 uuid: 3158b3e9-3a77-430e-87a8-00882303d51f
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - file
 id: editor
 label: editor
 weight: 3
 is_admin: null
-permissions: {  }
+permissions:
+  - 'delete own files'
