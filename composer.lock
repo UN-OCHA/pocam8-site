@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c6a6ca123bf23adc8331afcc41a0ddc",
+    "content-hash": "4b996c21653fdccc0c643d16e5979ddc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3419,28 +3419,28 @@
         },
         {
             "name": "drupal/lunr_filters",
-            "version": "1.1.5",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/lunr_filters.git",
-                "reference": "1.1.5"
+                "reference": "2.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/lunr_filters-1.1.5.zip",
-                "reference": "1.1.5",
-                "shasum": "c7b3201ffed5de3e092d8feba85ce6a76e263601"
+                "url": "https://ftp.drupal.org/files/projects/lunr_filters-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "e06c4a371066698ce14ddf71d21c061e2fda0983"
             },
             "require": {
-                "drupal/core": "^8 || ^9",
+                "drupal/core": "^8 || ^9 || ^10",
                 "drupal/lunr": "*",
                 "drupal/select2": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.1.5",
-                    "datestamp": "1645455322",
+                    "version": "2.0.0",
+                    "datestamp": "1692872469",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
