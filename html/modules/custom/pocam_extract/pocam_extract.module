@@ -43,6 +43,7 @@ function pocam_extract_entity_presave(EntityInterface $entity) {
       $query = \Drupal::service('entity_type.manager')
         ->getStorage('taxonomy_term')
         ->getQuery()
+        ->accessCheck(FALSE)
         ->condition('tid', $term_tid)
         ->sort('weight')
         ->sort('name');
@@ -249,4 +250,14 @@ function pocam_extract_theme_full_tree($entity, $view_mode) {
     '#prefix' => '<div class="theme-list">',
     '#suffix' => '</div>',
   ];
+}
+
+/**
+ *
+ */
+function pocam_extract_load_terms($name, $vid) : array {
+  return \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties([
+    'name' => $name,
+    'vid' => $vid,
+  ]);
 }

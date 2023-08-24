@@ -247,7 +247,7 @@ class Import extends FormBase {
           ];
         }
 
-        $resolution_term = taxonomy_term_load_multiple_by_name('Resolution', 'type');
+        $resolution_term = pocam_extract_load_terms('Resolution', 'type');
         $node->field_document_type->entity = array_pop($resolution_term);
 
         // Year.
@@ -266,7 +266,7 @@ class Import extends FormBase {
           'uri' => 'https://undocs.org/' . str_replace(',', '', $parts[0]),
         ];
 
-        $statement_term = taxonomy_term_load_multiple_by_name('Statement', 'type');
+        $statement_term = pocam_extract_load_terms('Statement', 'type');
         $node->field_document_type->entity = array_pop($statement_term);
 
         // Year.
@@ -351,7 +351,7 @@ class Import extends FormBase {
       }
 
       if (!$parent) {
-        $existing = taxonomy_term_load_multiple_by_name($short_theme_name, 'theme');
+        $existing = pocam_extract_load_terms($short_theme_name, 'theme');
       }
       else {
         $parent_tid = 0;
@@ -362,6 +362,7 @@ class Import extends FormBase {
         $query = \Drupal::service('entity_type.manager')
           ->getStorage('taxonomy_term')
           ->getQuery()
+          ->accessCheck(FALSE)
           ->condition('name', $short_theme_name)
           ->condition('parent', $parent_tid);
         $tids = $query->execute();

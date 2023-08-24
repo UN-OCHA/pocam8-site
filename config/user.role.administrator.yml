@@ -1,7 +1,22 @@
 uuid: b168ef09-4a30-4f5c-94fa-c1d387af46b4
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.filtered_html
+    - filter.format.full_html
+  module:
+    - block
+    - contextual
+    - facets
+    - filter
+    - image
+    - node
+    - path
+    - search_api
+    - system
+    - taxonomy
+    - views_ui
 _core:
   default_config_hash: Om6FEO7vZZMkPIbVvfxtdkWerQ2PvQM4sWUd6Q3ZnfI
 id: administrator

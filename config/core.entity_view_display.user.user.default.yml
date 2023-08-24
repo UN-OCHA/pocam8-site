@@ -22,6 +22,8 @@ content:
     settings:
       image_style: ''
       image_link: content
+      image_loading:
+        attribute: lazy
     type: image
     weight: 6
     third_party_settings: {  }
