@@ -2,7 +2,7 @@ name: POCAM Tome
 type: module
 description: 'POCAM Tomify'
 package: OCHA
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 
 dependencies:
   - tome:tome_static
