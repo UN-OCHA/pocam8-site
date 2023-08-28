@@ -5,7 +5,6 @@ COPY . /srv/www
 WORKDIR /srv/www
 RUN composer self-update && \
     composer install --quiet --no-dev --prefer-dist && \
-    composer run sass && \
     mkdir -p html/sites/default && \
     cp -a docker/settings.php docker/services.yml html/sites/default
 
