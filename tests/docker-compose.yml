@@ -1,0 +1,67 @@
+version: "2.2"
+
+networks:
+  default:
+
+volumes:
+  pocam-test-site-database:
+  pocam-test-site-public:
+  pocam-test-site-private:
+  pocam-test-site-dbus:
+
+services:
+  mysql:
+    image: public.ecr.aws/unocha/mysql:10.6
+    hostname: pocam-test-mysql
+    container_name: pocam-test-mysql
+    environment:
+      - MYSQL_DB=pocam
+      - MYSQL_USER=pocam
+      - MYSQL_PASS=pocam
+    volumes:
+      - "pocam-test-site-database:/var/lib/mysql:rw"
+    networks:
+      - default
+
+  drupal:
+    image: public.ecr.aws/unocha/pocam-site:local
+    hostname: pocam-test-site
+    container_name: pocam-test-site
+    depends_on:
+      - mysql
+    volumes:
+      - "./settings:/srv/www/shared/settings:ro"
+      # Mount config.
+      - "../config:/srv/www/config:ro"
+      # Mount volumes for dbus for chromium tests.
+      - "pocam-test-site-dbus:/var/run/dbus/system_bus_socket:rw"
+      # Mount volumes for the private and public files.
+      - "pocam-test-site-public:/srv/www/html/sites/default/files:rw"
+      - "pocam-test-site-private:/srv/www/html/sites/default/private:rw"
+      # Mount the folders needed for the tests.
+      - "./json:/srv/www/html/sites/default/files/json:rw"
+      - "./yaml:/srv/www/html/sites/default/files/content:rw"
+      - "../phpcs.xml:/srv/www/phpcs.xml:ro"
+      - "../phpunit.xml:/srv/www/phpunit.xml:ro"
+      # Mount local custom code.
+      - "../html/modules/custom:/srv/www/html/modules/custom:rw"
+      - "../html/themes/custom:/srv/www/html/themes/custom:rw"
+    environment:
+      - TERM=xterm
+      - ENVIRONMENT=dev
+      - NGINX_SERVERNAME=pocam-test-site,localhost,127.0.0.1
+      - NGINX_OVERRIDE_PROTOCOL=HTTP,pocam-test-site,localhost,127.0.0.1
+      - DRUSH_OPTIONS_URI=http://pocam-test-site
+      - DRUPAL_DB_DATABASE=pocam
+      - DRUPAL_DB_USERNAME=pocam
+      - DRUPAL_DB_PASSWORD=pocam
+      - DRUPAL_DB_HOST=mysql
+      - DRUPAL_DB_DRIVER=mysql
+      - PHP_ENVIRONMENT=dev
+      - PHP_XDEBUG=true
+      - CONNECTION_TIMEOUT=30000
+      - XDEBUG_MODE=coverage
+      - BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output
+      - DTT_BASE_URL=http://127.0.0.1
+    networks:
+      - default
