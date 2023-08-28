@@ -12,6 +12,7 @@ use Drupal\node\Entity\Node;
  */
 function pocam_tome_install() {
   $extract_nids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
     ->condition('type', 'pocam_extract')
     ->notExists('field_all_themes')
     ->execute();

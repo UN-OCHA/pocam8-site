@@ -51,12 +51,11 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
 
       switch ($token_name) {
         case 'search-block':
-
           $block = Block::load('exposedformextractspage_1');
           $output = \Drupal::entityTypeManager()
             ->getViewBuilder('block')
             ->view($block);
-          $replacements[$original] = render($output);
+          $replacements[$original] = \Drupal::service('renderer')->render($output);
           break;
 
         case 'themes-list':
@@ -72,7 +71,7 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
             '#prefix' => '<div class="theme-wrapper">',
             '#suffix' => '</div>',
           ];
-          $replacements[$original] = render($output);
+          $replacements[$original] = \Drupal::service('renderer')->render($output);
           break;
 
       }

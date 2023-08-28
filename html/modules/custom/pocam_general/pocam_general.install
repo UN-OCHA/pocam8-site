@@ -55,6 +55,7 @@ function pocam_general_update_8001() {
  */
 function pocam_general_update_8003() {
   $extract_nids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
     ->condition('type', 'pocam_extract')
     ->execute();
 
