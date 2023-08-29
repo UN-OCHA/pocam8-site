@@ -43,7 +43,6 @@ services:
       # Mount local custom code.
       - "../html/modules/custom:/srv/www/html/modules/custom:ro"
       - "../html/themes/custom:/srv/www/html/themes/custom:ro"
-      - "../html/core/includes:/srv/www/html/core/includes:ro"
     environment:
       - TERM=xterm
       - ENVIRONMENT=dev

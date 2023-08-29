@@ -105,10 +105,8 @@ jobs:
           run: |
             docker compose -f tests/docker-compose.yml up -d
             sleep 10
-            echo "docker containers:\n"
             docker ps -a
-            echo "run composer install:\n"
-            docker compose -f tests/docker-compose.yml exec -w /srv/www -T drupal composer install
+            docker compose -f tests/docker-compose.yml exec -w /srv/www -T drupal composer -vvv install
         env:
           fail-fast: true
 
