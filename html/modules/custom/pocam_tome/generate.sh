@@ -10,7 +10,7 @@ $drush cr
 
 # Create index.
 cd indexer
-node index.js --login="`$drush uli`" --index="http://pocam8-site.docksal/admin/config/lunr_search/extracts/index"
+node index.js --login="`$drush uli`" --index="http://pocam8-site.docksal.site/admin/config/lunr_search/extracts/index"
 cd ..
 
 # Make static site.
