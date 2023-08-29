@@ -1,13 +1,12 @@
 version: "2.2"
+name: pocam-test
 
 networks:
   default:
 
 volumes:
-  pocam-test-site-database:
-  pocam-test-site-public:
-  pocam-test-site-private:
-  pocam-test-site-dbus:
+  site-public:
+  site-private:
 
 services:
   mysql:
@@ -18,34 +17,33 @@ services:
       - MYSQL_DB=pocam
       - MYSQL_USER=pocam
       - MYSQL_PASS=pocam
-    volumes:
-      - "pocam-test-site-database:/var/lib/mysql:rw"
     networks:
       - default
 
   drupal:
-    image: public.ecr.aws/unocha/pocam-site:local
+    # Default to `odsg-site` for compatibility with the github tests.
+    # @see Makefile.
+    image: public.ecr.aws/unocha/${IMAGE_NAME:-pocam-site}:${IMAGE_TAG:-local}
     hostname: pocam-test-site
     container_name: pocam-test-site
     depends_on:
       - mysql
     volumes:
       - "./settings:/srv/www/shared/settings:ro"
-      # Mount config.
-      - "../config:/srv/www/config:ro"
-      # Mount volumes for dbus for chromium tests.
-      - "pocam-test-site-dbus:/var/run/dbus/system_bus_socket:rw"
       # Mount volumes for the private and public files.
-      - "pocam-test-site-public:/srv/www/html/sites/default/files:rw"
-      - "pocam-test-site-private:/srv/www/html/sites/default/private:rw"
+      - "site-public:/srv/www/html/sites/default/files:rw"
+      - "site-private:/srv/www/html/sites/default/private:rw"
+      # Mount the folder for composer scripts.
+      - "../scripts:/srv/www/scripts:ro"
       # Mount the folders needed for the tests.
       - "./json:/srv/www/html/sites/default/files/json:rw"
       - "./yaml:/srv/www/html/sites/default/files/content:rw"
       - "../phpcs.xml:/srv/www/phpcs.xml:ro"
       - "../phpunit.xml:/srv/www/phpunit.xml:ro"
       # Mount local custom code.
-      - "../html/modules/custom:/srv/www/html/modules/custom:rw"
-      - "../html/themes/custom:/srv/www/html/themes/custom:rw"
+      - "../html/modules/custom:/srv/www/html/modules/custom:ro"
+      - "../html/themes/custom:/srv/www/html/themes/custom:ro"
+      - "../html/core/includes:/srv/www/html/core/includes:ro"
     environment:
       - TERM=xterm
       - ENVIRONMENT=dev

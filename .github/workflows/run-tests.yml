@@ -105,7 +105,7 @@ jobs:
           run: |
             docker compose -f tests/docker-compose.yml up -d
             sleep 10
-            docker ps -a
+            docker ps -a | grep pocam
             docker compose -f tests/docker-compose.yml exec -w /srv/www -T drupal composer install
         env:
           fail-fast: true
