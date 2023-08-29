@@ -84,7 +84,7 @@
     "prefer-stable": true,
     "config": {
         "platform": {
-            "php": "8.0"
+            "php": "8.1"
         },
         "bin-dir": "vendor/bin/",
         "sort-packages": true,
