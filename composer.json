@@ -99,11 +99,6 @@
             "symfony/flex": true
         }
     },
-    "autoload": {
-        "classmap": [
-            "scripts/composer/ScriptHandler.php"
-        ]
-    },
     "scripts": {
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
