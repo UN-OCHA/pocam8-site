@@ -4,4 +4,4 @@ pocam_extract.import_form:
     _form: '\Drupal\pocam_extract\Form\Import'
     _title: 'Import Extracts'
   requirements:
-    _role: 'administrator'
+    _permission: 'administer nodes'
