@@ -1,0 +1,61 @@
+version: "2.2"
+name: pocam-test
+
+networks:
+  default:
+
+volumes:
+  site-public:
+  site-private:
+
+services:
+  mysql:
+    image: public.ecr.aws/unocha/mysql:10.6
+    hostname: pocam-test-mysql
+    container_name: pocam-test-mysql
+    environment:
+      - MYSQL_DB=pocam
+      - MYSQL_USER=pocam
+      - MYSQL_PASS=pocam
+    networks:
+      - default
+
+  drupal:
+    # Default to `odsg-site` for compatibility with the github tests.
+    # @see Makefile.
+    image: public.ecr.aws/unocha/${IMAGE_NAME:-pocam-site}:${IMAGE_TAG:-local}
+    hostname: pocam-test-site
+    container_name: pocam-test-site
+    depends_on:
+      - mysql
+    volumes:
+      - "./settings:/srv/www/shared/settings:ro"
+      # Mount volumes for the private and public files.
+      - "site-public:/srv/www/html/sites/default/files:rw"
+      - "site-private:/srv/www/html/sites/default/private:rw"
+      # Mount the folder for composer scripts.
+      - "../scripts:/srv/www/scripts:ro"
+      - "../phpcs.xml:/srv/www/phpcs.xml:ro"
+      - "../phpunit.xml:/srv/www/phpunit.xml:ro"
+      # Mount local custom code.
+      - "../html/modules/custom:/srv/www/html/modules/custom:ro"
+      - "../html/themes/custom:/srv/www/html/themes/custom:ro"
+    environment:
+      - TERM=xterm
+      - ENVIRONMENT=dev
+      - NGINX_SERVERNAME=pocam-test-site,localhost,127.0.0.1
+      - NGINX_OVERRIDE_PROTOCOL=HTTP,pocam-test-site,localhost,127.0.0.1
+      - DRUSH_OPTIONS_URI=http://pocam-test-site
+      - DRUPAL_DB_DATABASE=pocam
+      - DRUPAL_DB_USERNAME=pocam
+      - DRUPAL_DB_PASSWORD=pocam
+      - DRUPAL_DB_HOST=mysql
+      - DRUPAL_DB_DRIVER=mysql
+      - PHP_ENVIRONMENT=dev
+      - PHP_XDEBUG=true
+      - CONNECTION_TIMEOUT=30000
+      - XDEBUG_MODE=coverage
+      - BROWSERTEST_OUTPUT_DIRECTORY=/srv/www/html/sites/default/files/browser_output
+      - DTT_BASE_URL=http://127.0.0.1
+    networks:
+      - default

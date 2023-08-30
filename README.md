@@ -1,5 +1,3 @@
-[![Development build](https://travis-ci.com/UN-OCHA/pocam8-site.svg?branch=develop)](https://travis-ci.com/UN-OCHA/pocam8-site)
-[![Main build](https://travis-ci.com/UN-OCHA/pocam8-site.svg?branch=main)](https://travis-ci.com/UN-OCHA/pocam8-site)
 ![Development image](https://github.com/UN-OCHA/pocam8-site/workflows/Build%20docker%20image/badge.svg?branch=develop)
 ![Main image](https://github.com/UN-OCHA/pocam8-site/workflows/Build%20docker%20image/badge.svg?branch=main)
 
