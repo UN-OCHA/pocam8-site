@@ -35,9 +35,6 @@ services:
       - "site-private:/srv/www/html/sites/default/private:rw"
       # Mount the folder for composer scripts.
       - "../scripts:/srv/www/scripts:ro"
-      # Mount the folders needed for the tests.
-      - "./json:/srv/www/html/sites/default/files/json:rw"
-      - "./yaml:/srv/www/html/sites/default/files/content:rw"
       - "../phpcs.xml:/srv/www/phpcs.xml:ro"
       - "../phpunit.xml:/srv/www/phpunit.xml:ro"
       # Mount local custom code.
