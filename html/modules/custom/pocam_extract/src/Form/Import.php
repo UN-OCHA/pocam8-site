@@ -145,7 +145,7 @@ class Import extends FormBase {
     $worksheet = $spreadsheet->getActiveSheet();
 
     $highestRow = $worksheet->getHighestDataRow();
-    $columns = range(1, 6);
+    $columns = range(1, 7);
 
     for ($row = 2; $row <= $highestRow; ++$row) {
       $contents = [];
@@ -184,7 +184,7 @@ class Import extends FormBase {
    * Batch function.
    *
    * Expects row, from spreadsheet, with columns 0-2 as themes, 3 as text,
-   * 4 as title and 5 as 'see also' references.
+   * 4 as title, 5 as 'see also' references and 6 as 'issues'.
    */
   public static function pocamExtractImportCreate($row, &$context) {
     // Use index for taxonomy weight.
@@ -199,6 +199,14 @@ class Import extends FormBase {
       $text = str_replace('…', '...', $row[3]);
     }
 
+    // Text.
+    $issues = '';
+    if (isset($row[6]) && !empty($row[6])) {
+      $issues = str_replace('…', '...', $row[6]);
+      $parts = explode("\n", $issues);
+      $issues = '<p>' . implode('</p><p>', $parts) . '</p>';
+    }
+
     $data = [
       'type' => 'pocam_extract',
       'title' => '',
@@ -208,6 +216,10 @@ class Import extends FormBase {
       'field_year' => [],
       'field_see_also' => [],
       'field_theme' => [],
+      'field_issues_for_consideration' => [
+        'value' => $issues,
+        'format' => 'basic_html',
+      ],
     ];
 
     $node = Node::create($data);
@@ -298,10 +310,17 @@ class Import extends FormBase {
           $links = [];
           foreach ($see_alsos as $item) {
             $parts = explode(' ', trim($item));
+
+            // Skip illegal entries.
+            if (strlen(trim($item)) > 250) {
+              continue;
+            }
+
             // All see alsos should start with 'S/RES' or 'S/PRST'.
             if (substr($parts[0], 0, 2) !== 'S/') {
               continue;
             }
+
             $links[] = [
               'title' => trim($item),
               'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),

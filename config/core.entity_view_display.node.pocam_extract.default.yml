@@ -18,8 +18,8 @@ dependencies:
     - user
 third_party_settings:
   layout_builder:
-    allow_custom: false
     enabled: true
+    allow_custom: false
     sections:
       -
         layout_id: layout_twocol_section
@@ -31,64 +31,64 @@ third_party_settings:
             uuid: 3884965d-e001-4264-a683-889e8343af23
             region: first
             configuration:
+              id: 'field_block:node:pocam_extract:field_text'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:pocam_extract:field_text'
               formatter:
-                label: hidden
                 type: text_default
+                label: hidden
                 settings: {  }
                 third_party_settings: {  }
-            additional: {  }
             weight: 0
+            additional: {  }
           46b65fc4-259a-4fa4-835f-d3d93b71084b:
             uuid: 46b65fc4-259a-4fa4-835f-d3d93b71084b
             region: second
             configuration:
+              id: 'field_block:node:pocam_extract:field_year'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:pocam_extract:field_year'
               formatter:
-                label: above
                 type: number_integer
+                label: above
                 settings:
-                  prefix_suffix: true
                   thousand_separator: ''
+                  prefix_suffix: true
                 third_party_settings: {  }
-            additional: {  }
             weight: 0
+            additional: {  }
           f5cdf645-859f-4326-bbd5-af13b122854a:
             uuid: f5cdf645-859f-4326-bbd5-af13b122854a
             region: second
             configuration:
               id: 'field_block:node:pocam_extract:field_document_type'
               label: 'Document type'
-              provider: layout_builder
               label_display: '0'
-              formatter:
-                label: above
-                type: entity_reference_label
-                settings:
-                  link: false
-                third_party_settings: {  }
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
-            additional: {  }
+              formatter:
+                type: entity_reference_label
+                label: above
+                settings:
+                  link: false
+                third_party_settings: {  }
             weight: 1
+            additional: {  }
           cb17daef-7301-48a9-a990-c35d98377cb0:
             uuid: cb17daef-7301-48a9-a990-c35d98377cb0
             region: second
             configuration:
+              id: 'field_block:node:pocam_extract:field_link'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:pocam_extract:field_link'
               formatter:
-                label: above
                 type: link
+                label: above
                 settings:
                   trim_length: 80
                   url_only: false
@@ -96,28 +96,28 @@ third_party_settings:
                   rel: ''
                   target: ''
                 third_party_settings: {  }
-            additional: {  }
             weight: 4
+            additional: {  }
           a78b9917-5245-40e9-a14d-a02540fc0a4a:
             uuid: a78b9917-5245-40e9-a14d-a02540fc0a4a
             region: second
             configuration:
+              id: 'extra_field_block:node:pocam_extract:theme_full_tree'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'extra_field_block:node:pocam_extract:theme_full_tree'
-            additional: {  }
             weight: 3
+            additional: {  }
           fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be:
             uuid: fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be
             region: second
             configuration:
+              id: 'extra_field_block:node:pocam_extract:theme_see_also'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'extra_field_block:node:pocam_extract:theme_see_also'
-            additional: {  }
             weight: 5
+            additional: {  }
         third_party_settings: {  }
 id: node.pocam_extract.default
 targetEntityType: node
@@ -125,25 +125,24 @@ bundle: pocam_extract
 mode: default
 content:
   field_all_themes:
-    weight: 7
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 7
     region: first
   field_document_type:
-    label: above
-    weight: 1
     type: entity_reference_label
+    label: above
     settings:
       link: true
     third_party_settings: {  }
+    weight: 1
     region: content
   field_link:
-    label: above
-    weight: 4
     type: link
+    label: above
     settings:
       trim_length: 80
       url_only: false
@@ -151,11 +150,10 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
+    weight: 4
     region: content
   field_see_also:
     type: link
-    weight: 5
-    region: content
     label: above
     settings:
       trim_length: 80
@@ -164,44 +162,46 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
+    weight: 5
+    region: content
   field_text:
-    label: hidden
-    weight: 0
     type: text_default
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 0
     region: content
   field_theme:
     type: entity_reference_label
-    weight: 3
-    region: content
     label: above
     settings:
       link: true
     third_party_settings: {  }
+    weight: 3
+    region: content
   field_year:
-    label: above
-    weight: 6
     type: number_integer
+    label: above
     settings:
-      prefix_suffix: true
       thousand_separator: ''
+      prefix_suffix: true
     third_party_settings: {  }
+    weight: 6
     region: content
   links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 2
     region: content
-    settings: {  }
-    third_party_settings: {  }
   theme_full_tree:
-    weight: 2
     settings: {  }
     third_party_settings: {  }
+    weight: 2
     region: first
   theme_see_also:
-    weight: 2
     settings: {  }
     third_party_settings: {  }
+    weight: 2
     region: first
 hidden:
   search_api_excerpt: true

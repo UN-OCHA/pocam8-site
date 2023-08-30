@@ -18,14 +18,14 @@ plugin: system_main_block
 settings:
   id: system_main_block
   label: 'Main page content'
-  provider: system
   label_display: '0'
+  provider: system
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'
-    bundles:
-      page: page
-      pocam_extract: pocam_extract
     negate: false
     context_mapping:
       node: '@node.node_route_context:node'
+    bundles:
+      page: page
+      pocam_extract: pocam_extract

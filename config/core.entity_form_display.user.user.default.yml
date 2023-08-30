@@ -35,11 +35,11 @@ content:
     weight: 6
     region: content
   user_picture:
+    type: image_image
+    weight: 31
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    type: image_image
-    weight: 31
     third_party_settings: {  }
-    region: content
 hidden: {  }

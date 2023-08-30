@@ -20,19 +20,19 @@ bundle: pocam_extract
 mode: teaser
 content:
   links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    weight: 100
     region: content
   theme_full_tree:
-    weight: 2
     settings: {  }
     third_party_settings: {  }
+    weight: 2
     region: content
   theme_see_also:
-    weight: 2
     settings: {  }
     third_party_settings: {  }
+    weight: 2
     region: content
 hidden:
   field_all_themes: true
