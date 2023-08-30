@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.node.pocam_extract.field_all_themes
     - field.field.node.pocam_extract.field_document_type
-    - field.field.node.pocam_extract.field_issues_for_consideration
     - field.field.node.pocam_extract.field_link
     - field.field.node.pocam_extract.field_see_also
     - field.field.node.pocam_extract.field_text
@@ -32,14 +31,6 @@ content:
     weight: 2
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_issues_for_consideration:
-    type: text_textarea
-    weight: 26
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
     third_party_settings: {  }
   field_link:
     type: link_default
@@ -90,11 +81,6 @@ content:
     region: content
     settings:
       display_label: true
-    third_party_settings: {  }
-  simple_sitemap:
-    weight: 10
-    region: content
-    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
