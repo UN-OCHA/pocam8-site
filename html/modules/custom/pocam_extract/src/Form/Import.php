@@ -173,7 +173,7 @@ class Import extends FormBase {
         $contents[$column] = $contents[$column] ?? '';
       }
 
-      // Make sure we have a title;
+      // Make sure we have a title.
       if (!empty($contents) && !empty($contents[5])) {
         $contents[] = $row;
         $operations[] = [
