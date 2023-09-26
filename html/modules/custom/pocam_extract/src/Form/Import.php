@@ -151,23 +151,30 @@ class Import extends FormBase {
     for ($row = 2; $row <= $highestRow; ++$row) {
       $contents = [];
       foreach ($columns as $column) {
+        $contents[$column] = '';
+
         $cell = $worksheet->getCellByColumnAndRow($column, $row);
         $value = $cell->getValue();
 
-        if (($range = $cell->getMergeRange()) && !$cell->isMergeRangeValueCell()) {
+        // Is the cell merged?
+        if (empty($value) && ($range = $cell->getMergeRange()) && !$cell->isMergeRangeValueCell()) {
           $first_in_range_coordinates = strtok($range, ':');
           $value = $worksheet->getCell($first_in_range_coordinates)->getValue();
         }
 
         // Make sure we have levels.
-        if ($column <= 2 && empty($value) && isset($previous_row[$column])) {
+        if (empty($value) && $column <= 3 && isset($previous_row[$column])) {
           $value = $previous_row[$column];
         }
 
-        $contents[] = $value;
+        $contents[$column] = $value;
+
+        // Replace NULL values.
+        $contents[$column] = $contents[$column] ?? '';
       }
 
-      if (!empty($contents)) {
+      // Make sure we have a title;
+      if (!empty($contents) && !empty($contents[5])) {
         $contents[] = $row;
         $operations[] = [
           'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
@@ -178,39 +185,42 @@ class Import extends FormBase {
       }
     }
 
-    $batch = [
-      'title' => $this->t('Importing'),
-      'init_message' => $this->t('Initializing.'),
-      'progress message' => $this->t('Processed @current out of @total..'),
-      'operations' => $operations,
-      'finished' => 'Drupal\pocam_extract\Form\Import::pocamExtractImportExtractFinished',
-    ];
-    batch_set($batch);
+    if (!empty($operations)) {
+      $batch = [
+        'title' => $this->t('Importing'),
+        'init_message' => $this->t('Initializing.'),
+        'progress message' => $this->t('Processed @current out of @total..'),
+        'operations' => $operations,
+        'finished' => 'Drupal\pocam_extract\Form\Import::pocamExtractImportExtractFinished',
+      ];
+      batch_set($batch);
+    }
   }
 
   /**
    * Batch function.
    *
-   * Expects row, from spreadsheet, with columns 0-2 as themes, 3 as text,
-   * 4 as title, 5 as 'see also' references and 6 as 'issues'.
+   * Expects row, from spreadsheet, with columns 1-3 as themes, 4 as text,
+   * 5 as title, 6 as 'see also' references and 7 as 'issues'.
    */
   public static function pocamExtractImportCreate($row, &$context) {
     // Use index for taxonomy weight.
     $index = array_pop($row);
 
+    // Trim values.
     $row = array_map('trim', $row);
 
     // Text.
     $text = '';
-    if (isset($row[3]) && !empty($row[3])) {
+    if (isset($row[4]) && !empty($row[4])) {
       // Replace ellipse.
-      $text = str_replace('…', '...', $row[3]);
+      $text = str_replace('…', '...', $row[4]);
     }
 
-    // Text.
+    // Issues.
     $issues = '';
-    if (isset($row[6]) && !empty($row[6])) {
-      $issues = str_replace('…', '...', $row[6]);
+    if (isset($row[7]) && !empty($row[7])) {
+      $issues = str_replace('…', '...', $row[7]);
       $parts = explode("\n", $issues);
       $issues = '<p>' . implode('</p><p>', $parts) . '</p>';
     }
@@ -233,8 +243,8 @@ class Import extends FormBase {
     $node = Node::create($data);
 
     // Title, link, document type and year.
-    if (isset($row[4]) && !empty($row[4])) {
-      $title = $row[4];
+    if (isset($row[5]) && !empty($row[5])) {
+      $title = $row[5];
       $parts = explode(' ', $title);
 
       // Set node title.
@@ -292,14 +302,14 @@ class Import extends FormBase {
 
     // Theme field.
     $themes = [];
-    if (isset($row['0']) && !empty($row['0'])) {
-      $themes[] = trim($row['0']);
-    }
     if (isset($row['1']) && !empty($row['1'])) {
       $themes[] = trim($row['1']);
     }
     if (isset($row['2']) && !empty($row['2'])) {
       $themes[] = trim($row['2']);
+    }
+    if (isset($row['3']) && !empty($row['3'])) {
+      $themes[] = trim($row['3']);
     }
 
     if (!empty($themes)) {
@@ -307,10 +317,10 @@ class Import extends FormBase {
       $term = Import::pocamExtractCreateThemeTerm($themes, $index);
       $node->field_theme->entity = $term;
 
-      if (isset($row[5]) && !empty($row[5])) {
+      if (isset($row[6]) && !empty($row[6])) {
         // Only update if it's empty.
         if (!isset($term->field_see_also->value) || empty($term->field_see_also->value)) {
-          $see_also = $row[5];
+          $see_also = $row[6];
           $see_also = str_replace('See also, for example, ', '', $see_also);
           $see_also = str_replace('; and ', '; ', $see_also);
           $see_alsos = explode(';', $see_also);
@@ -422,13 +432,15 @@ class Import extends FormBase {
       }
     }
 
-    $batch = [
-      'title' => $this->t('Deleting and importing extracts.'),
-      'init_message' => $this->t('Initializing.'),
-      'progress message' => $this->t('Processed @current out of @total..'),
-      'operations' => $operations,
-    ];
-    batch_set($batch);
+    if (!empty($operations)) {
+      $batch = [
+        'title' => $this->t('Deleting and importing extracts.'),
+        'init_message' => $this->t('Initializing.'),
+        'progress message' => $this->t('Processed @current out of @total..'),
+        'operations' => $operations,
+      ];
+      batch_set($batch);
+    }
 
     $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery();
     $query->condition('vid', 'theme');
@@ -445,13 +457,15 @@ class Import extends FormBase {
       }
     }
 
-    $batch = [
-      'title' => $this->t('Deleting and importing extracts.'),
-      'init_message' => $this->t('Initializing.'),
-      'progress message' => $this->t('Processed @current out of @total..'),
-      'operations' => $operations,
-    ];
-    batch_set($batch);
+    if (!empty($operations)) {
+      $batch = [
+        'title' => $this->t('Deleting and importing extracts.'),
+        'init_message' => $this->t('Initializing.'),
+        'progress message' => $this->t('Processed @current out of @total..'),
+        'operations' => $operations,
+      ];
+      batch_set($batch);
+    }
   }
 
   /**
