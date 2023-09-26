@@ -1,0 +1,21 @@
+uuid: da1bdf73-8108-4ed8-8240-da3b32d7ccb1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_issues_for_consideration
+    - node.type.pocam_extract
+  module:
+    - text
+id: node.pocam_extract.field_issues_for_consideration
+field_name: field_issues_for_consideration
+entity_type: node
+bundle: pocam_extract
+label: 'Issues for Consideration'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
