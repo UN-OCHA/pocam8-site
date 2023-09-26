@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.pocam_extract.field_all_themes
     - field.field.node.pocam_extract.field_document_type
+    - field.field.node.pocam_extract.field_issues_for_consideration
     - field.field.node.pocam_extract.field_link
     - field.field.node.pocam_extract.field_see_also
     - field.field.node.pocam_extract.field_text
@@ -118,6 +119,21 @@ third_party_settings:
                 entity: layout_builder.entity
             weight: 5
             additional: {  }
+          fcca89c3-d666-4ca3-b48a-13dcb4c439a0:
+            uuid: fcca89c3-d666-4ca3-b48a-13dcb4c439a0
+            region: first
+            configuration:
+              id: 'field_block:node:pocam_extract:field_issues_for_consideration'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: text_default
+                label: above
+                settings: {  }
+                third_party_settings: {  }
+            weight: 1
+            additional: {  }
         third_party_settings: {  }
 id: node.pocam_extract.default
 targetEntityType: node
@@ -140,6 +156,13 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  field_issues_for_consideration:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: first
   field_link:
     type: link
     label: above
