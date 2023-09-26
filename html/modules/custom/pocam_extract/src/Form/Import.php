@@ -146,6 +146,7 @@ class Import extends FormBase {
 
     $highestRow = $worksheet->getHighestDataRow();
     $columns = range(1, 7);
+    $previous_row = [];
 
     for ($row = 2; $row <= $highestRow; ++$row) {
       $contents = [];
@@ -158,6 +159,11 @@ class Import extends FormBase {
           $value = $worksheet->getCell($first_in_range_coordinates)->getValue();
         }
 
+        // Make sure we have levels.
+        if ($column <= 2 && empty($value) && isset($previous_row[$column])) {
+          $value = $previous_row[$column];
+        }
+
         $contents[] = $value;
       }
 
@@ -167,6 +173,8 @@ class Import extends FormBase {
           'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
           [$contents],
         ];
+
+        $previous_row = $contents;
       }
     }
 
