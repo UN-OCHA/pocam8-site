@@ -1,15 +1,25 @@
-FROM public.ecr.aws/unocha/unified-builder:8.0-stable as builder
-ARG  BRANCH_ENVIRONMENT
-ENV  NODE_ENV=$BRANCH_ENVIRONMENT
-COPY . /srv/www
-WORKDIR /srv/www
-RUN composer self-update && \
-    composer install --quiet --no-dev --prefer-dist && \
-    composer run sass && \
-    mkdir -p html/sites/default && \
-    cp -a docker/settings.php docker/services.yml html/sites/default
+# Build the code.
+FROM public.ecr.aws/unocha/unified-builder:8.1-stable as builder
 
-FROM public.ecr.aws/unocha/php-k8s:8.0-NR-stable
+ARG  BRANCH_ENVIRONMENT
+
+ENV  NODE_ENV=$BRANCH_ENVIRONMENT
+
+# Copy only the files necessary to build the code (see .dockerignore in root).
+COPY . /srv/www
+
+WORKDIR /srv/www
+
+# Clean up previous composer installation and run new one.
+RUN rm -rf ./vendor && composer install --no-interaction --no-dev
+
+# Copy settings to default site location.
+RUN cp -a docker/settings.php docker/services.yml html/sites/default
+
+################################################################################
+
+# Generate the image.
+FROM public.ecr.aws/unocha/php-k8s:8.1-stable
 
 ARG VCS_REF
 ARG VCS_URL
@@ -19,14 +29,14 @@ ARG GITHUB_REPOSITORY
 ARG GITHUB_SHA
 ARG GITHUB_REF
 
-ENV  NGINX_SERVERNAME=poc-aide-memoire.unocha.org
-env  PHP_ENVIRONMENT=production
-ENV  PHP_MEMORY_LIMIT=256M
-ENV  PHP_MAX_CHILDREN=16
-ENV  GIT_BLAME=$GITHUB_ACTOR
-ENV  GIT_REPO=$GITHUB_REPOSITORY
-ENV  GIT_SHA=$GITHUB_SHA
-ENV  GIT_REF=$GITHUB_REF
+ENV  NGINX_SERVERNAME=poc-aide-memoire.unocha.org \
+     PHP_ENVIRONMENT=production \
+     PHP_MEMORY_LIMIT=256M \
+     PHP_MAX_CHILDREN=16 \
+     GIT_BLAME=$GITHUB_ACTOR \
+     GIT_REPO=$GITHUB_REPOSITORY \
+     GIT_SHA=$GITHUB_SHA \
+     GIT_REF=$GITHUB_REF
 
 LABEL info.humanitarianresponse.build.date=$BUILD_DATE \
       info.humanitarianresponse.build.vcs-url=$VCS_URL \
@@ -38,4 +48,5 @@ COPY --from=builder /srv/www/vendor /srv/www/vendor/
 COPY --from=builder /srv/www/composer.json /srv/www/composer.json
 COPY --from=builder /srv/www/composer.patches.json /srv/www/composer.patches.json
 COPY --from=builder /srv/www/composer.lock /srv/www/composer.lock
-COPY --from=builder /srv/www/docker/fastcgi_drupal.conf /etc/nginx/apps/drupal/fastcgi_drupal.conf
+COPY --from=builder /srv/www/PATCHES /srv/www/PATCHES
+COPY --from=builder /srv/www/scripts /srv/www/scripts

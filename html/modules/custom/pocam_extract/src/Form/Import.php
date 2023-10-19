@@ -119,8 +119,9 @@ class Import extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
     $validators = ['file_validate_extensions' => ['xlsx']];
+
+    /** @var \Drupal\file\FileInterface $file */
     $file = file_save_upload('xlsx', $validators, FALSE, 0);
     if (!$file) {
       $error = $this->t('File could not be uploaded. Make sure it has .xlsx extension.');
@@ -129,57 +130,99 @@ class Import extends FormBase {
       return;
     }
 
-    $filename = $this->fileSystem->realpath($file->destination);
+    $filename = $this->fileSystem->realpath($file->getFileUri());
 
     if ($form_state->getValue('strategy') === 'overwrite') {
       $this->pocamExtractDeleteContent();
     }
 
     $reader = new Xlsx();
-    $reader->setReadDataOnly(TRUE);
+    // Needed to be able to handle merged cells.
+    $reader->setReadDataOnly(FALSE);
     $spreadsheet = $reader->load($filename);
 
+    // Use the first sheet.
     $worksheet = $spreadsheet->getActiveSheet();
-    $operations = [];
 
     $highestRow = $worksheet->getHighestDataRow();
-    for ($row = 3; $row <= $highestRow; ++$row) {
-      $range = 'A' . $row . ':F' . $row;
-      $contents = $worksheet->rangeToArray($range, NULL, FALSE, FALSE);
-      if (!empty(array_filter($contents[0]))) {
-        $contents[0][] = $row;
+    $columns = range(1, 7);
+    $previous_row = [];
+
+    for ($row = 2; $row <= $highestRow; ++$row) {
+      $contents = [];
+      foreach ($columns as $column) {
+        $contents[$column] = '';
+
+        $cell = $worksheet->getCellByColumnAndRow($column, $row);
+        $value = $cell->getValue();
+
+        // Is the cell merged?
+        if (empty($value) && ($range = $cell->getMergeRange()) && !$cell->isMergeRangeValueCell()) {
+          $first_in_range_coordinates = strtok($range, ':');
+          $value = $worksheet->getCell($first_in_range_coordinates)->getValue();
+        }
+
+        // Make sure we have levels.
+        if (empty($value) && $column <= 3 && isset($previous_row[$column])) {
+          $value = $previous_row[$column];
+        }
+
+        $contents[$column] = $value;
+
+        // Replace NULL values.
+        $contents[$column] = $contents[$column] ?? '';
+      }
+
+      // Make sure we have a title.
+      if (!empty($contents) && !empty($contents[5])) {
+        $contents[] = $row;
         $operations[] = [
           'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
-          $contents,
+          [$contents],
         ];
+
+        $previous_row = $contents;
       }
     }
 
-    $batch = [
-      'title' => $this->t('Importing'),
-      'init_message' => $this->t('Initializing.'),
-      'progress message' => $this->t('Processed @current out of @total..'),
-      'operations' => $operations,
-      'finished' => 'Drupal\pocam_extract\Form\Import::pocamExtractImportExtractFinished',
-    ];
-    batch_set($batch);
+    if (!empty($operations)) {
+      $batch = [
+        'title' => $this->t('Importing'),
+        'init_message' => $this->t('Initializing.'),
+        'progress message' => $this->t('Processed @current out of @total..'),
+        'operations' => $operations,
+        'finished' => 'Drupal\pocam_extract\Form\Import::pocamExtractImportExtractFinished',
+      ];
+      batch_set($batch);
+    }
   }
 
   /**
    * Batch function.
    *
-   * Expects row, from spreadsheet, with columns 0-2 as themes, 3 as text,
-   * 4 as title and 5 as 'see also' references.
+   * Expects row, from spreadsheet, with columns 1-3 as themes, 4 as text,
+   * 5 as title, 6 as 'see also' references and 7 as 'issues'.
    */
   public static function pocamExtractImportCreate($row, &$context) {
+    // Use index for taxonomy weight.
     $index = array_pop($row);
 
+    // Trim values.
     $row = array_map('trim', $row);
 
     // Text.
-    if (isset($row[3]) && !empty($row[3])) {
+    $text = '';
+    if (isset($row[4]) && !empty($row[4])) {
       // Replace ellipse.
-      $text = str_replace('…', '...', $row[3]);
+      $text = str_replace('…', '...', $row[4]);
+    }
+
+    // Issues.
+    $issues = '';
+    if (isset($row[7]) && !empty($row[7])) {
+      $issues = str_replace('…', '...', $row[7]);
+      $parts = explode("\n", $issues);
+      $issues = '<p>' . implode('</p><p>', $parts) . '</p>';
     }
 
     $data = [
@@ -191,13 +234,17 @@ class Import extends FormBase {
       'field_year' => [],
       'field_see_also' => [],
       'field_theme' => [],
+      'field_issues_for_consideration' => [
+        'value' => $issues,
+        'format' => 'basic_html',
+      ],
     ];
 
     $node = Node::create($data);
 
     // Title, link, document type and year.
-    if (isset($row[4]) && !empty($row[4])) {
-      $title = $row[4];
+    if (isset($row[5]) && !empty($row[5])) {
+      $title = $row[5];
       $parts = explode(' ', $title);
 
       // Set node title.
@@ -205,20 +252,30 @@ class Import extends FormBase {
 
       // Document type: Resolution.
       if (strpos($parts[0], '/RES/') !== FALSE) {
-        $node->field_link = [
-          'title' => $title,
-          'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
-        ];
+        if (isset($parts[1])) {
+          $node->field_link = [
+            'title' => $title,
+            'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
+          ];
+        }
+        else {
+          $node->field_link = [
+            'title' => $title,
+            'uri' => 'https://undocs.org/' . $parts[0],
+          ];
+        }
 
         $resolution_term = taxonomy_term_load_multiple_by_name('Resolution', 'type');
         $node->field_document_type->entity = array_pop($resolution_term);
 
         // Year.
-        $year = str_replace(['(', ')', ','], '', $parts[1]);
-        $year = (int) trim($year);
-        $node->set('field_year', [
-          'value' => $year,
-        ]);
+        if (isset($parts[1])) {
+          $year = str_replace(['(', ')', ','], '', $parts[1]);
+          $year = (int) trim($year);
+          $node->set('field_year', [
+            'value' => $year,
+          ]);
+        }
       }
       // Document type: Statement.
       else {
@@ -238,17 +295,21 @@ class Import extends FormBase {
         ]);
       }
     }
+    else {
+      $context['skipped'][] = $row;
+      return;
+    }
 
     // Theme field.
     $themes = [];
-    if (isset($row['0']) && !empty($row['0'])) {
-      $themes[] = trim($row['0']);
-    }
     if (isset($row['1']) && !empty($row['1'])) {
       $themes[] = trim($row['1']);
     }
     if (isset($row['2']) && !empty($row['2'])) {
       $themes[] = trim($row['2']);
+    }
+    if (isset($row['3']) && !empty($row['3'])) {
+      $themes[] = trim($row['3']);
     }
 
     if (!empty($themes)) {
@@ -256,10 +317,10 @@ class Import extends FormBase {
       $term = Import::pocamExtractCreateThemeTerm($themes, $index);
       $node->field_theme->entity = $term;
 
-      if (isset($row[5]) && !empty($row[5])) {
+      if (isset($row[6]) && !empty($row[6])) {
         // Only update if it's empty.
         if (!isset($term->field_see_also->value) || empty($term->field_see_also->value)) {
-          $see_also = $row[5];
+          $see_also = $row[6];
           $see_also = str_replace('See also, for example, ', '', $see_also);
           $see_also = str_replace('; and ', '; ', $see_also);
           $see_alsos = explode(';', $see_also);
@@ -267,10 +328,17 @@ class Import extends FormBase {
           $links = [];
           foreach ($see_alsos as $item) {
             $parts = explode(' ', trim($item));
+
+            // Skip illegal entries.
+            if (strlen(trim($item)) > 250) {
+              continue;
+            }
+
             // All see alsos should start with 'S/RES' or 'S/PRST'.
             if (substr($parts[0], 0, 2) !== 'S/') {
               continue;
             }
+
             $links[] = [
               'title' => trim($item),
               'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
@@ -349,30 +417,81 @@ class Import extends FormBase {
    * Clear extract content and theme terms before import.
    */
   private function pocamExtractDeleteContent() {
-    $count_nodes = $count_terms = 0;
-    $extracts = $this->entityTypeManager->getStorage('node')->loadByProperties(['type' => 'pocam_extract']);
+    $query = $this->entityTypeManager->getStorage('node')->getQuery();
+    $query->condition('type', 'pocam_extract');
+    $extract_ids = $query->execute();
+
+    if (!empty($extract_ids)) {
+      $operations = [];
+      $chunks = array_chunk($extract_ids, 50);
+      foreach ($chunks as $chunk) {
+        $operations[] = [
+          'Drupal\pocam_extract\Form\Import::pocamExtractDeleteExtracts',
+          [$chunk],
+        ];
+      }
+    }
+
+    if (!empty($operations)) {
+      $batch = [
+        'title' => $this->t('Deleting and importing extracts.'),
+        'init_message' => $this->t('Initializing.'),
+        'progress message' => $this->t('Processed @current out of @total..'),
+        'operations' => $operations,
+      ];
+      batch_set($batch);
+    }
+
+    $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery();
+    $query->condition('vid', 'theme');
+    $term_ids = $query->execute();
+
+    if (!empty($term_ids)) {
+      $operations = [];
+      $chunks = array_chunk($term_ids, 25);
+      foreach ($chunks as $chunk) {
+        $operations[] = [
+          'Drupal\pocam_extract\Form\Import::pocamExtractDeleteThemes',
+          [$chunk],
+        ];
+      }
+    }
+
+    if (!empty($operations)) {
+      $batch = [
+        'title' => $this->t('Deleting and importing extracts.'),
+        'init_message' => $this->t('Initializing.'),
+        'progress message' => $this->t('Processed @current out of @total..'),
+        'operations' => $operations,
+      ];
+      batch_set($batch);
+    }
+  }
+
+  /**
+   * Delete extracts in batch.
+   */
+  public static function pocamExtractDeleteExtracts($extract_ids, &$context) {
+    $extracts = \Drupal::service('entity_type.manager')->getStorage('node')->loadMultiple($extract_ids);
     foreach ($extracts as $node) {
-      $count_nodes++;
       $node->delete();
     }
-    $themes = $this->entityTypeManager->getStorage('taxonomy_term')->loadByProperties(['vid' => 'theme']);
-    foreach ($themes as $term) {
-      $count_terms++;
+  }
+
+  /**
+   * Delete themes in batch.
+   */
+  public static function pocamExtractDeleteThemes($term_ids, &$context) {
+    $extracts = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadMultiple($term_ids);
+    foreach ($extracts as $term) {
       $term->delete();
     }
-    $message = $this->t('Removed @count_nodes extracts and @count_terms themes.', [
-      '@count_nodes' => $count_nodes,
-      '@count_terms' => $count_terms,
-    ]);
-    $this->messenger()
-      ->addMessage($message);
   }
 
   /**
    * Give feedback after imports.
    */
   public static function pocamExtractImportExtractFinished($success, $results, $operations) {
-
     $items = [];
     // The 'success' parameter means no fatal PHP errors were detected. All
     // other error management should be handled using 'results'.
