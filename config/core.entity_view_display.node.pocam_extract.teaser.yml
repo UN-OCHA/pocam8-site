@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.pocam_extract.field_all_themes
+    - field.field.node.pocam_extract.field_country_theme
     - field.field.node.pocam_extract.field_document_type
     - field.field.node.pocam_extract.field_issues_for_consideration
     - field.field.node.pocam_extract.field_link
@@ -37,6 +38,7 @@ content:
     region: content
 hidden:
   field_all_themes: true
+  field_country_theme: true
   field_document_type: true
   field_issues_for_consideration: true
   field_link: true
