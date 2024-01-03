@@ -1,15 +1,16 @@
-uuid: 555ae86f-8449-42e5-b0aa-0f9d6a84a9ee
+uuid: a12f02b9-ea9f-4386-b217-ef6c2ce2d5a8
 langcode: en
 status: true
 dependencies:
   module:
     - node
+    - taxonomy
 id: node.field_country_theme
 field_name: field_country_theme
 entity_type: node
-type: string_long
+type: entity_reference
 settings:
-  case_sensitive: false
+  target_type: taxonomy_term
 module: core
 locked: false
 cardinality: 1

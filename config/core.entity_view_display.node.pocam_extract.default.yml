@@ -98,7 +98,7 @@ third_party_settings:
                   rel: ''
                   target: ''
                 third_party_settings: {  }
-            weight: 5
+            weight: 6
             additional: {  }
           a78b9917-5245-40e9-a14d-a02540fc0a4a:
             uuid: a78b9917-5245-40e9-a14d-a02540fc0a4a
@@ -108,7 +108,7 @@ third_party_settings:
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-            weight: 4
+            weight: 5
             additional: {  }
           fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be:
             uuid: fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be
@@ -118,7 +118,7 @@ third_party_settings:
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-            weight: 6
+            weight: 7
             additional: {  }
           fcca89c3-d666-4ca3-b48a-13dcb4c439a0:
             uuid: fcca89c3-d666-4ca3-b48a-13dcb4c439a0
@@ -135,38 +135,24 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 1
             additional: {  }
-          a8864c0f-b465-4871-95d3-c12a4ada2f7f:
-            uuid: a8864c0f-b465-4871-95d3-c12a4ada2f7f
-            region: first
-            configuration:
-              id: 'field_block:node:pocam_extract:field_country_theme'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: basic_string
-                label: above
-                settings: {  }
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
-          dea5fc80-31e9-4ac2-bd81-4bdcf7d3e246:
-            uuid: dea5fc80-31e9-4ac2-bd81-4bdcf7d3e246
+          62a879d8-3e24-4acd-85ff-685e62185cb7:
+            uuid: 62a879d8-3e24-4acd-85ff-685e62185cb7
             region: second
             configuration:
               id: 'field_block:node:pocam_extract:field_country_theme'
-              label: 'Country/ Theme'
+              label: 'Country / Theme'
               label_display: '0'
               provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
               formatter:
-                type: basic_string
+                type: entity_reference_entity_view
                 label: above
-                settings: {  }
+                settings:
+                  view_mode: default
                 third_party_settings: {  }
-            weight: 3
+            weight: 4
             additional: {  }
         third_party_settings: {  }
 id: node.pocam_extract.default
@@ -183,9 +169,10 @@ content:
     weight: 7
     region: first
   field_country_theme:
-    type: basic_string
+    type: entity_reference_label
     label: above
-    settings: {  }
+    settings:
+      link: true
     third_party_settings: {  }
     weight: 9
     region: first

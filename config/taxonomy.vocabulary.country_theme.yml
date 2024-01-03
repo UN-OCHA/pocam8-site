@@ -1,0 +1,8 @@
+uuid: fd2cfd10-84ed-45f3-b5d3-18678c8d3c8c
+langcode: en
+status: true
+dependencies: {  }
+name: 'Country / Theme'
+vid: country_theme
+description: ''
+weight: 0

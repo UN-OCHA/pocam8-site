@@ -1,19 +1,29 @@
-uuid: 489ff1e3-5f14-4575-a153-dd4703d71d2c
+uuid: 24cd18af-6503-4722-9913-7ee4b9dc6568
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_country_theme
     - node.type.pocam_extract
+    - taxonomy.vocabulary.country_theme
 id: node.pocam_extract.field_country_theme
 field_name: field_country_theme
 entity_type: node
 bundle: pocam_extract
-label: 'Country/ Theme'
+label: 'Country / Theme'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: string_long
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      country_theme: country_theme
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

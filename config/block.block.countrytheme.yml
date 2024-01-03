@@ -1,0 +1,29 @@
+uuid: 3f1764ce-40f5-4ef4-b4a2-55fc086b2b0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.country_theme
+  module:
+    - facets
+    - system
+  theme:
+    - common_design_subtheme
+id: countrytheme
+theme: common_design_subtheme
+region: facets
+weight: 0
+provider: null
+plugin: 'facet_block:country_theme'
+settings:
+  id: 'facet_block:country_theme'
+  label: 'Country / Theme'
+  label_display: visible
+  provider: facets
+  context_mapping: {  }
+  block_id: countrytheme
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/extracts\r\n/extracts/*"
