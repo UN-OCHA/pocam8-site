@@ -173,7 +173,7 @@ class Import extends FormBase {
               $value = $worksheet->getCell($first_in_range_coordinates)->getValue();
             }
 
-            $contents[$column] = $value;
+            $contents[$column] = trim($value);
 
             // Replace NULL values.
             $contents[$column] = $contents[$column] ?? '';
