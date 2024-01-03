@@ -252,16 +252,11 @@ class Import extends FormBase {
 
       // Document type: Resolution.
       if (strpos($parts[0], '/RES/') !== FALSE) {
-        if (isset($parts[1])) {
+        $ref_link = self::convertReferenceToLink($title);
+        if (!empty($ref_link)) {
           $node->field_link = [
             'title' => $title,
-            'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
-          ];
-        }
-        else {
-          $node->field_link = [
-            'title' => $title,
-            'uri' => 'https://undocs.org/' . $parts[0],
+            'uri' => $ref_link,
           ];
         }
 
@@ -278,21 +273,26 @@ class Import extends FormBase {
         }
       }
       // Document type: Statement.
-      else {
-        $node->field_link = [
-          'title' => $title,
-          'uri' => 'https://undocs.org/' . str_replace(',', '', $parts[0]),
-        ];
+      elseif (strpos($parts[0], '/PRST/') !== FALSE) {
+        $ref_link = self::convertReferenceToLink($title);
+        if (!empty($ref_link)) {
+          $node->field_link = [
+            'title' => $title,
+            'uri' => $ref_link,
+          ];
+        }
 
         $statement_term = taxonomy_term_load_multiple_by_name('Statement', 'type');
         $node->field_document_type->entity = array_pop($statement_term);
 
         // Year.
         $year_parts = explode('/', $parts[0]);
-        $year = (int) $year_parts[2];
-        $node->set('field_year', [
-          'value' => $year,
-        ]);
+        if (isset($year_parts[2])) {
+          $year = (int) $year_parts[2];
+          $node->set('field_year', [
+            'value' => $year,
+          ]);
+        }
       }
     }
     else {
@@ -327,22 +327,13 @@ class Import extends FormBase {
 
           $links = [];
           foreach ($see_alsos as $item) {
-            $parts = explode(' ', trim($item));
-
-            // Skip illegal entries.
-            if (strlen(trim($item)) > 250) {
-              continue;
+            $ref_link = self::convertReferenceToLink($item);
+            if (!empty($ref_link)) {
+              $links[] = [
+                'title' => trim($item),
+                'uri' => $ref_link,
+              ];
             }
-
-            // All see alsos should start with 'S/RES' or 'S/PRST'.
-            if (substr($parts[0], 0, 2) !== 'S/') {
-              continue;
-            }
-
-            $links[] = [
-              'title' => trim($item),
-              'uri' => 'https://undocs.org/' . $parts[0] . str_replace(',', '', $parts[1]),
-            ];
           }
           $term->set('field_see_also', $links);
           $term->save();
@@ -353,6 +344,38 @@ class Import extends FormBase {
     $context['results'][] = $node;
 
     $node->save();
+  }
+
+  /**
+   * Convert reference to a link.
+   */
+  public static function convertReferenceToLink($reference) {
+    // Trim it.
+    $reference = trim($reference);
+
+    // Remove everything after ,.
+    if (strpos($reference, ',') !== FALSE) {
+      $reference = substr($reference, 0, strpos($reference, ','));
+    }
+
+    // Remove spaces.
+    $reference = str_replace(' ', '', $reference);
+
+    // Skip illegal entries.
+    if (strlen($reference) > 250) {
+      return '';
+    }
+
+    // All see alsos should start with 'S/RES' or 'S/PRST'.
+    if (substr($reference, 0, 2) !== 'S/') {
+      return '';
+    }
+
+    if (strpos($reference, 'S/RES/') !== 0 && strpos($reference, 'S/PRST/') !== 0) {
+      return '';
+    }
+
+    return 'https://undocs.org/' . $reference;
   }
 
   /**
