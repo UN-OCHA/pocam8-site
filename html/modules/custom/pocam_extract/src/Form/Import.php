@@ -92,6 +92,12 @@ class Import extends FormBase {
       '#default_value' => 'append',
     ];
 
+    $form['xlsx_res_prst'] = [
+      '#type' => 'file',
+      '#title' => $this->t('Xlsx file with RES, PRST and country/theme'),
+      '#description' => $this->t('Excel file containing mapping between RES/PRST and Country/Theme.'),
+    ];
+
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Import extracts'),
@@ -105,6 +111,14 @@ class Import extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $all_files = $this->getRequest()->files->get('files', []);
+
+    if (!empty($all_files['xlsx_res_prst'])) {
+      $file_upload = $all_files['xlsx_res_prst'];
+      if ($file_upload->isValid()) {
+        $form_state->setValue('xlsx_res_prst', $file_upload->getRealPath());
+      }
+    }
+
     if (!empty($all_files['xlsx'])) {
       $file_upload = $all_files['xlsx'];
       if ($file_upload->isValid()) {
@@ -112,6 +126,7 @@ class Import extends FormBase {
         return;
       }
     }
+
     $form_state->setErrorByName('xlsx', $this->t('The file could not be uploaded.'));
   }
 
@@ -120,16 +135,65 @@ class Import extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $validators = ['file_validate_extensions' => ['xlsx']];
+    $res_prst_mapping = [];
+
+    // Process lookup data for RES and PRST.
+    $all_files = $this->getRequest()->files->get('files', []);
+    if (!empty($all_files['xlsx_res_prst'])) {
+      /** @var \Drupal\file\FileInterface $file */
+      $file = file_save_upload('xlsx_res_prst', $validators, FALSE, 0);
+      if (!$file) {
+        $error = $this->t('File could not be uploaded. Make sure it has .xlsx extension.');
+        $this->messenger()->addError($error);
+        return;
+      }
+      $filename = $this->fileSystem->realpath($file->getFileUri());
+
+      $reader = new Xlsx();
+      // Needed to be able to handle merged cells.
+      $reader->setReadDataOnly(FALSE);
+      $spreadsheet = $reader->load($filename);
+
+      foreach (['RES', 'PRST'] as $sheet_name) {
+        $worksheet = $spreadsheet->getSheetByName($sheet_name);
+        $highestRow = $worksheet->getHighestDataRow();
+        $columns = range(1, 2);
+
+        for ($row = 2; $row <= $highestRow; ++$row) {
+          $contents = [];
+          foreach ($columns as $column) {
+            $contents[$column] = '';
+
+            $cell = $worksheet->getCellByColumnAndRow($column, $row);
+            $value = $cell->getValue();
+
+            // Is the cell merged?
+            if (empty($value) && ($range = $cell->getMergeRange()) && !$cell->isMergeRangeValueCell()) {
+              $first_in_range_coordinates = strtok($range, ':');
+              $value = $worksheet->getCell($first_in_range_coordinates)->getValue();
+            }
+
+            $contents[$column] = $value;
+
+            // Replace NULL values.
+            $contents[$column] = $contents[$column] ?? '';
+          }
+
+          if (!empty($contents[1]) && !empty($contents[2])) {
+            $contents[1] = str_replace(' ', '', $contents[1]);
+            $res_prst_mapping[$contents[1]] = $contents[2];
+          }
+        }
+      }
+    }
 
     /** @var \Drupal\file\FileInterface $file */
     $file = file_save_upload('xlsx', $validators, FALSE, 0);
     if (!$file) {
       $error = $this->t('File could not be uploaded. Make sure it has .xlsx extension.');
-      $this->messenger()
-        ->addError($error);
+      $this->messenger()->addError($error);
       return;
     }
-
     $filename = $this->fileSystem->realpath($file->getFileUri());
 
     if ($form_state->getValue('strategy') === 'overwrite') {
@@ -178,7 +242,7 @@ class Import extends FormBase {
         $contents[] = $row;
         $operations[] = [
           'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
-          [$contents],
+          [$contents, $res_prst_mapping],
         ];
 
         $previous_row = $contents;
@@ -203,7 +267,7 @@ class Import extends FormBase {
    * Expects row, from spreadsheet, with columns 1-3 as themes, 4 as text,
    * 5 as title, 6 as 'see also' references and 7 as 'issues'.
    */
-  public static function pocamExtractImportCreate($row, &$context) {
+  public static function pocamExtractImportCreate($row, $res_prst_mapping, &$context) {
     // Use index for taxonomy weight.
     $index = array_pop($row);
 
@@ -234,6 +298,7 @@ class Import extends FormBase {
       'field_year' => [],
       'field_see_also' => [],
       'field_theme' => [],
+      'field_country_theme' => [],
       'field_issues_for_consideration' => [
         'value' => $issues,
         'format' => 'basic_html',
@@ -249,6 +314,14 @@ class Import extends FormBase {
 
       // Set node title.
       $node->setTitle('Excerpt from ' . $title);
+
+      // Set Country/Theme.
+      $country_theme = self::lookupCountryTheme($title, $res_prst_mapping);
+      if (!empty($country_theme)) {
+        $node->set('field_country_theme', [
+          'value' => $country_theme,
+        ]);
+      }
 
       // Document type: Resolution.
       if (strpos($parts[0], '/RES/') !== FALSE) {
@@ -344,6 +417,42 @@ class Import extends FormBase {
     $context['results'][] = $node;
 
     $node->save();
+  }
+
+  /**
+   * Lookup Country/Theme.
+   */
+  public static function lookupCountryTheme($reference, $mapping) {
+    if (empty($mapping)) {
+      return '';
+    }
+
+    // Trim it.
+    $reference = trim($reference);
+
+    // Remove everything after ,.
+    if (strpos($reference, ',') !== FALSE) {
+      $reference = substr($reference, 0, strpos($reference, ','));
+    }
+
+    // Remove spaces.
+    $reference = str_replace(' ', '', $reference);
+
+    // Skip illegal entries.
+    if (strlen($reference) > 250) {
+      return '';
+    }
+
+    // All see alsos should start with 'S/RES' or 'S/PRST'.
+    if (substr($reference, 0, 2) !== 'S/') {
+      return '';
+    }
+
+    if (strpos($reference, 'S/RES/') !== 0 && strpos($reference, 'S/PRST/') !== 0) {
+      return '';
+    }
+
+    return $mapping[$reference] ?? '';
   }
 
   /**

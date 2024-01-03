@@ -141,8 +141,6 @@ function _pocam_general_build_tree($voc, $depth = 2) {
             'links' => [
               '#theme' => 'item_list',
               '#items' => [],
-              '#prefix' => '<div class="x-theme-wrapper">',
-              '#suffix' => '</div>',
             ],
           ];
           break;
