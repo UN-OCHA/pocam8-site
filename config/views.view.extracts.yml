@@ -318,7 +318,9 @@ display:
               anonymous: '0'
               administrator: '0'
               editor: '0'
+            expose_fields: false
             placeholder: ''
+            searched_fields_id: ''
           is_grouped: false
           group_info:
             label: ''
@@ -335,6 +337,7 @@ display:
           min_length: null
           fields:
             - processed
+            - rendered_item
       style:
         type: table
         options:
@@ -393,6 +396,7 @@ display:
       tags:
         - 'config:field.storage.node.field_link'
         - 'config:search_api.index.extracts'
+        - 'search_api_list:extracts'
   header:
     id: header
     display_title: header
@@ -414,6 +418,7 @@ display:
       tags:
         - 'config:field.storage.node.field_link'
         - 'config:search_api.index.extracts'
+        - 'search_api_list:extracts'
   page_1:
     id: page_1
     display_title: Page
@@ -438,3 +443,4 @@ display:
       tags:
         - 'config:field.storage.node.field_link'
         - 'config:search_api.index.extracts'
+        - 'search_api_list:extracts'

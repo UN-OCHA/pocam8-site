@@ -13,6 +13,7 @@ dependencies:
     - field.storage.taxonomy_term.field_long_name
     - field.storage.node.field_year
     - search_api.server.local
+    - core.entity_view_mode.node.search_index
   module:
     - taxonomy
     - search_api
@@ -103,6 +104,16 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_text
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        - anonymous
+      view_mode:
+        'entity:node':
+          pocam_extract: search_index
   title:
     label: 'Theme » Taxonomy term » See also » Link text'
     datasource_id: 'entity:node'
@@ -188,6 +199,7 @@ processor_settings:
       - name_1
       - name_2
       - processed
+      - rendered_item
       - title
       - title_1
       - title_2
@@ -201,6 +213,7 @@ processor_settings:
     fields:
       - field_long_name
       - processed
+      - rendered_item
     spaces: ''
     ignored: ._-
     overlap_cjk: 0
