@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.pocam_extract.field_all_themes
+    - field.field.node.pocam_extract.field_country_theme
     - field.field.node.pocam_extract.field_document_type
     - field.field.node.pocam_extract.field_issues_for_consideration
     - field.field.node.pocam_extract.field_link
@@ -97,7 +98,7 @@ third_party_settings:
                   rel: ''
                   target: ''
                 third_party_settings: {  }
-            weight: 4
+            weight: 6
             additional: {  }
           a78b9917-5245-40e9-a14d-a02540fc0a4a:
             uuid: a78b9917-5245-40e9-a14d-a02540fc0a4a
@@ -107,7 +108,7 @@ third_party_settings:
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-            weight: 3
+            weight: 5
             additional: {  }
           fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be:
             uuid: fc782e4d-6fd7-4c96-9cf5-4ab451a1b4be
@@ -117,7 +118,7 @@ third_party_settings:
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-            weight: 5
+            weight: 7
             additional: {  }
           fcca89c3-d666-4ca3-b48a-13dcb4c439a0:
             uuid: fcca89c3-d666-4ca3-b48a-13dcb4c439a0
@@ -134,6 +135,25 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 1
             additional: {  }
+          62a879d8-3e24-4acd-85ff-685e62185cb7:
+            uuid: 62a879d8-3e24-4acd-85ff-685e62185cb7
+            region: second
+            configuration:
+              id: 'field_block:node:pocam_extract:field_country_theme'
+              label: 'Country / Theme'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_entity_view
+                label: above
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
+            weight: 4
+            additional: {  }
         third_party_settings: {  }
 id: node.pocam_extract.default
 targetEntityType: node
@@ -147,6 +167,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 7
+    region: first
+  field_country_theme:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 9
     region: first
   field_document_type:
     type: entity_reference_label

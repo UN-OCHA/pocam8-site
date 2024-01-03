@@ -56,7 +56,7 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
           $output = \Drupal::entityTypeManager()
             ->getViewBuilder('block')
             ->view($block);
-          $replacements[$original] = render($output);
+          $replacements[$original] = \Drupal::service('renderer')->render($output);
           break;
 
         case 'themes-list':
@@ -66,13 +66,7 @@ function pocam_general_tokens($type, $tokens, array $data = [], array $options =
           }
 
           $items = _pocam_general_build_tree('theme', $depth);
-          $output = [
-            '#theme' => 'item_list',
-            '#items' => $items,
-            '#prefix' => '<div class="theme-wrapper">',
-            '#suffix' => '</div>',
-          ];
-          $replacements[$original] = render($output);
+          $replacements[$original] = \Drupal::service('renderer')->render($items);
           break;
 
       }
@@ -101,47 +95,60 @@ function pocam_general_form_views_exposed_form_alter(&$form, FormStateInterface 
  */
 function _pocam_general_build_tree($voc, $depth = 2) {
   $links = [];
-  $terms = \Drupal::entityTypeManager()
-    ->getStorage('taxonomy_term')
-    ->loadTree($voc, 0, $depth);
+
+  /** @var \\Drupal\taxonomy\TermStorage $term_storage */
+  $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $terms = $term_storage->loadTree($voc, 0, $depth);
   $facet_count = _pocam_general_get_facet_count('field_theme');
-  $parents = [];
 
   foreach ($terms as $term) {
-
     if (isset($facet_count[$term->tid])) {
       $text = $term->name . ' (' . $facet_count[$term->tid] . ')';
 
       $path = 'internal:/extracts/theme/' . urlencode($term->name) . '-' . $term->tid;
+
       // Allow other modules to alter path.
       $context['term'] = $term;
       \Drupal::moduleHandler()->alter('pocam_general_build_path', $path, $context);
 
       $markup = Link::fromTextAndUrl($text, Url::fromUri($path))->toString();
-      if ($term->parents[0] == 0) {
-        $links['p-' . $term->tid] = [
-          '#markup' => $markup,
-          'children' => [],
-        ];
+
+      // Level.
+      $level = 0;
+      $parent_ids = [];
+
+      /** @var \Drupal\taxonomy\Entity\Term $real_term */
+      $real_term = $term_storage->load($term->tid);
+      if ($real_term->hasField('field_parent_tids')) {
+        $level = substr_count($real_term->get('field_parent_tids')->value, '|');
+        $parent_ids = explode('|', $real_term->get('field_parent_tids')->value);
       }
-      else {
-        if (isset($links['p-' . $term->parents[0]]['children'])) {
-          $links['p-' . $term->parents[0]]['children'][$term->tid] = [
-            '#markup' => $markup,
-            'children' => [],
+
+      switch ($level) {
+        case 0:
+          $links['p-' . $term->tid] = [
+            '#type' => 'details',
+            '#title' => $markup,
+            '#open' => FALSE,
           ];
-          // @todo Add comment to explain what the rest of the loop is for.
-          $parents[$term->tid] = &$links['p-' . $term->parents[0]]['children'][$term->tid];
-        }
-        else {
-          if (isset($parents[$term->parents[0]])) {
-            $parents[$term->parents[0]]['children'][$term->tid] = [
-              '#markup' => $markup,
-              'children' => [],
-            ];
-            $parents[$term->tid] = &$parents[$term->tid]['children'][$term->tid];
-          }
-        }
+          break;
+
+        case 1:
+          $links['p-' . $parent_ids[0]]['p-' . $term->tid] = [
+            '#type' => 'details',
+            '#title' => $markup,
+            '#open' => FALSE,
+            'links' => [
+              '#theme' => 'item_list',
+              '#items' => [],
+            ],
+          ];
+          break;
+
+        case 2:
+          $links['p-' . $parent_ids[0]]['p-' . $parent_ids[1]]['links']['#items'][] = $markup;
+          break;
+
       }
     }
   }

@@ -10,7 +10,7 @@ dependencies:
 id: facet_summary
 name: 'Current Search'
 facet_source_id: 'search_api:views_page__extracts__page_1'
-search_filter_identifier: search
+search_filter_identifier: ''
 processor_configs:
   hide_when_not_rendered:
     processor_id: hide_when_not_rendered
@@ -51,6 +51,12 @@ facets:
   year:
     checked: true
     label: Year
+    separator: ', '
+    show_count: true
+    weight: 0
+  country_theme:
+    checked: true
+    label: 'Country / Theme'
     separator: ', '
     show_count: true
     weight: 0

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.pocam_extract.field_all_themes
+    - field.field.node.pocam_extract.field_country_theme
     - field.field.node.pocam_extract.field_document_type
     - field.field.node.pocam_extract.field_issues_for_consideration
     - field.field.node.pocam_extract.field_link
@@ -26,6 +27,16 @@ content:
     weight: 9
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_country_theme:
+    type: entity_reference_autocomplete
+    weight: 26
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_document_type:
     type: options_select

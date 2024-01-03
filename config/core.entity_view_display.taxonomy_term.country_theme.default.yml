@@ -1,0 +1,22 @@
+uuid: 5c74d561-e3fd-4dab-9c7a-d539ecf1bc53
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.country_theme
+  module:
+    - text
+id: taxonomy_term.country_theme.default
+targetEntityType: taxonomy_term
+bundle: country_theme
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

@@ -3,14 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_country_theme
     - field.storage.node.field_document_type
+    - field.storage.node.field_link
+    - field.storage.node.field_see_also
+    - field.storage.node.field_text
     - field.storage.node.field_theme
+    - field.storage.taxonomy_term.field_see_also
     - field.storage.taxonomy_term.field_long_name
     - field.storage.node.field_year
-    - field.storage.node.field_text
-    - field.storage.taxonomy_term.field_see_also
-    - field.storage.node.field_see_also
-    - field.storage.node.field_link
     - search_api.server.local
   module:
     - taxonomy
@@ -21,6 +22,14 @@ name: Extracts
 description: ''
 read_only: false
 field_settings:
+  field_country_theme:
+    label: 'Country / Theme'
+    datasource_id: 'entity:node'
+    property_path: field_country_theme
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_country_theme
   field_document_type:
     label: 'Document type'
     datasource_id: 'entity:node'
@@ -76,6 +85,16 @@ field_settings:
         - field.storage.node.field_document_type
       module:
         - taxonomy
+  name_2:
+    label: 'Country / Theme » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_country_theme:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_country_theme
+      module:
+        - taxonomy
   processed:
     label: 'Text » Processed text'
     datasource_id: 'entity:node'
@@ -123,7 +142,9 @@ datasource_settings:
 processor_settings:
   add_url: {  }
   aggregated_field: {  }
+  custom_value: {  }
   entity_status: {  }
+  entity_type: {  }
   hierarchy:
     weights:
       preprocess_index: -45
@@ -135,6 +156,7 @@ processor_settings:
     prefix: '<strong class="highlight">'
     suffix: '</strong>'
     excerpt: true
+    excerpt_always: false
     excerpt_length: 256
     exclude_fields:
       - field_long_name
@@ -164,6 +186,7 @@ processor_settings:
       - field_long_name
       - name
       - name_1
+      - name_2
       - processed
       - title
       - title_1
@@ -179,6 +202,7 @@ processor_settings:
       - field_long_name
       - processed
     spaces: ''
+    ignored: ._-
     overlap_cjk: 0
     minimum_word_size: '1'
 tracker_settings:
@@ -187,4 +211,5 @@ tracker_settings:
 options:
   cron_limit: 50
   index_directly: true
+  track_changes_in_references: true
 server: local

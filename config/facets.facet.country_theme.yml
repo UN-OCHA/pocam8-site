@@ -1,0 +1,63 @@
+uuid: 31d5ce86-aab6-4a5c-a370-a13fe8be12bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.index.extracts
+    - views.view.extracts
+  module:
+    - search_api
+id: country_theme
+name: 'Country / Theme'
+weight: 0
+min_count: 1
+missing: false
+missing_label: others
+url_alias: country_theme
+facet_source_id: 'search_api:views_page__extracts__page_1'
+field_identifier: field_country_theme
+query_operator: and
+hard_limit: 0
+exclude: false
+use_hierarchy: false
+keep_hierarchy_parents_active: false
+hierarchy:
+  type: taxonomy
+  config: {  }
+expand_hierarchy: false
+enable_parent_when_child_gets_disabled: true
+widget:
+  type: select2
+  config:
+    show_numbers: true
+    width: 100%
+    autocomplete: false
+    match_operator: CONTAINS
+empty_behavior:
+  behavior: none
+only_visible_when_facet_source_is_visible: true
+show_only_one_result: false
+show_title: false
+processor_configs:
+  display_value_widget_order:
+    processor_id: display_value_widget_order
+    weights:
+      sort: 40
+    settings:
+      sort: ASC
+  hierarchy_processor:
+    processor_id: hierarchy_processor
+    weights:
+      build: 100
+    settings: {  }
+  translate_entity:
+    processor_id: translate_entity
+    weights:
+      build: 5
+    settings: {  }
+  url_processor_handler:
+    processor_id: url_processor_handler
+    weights:
+      pre_query: 50
+      build: 15
+    settings: {  }
