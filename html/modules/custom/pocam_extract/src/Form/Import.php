@@ -318,9 +318,8 @@ class Import extends FormBase {
       // Set Country/Theme.
       $country_theme = self::lookupCountryTheme($title, $res_prst_mapping);
       if (!empty($country_theme)) {
-        $node->set('field_country_theme', [
-          'value' => $country_theme,
-        ]);
+        $country_theme_term = self::pocamExtractCreateCountryThemeTerm($country_theme, $index);
+        $node->field_country_theme->entity = $country_theme_term;
       }
 
       // Document type: Resolution.
@@ -488,6 +487,44 @@ class Import extends FormBase {
   }
 
   /**
+   * Create country term, or identify the term if it already exists.
+   */
+  public static function pocamExtractCreateCountryThemeTerm($country_theme, $weight) {
+    // Make sure term name is not too long.
+    $short_country_theme = $country_theme;
+    if (mb_strlen($country_theme) > 250) {
+      $short_country_theme = Unicode::truncate($country_theme, 250, TRUE, TRUE);
+    }
+
+    $query = \Drupal::service('entity_type.manager')
+      ->getStorage('taxonomy_term')
+      ->getQuery()
+      ->condition('name', $short_country_theme)
+      ->condition('vid', 'country_theme');
+    $tids = $query->execute();
+    $existing = \Drupal::service('entity_type.manager')
+      ->getStorage('taxonomy_term')
+      ->loadMultiple($tids);
+
+    if (!empty($existing)) {
+      $term = reset($existing);
+      return $term;
+    }
+
+    $data = [
+      'vid' => 'country_theme',
+      'name' => $short_country_theme,
+      'description' => $country_theme,
+      'weight' => $weight,
+    ];
+
+    $term = Term::create($data);
+    $term->save();
+
+    return $term;
+  }
+
+  /**
    * Create theme term, or identify the term if it already exists.
    */
   public static function pocamExtractCreateThemeTerm($themes, $weight) {
@@ -513,7 +550,8 @@ class Import extends FormBase {
           ->getStorage('taxonomy_term')
           ->getQuery()
           ->condition('name', $short_theme_name)
-          ->condition('parent', $parent_tid);
+          ->condition('parent', $parent_tid)
+          ->condition('vid', 'theme');
         $tids = $query->execute();
         $existing = \Drupal::service('entity_type.manager')
           ->getStorage('taxonomy_term')
@@ -583,7 +621,22 @@ class Import extends FormBase {
       $chunks = array_chunk($term_ids, 25);
       foreach ($chunks as $chunk) {
         $operations[] = [
-          'Drupal\pocam_extract\Form\Import::pocamExtractDeleteThemes',
+          'Drupal\pocam_extract\Form\Import::pocamExtractDeleteTerms',
+          [$chunk],
+        ];
+      }
+    }
+
+    $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery();
+    $query->condition('vid', 'country_theme');
+    $term_ids = $query->execute();
+
+    if (!empty($term_ids)) {
+      $operations = [];
+      $chunks = array_chunk($term_ids, 25);
+      foreach ($chunks as $chunk) {
+        $operations[] = [
+          'Drupal\pocam_extract\Form\Import::pocamExtractDeleteTerms',
           [$chunk],
         ];
       }
@@ -613,7 +666,7 @@ class Import extends FormBase {
   /**
    * Delete themes in batch.
    */
-  public static function pocamExtractDeleteThemes($term_ids, &$context) {
+  public static function pocamExtractDeleteTerms($term_ids, &$context) {
     $extracts = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadMultiple($term_ids);
     foreach ($extracts as $term) {
       $term->delete();
