@@ -402,7 +402,7 @@ class Import extends FormBase {
             $ref_link = self::convertReferenceToLink($item);
             if (!empty($ref_link)) {
               $links[] = [
-                'title' => trim($item),
+                'title' => mb_substr(trim($item), 0, 250),
                 'uri' => $ref_link,
               ];
             }
