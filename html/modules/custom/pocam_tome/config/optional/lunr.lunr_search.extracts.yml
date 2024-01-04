@@ -7,7 +7,7 @@ dependencies:
   module:
     - views
 _core:
-  default_config_hash: Q5RTUJ7e7AB5NeXOXNrEbXhMoEBOyYdimuUZtfYrNI4
+  default_config_hash: rTNK9SXtk9tzCtfQNHkhh7eztyeXXHCc9bueXAlnVd8
 id: extracts
 label: Extracts
 path: /extracts
