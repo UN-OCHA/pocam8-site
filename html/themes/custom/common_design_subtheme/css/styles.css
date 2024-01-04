@@ -260,5 +260,14 @@
 }
 
 .country-theme--description p {
+  margin: 0;
+}
+
+.block-extra-field-blocknodepocam-extracttheme-full-tree h3 {
   margin-top: 0;
+  font-size: 18px;
+}
+
+.layout__region--second > div {
+  margin-bottom: .5rem;
 }
