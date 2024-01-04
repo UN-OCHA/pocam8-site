@@ -12,7 +12,16 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_pocam_general_build_path_alter().
  */
 function pocam_tome_pocam_general_build_path_alter(&$path, array $context) {
-  $path = 'internal:/extracts?field_all_themes=' . $context['term']->tid;
+  switch ($context['term']->vid) {
+    case 'country_theme':
+      $path = 'internal:/extracts?country_theme=' . $context['term']->tid;
+      break;
+
+    case 'theme':
+      $path = 'internal:/extracts?field_all_themes=' . $context['term']->tid;
+      break;
+
+  }
 }
 
 /**

@@ -318,7 +318,7 @@ class Import extends FormBase {
       // Set Country/Theme.
       $country_theme = self::lookupCountryTheme($title, $res_prst_mapping);
       if (!empty($country_theme)) {
-        $country_theme_term = self::pocamExtractCreateCountryThemeTerm($country_theme, $index);
+        $country_theme_term = self::pocamExtractCreateCountryThemeTerm($country_theme);
         $node->field_country_theme->entity = $country_theme_term;
       }
 
@@ -489,7 +489,7 @@ class Import extends FormBase {
   /**
    * Create country term, or identify the term if it already exists.
    */
-  public static function pocamExtractCreateCountryThemeTerm($country_theme, $weight) {
+  public static function pocamExtractCreateCountryThemeTerm($country_theme) {
     // Make sure term name is not too long.
     $short_country_theme = $country_theme;
     if (mb_strlen($country_theme) > 250) {
@@ -515,7 +515,7 @@ class Import extends FormBase {
       'vid' => 'country_theme',
       'name' => $short_country_theme,
       'description' => $country_theme,
-      'weight' => $weight,
+      'weight' => 0,
     ];
 
     $term = Term::create($data);
