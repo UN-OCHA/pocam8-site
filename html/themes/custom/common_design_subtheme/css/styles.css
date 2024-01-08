@@ -271,3 +271,26 @@
 .layout__region--second > div {
   margin-bottom: .5rem;
 }
+
+/* This makes the ::marker display in Chrome */
+.field--name-body summary {
+  display: list-item;
+}
+
+.field--name-body summary a {
+  margin-inline-start: 1rem;
+}
+
+/* Increase marker size on mobile */
+@media (max-width: 767px) {
+  .field--name-body summary::marker {
+    font-size: 1.5rem;
+  }
+}
+.field--name-body > details {
+  margin-bottom: 2rem;
+}
+
+.node--type-page details > details {
+  padding: 1rem 1rem 0;
+}
