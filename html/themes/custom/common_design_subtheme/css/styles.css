@@ -284,10 +284,6 @@
   display: list-item;
 }
 
-.field--name-body summary a {
-  margin-inline-start: 1rem;
-}
-
 /* Increase marker size on mobile */
 @media (max-width: 767px) {
   .field--name-body summary::marker {
