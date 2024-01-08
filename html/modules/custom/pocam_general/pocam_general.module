@@ -105,7 +105,7 @@ function _pocam_general_build_tree($voc, $depth = 2) {
     if (isset($facet_count[$term->tid])) {
       $text = $term->name . ' (' . $facet_count[$term->tid] . ')';
 
-      $path = 'internal:/extracts/theme/' . urlencode($term->name) . '-' . $term->tid;
+      $path = 'internal:/extracts?f[0]=theme:' . $term->tid;
 
       // Allow other modules to alter path.
       $context['term'] = $term;
