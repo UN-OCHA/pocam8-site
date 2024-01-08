@@ -59,6 +59,7 @@
 .cd-site-logo:focus {
   outline: 3px solid var(--cd-blue--bright);
 }
+
 @media (max-width: 767px) {
   .cd-site-logo {
     background: url('/themes/custom/common_design_subtheme/img/logos/poc-logo-mobile.svg')
@@ -80,6 +81,7 @@
   display: block;
   margin-bottom: 20px;
 }
+
 @media (min-width: 576px) {
   .views-field-field-link {
     min-width: 20%;
@@ -123,11 +125,13 @@
   color: var(--cd-grey--dark);
   font-style: italic;
 }
+
 @media all and (-ms-high-contrast: none) {
   .cd-layout-sidebar-first input[type='text'] {
     width: 98%;
   }
 }
+
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .cd-layout-sidebar-first input[type='text'] {
     line-height: unset;
@@ -178,11 +182,13 @@
   color: var(--cd-grey--dark);
   font-style: italic;
 }
+
 @media all and (-ms-high-contrast: none) {
   .path-frontpage article input[type='text'] {
     width: 98%;
   }
 }
+
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .path-frontpage article input[type='text'] {
     line-height: unset;
@@ -247,6 +253,7 @@
 .field__label {
   font-weight: 700;
 }
+
 @media screen and (min-width: 40em) {
   .node--type-pocam-extract .layout__region--second {
     padding-left: 2rem;
@@ -270,4 +277,23 @@
 
 .layout__region--second > div {
   margin-bottom: .5rem;
+}
+
+/* This makes the ::marker display in Chrome */
+.field--name-body summary {
+  display: list-item;
+}
+
+/* Increase marker size on mobile */
+@media (max-width: 767px) {
+  .field--name-body summary::marker {
+    font-size: 1.5rem;
+  }
+}
+.field--name-body > details {
+  margin-bottom: 2rem;
+}
+
+.node--type-page details > details {
+  padding: 1rem 1rem 0;
 }
