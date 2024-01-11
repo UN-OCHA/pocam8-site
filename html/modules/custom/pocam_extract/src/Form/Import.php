@@ -374,13 +374,13 @@ class Import extends FormBase {
 
     // Theme field.
     $themes = [];
-    if (isset($row['1']) && !empty($row['1'])) {
+    if (isset($row['1']) && !empty($row['1']) && $row['1'] !== '-') {
       $themes[] = trim($row['1']);
     }
-    if (isset($row['2']) && !empty($row['2'])) {
+    if (isset($row['2']) && !empty($row['2']) && $row['2'] !== '-') {
       $themes[] = trim($row['2']);
     }
-    if (isset($row['3']) && !empty($row['3'])) {
+    if (isset($row['3']) && !empty($row['3']) && $row['3'] !== '-') {
       $themes[] = trim($row['3']);
     }
 
@@ -593,7 +593,7 @@ class Import extends FormBase {
 
     if (!empty($extract_ids)) {
       $operations = [];
-      $chunks = array_chunk($extract_ids, 50);
+      $chunks = array_chunk($extract_ids, 25);
       foreach ($chunks as $chunk) {
         $operations[] = [
           'Drupal\pocam_extract\Form\Import::pocamExtractDeleteExtracts',
