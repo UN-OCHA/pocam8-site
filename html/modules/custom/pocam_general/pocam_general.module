@@ -153,6 +153,31 @@ function _pocam_general_build_tree($voc, $depth = 2) {
     }
   }
 
+  // Re-write links if needed.
+  $converted_levels = [];
+  foreach ($links as $index0 => &$item0) {
+    foreach ($item0 as $index1 => &$item1) {
+      if (strpos($index1, 'p-') !== 0) {
+        continue;
+      }
+
+      if (empty($item1['links']['#items'])) {
+        if (!isset($converted_levels[$index0])) {
+          $converted_levels[$index0] = TRUE;
+          $item0 += [
+            'links' => [
+              '#theme' => 'item_list',
+              '#items' => [],
+            ],
+          ];
+        }
+
+        $item0['links']['#items'][] = $item1['#title'];
+        unset($item0[$index1]);
+      }
+    }
+  }
+
   return $links;
 }
 
