@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.pocam_extract.field_document_type
     - field.field.node.pocam_extract.field_issues_for_consideration
     - field.field.node.pocam_extract.field_link
+    - field.field.node.pocam_extract.field_row
     - field.field.node.pocam_extract.field_see_also
     - field.field.node.pocam_extract.field_text
     - field.field.node.pocam_extract.field_theme
@@ -42,6 +43,7 @@ hidden:
   field_document_type: true
   field_issues_for_consideration: true
   field_link: true
+  field_row: true
   field_see_also: true
   field_text: true
   field_theme: true

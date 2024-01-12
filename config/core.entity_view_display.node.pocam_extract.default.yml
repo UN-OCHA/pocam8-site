@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.pocam_extract.field_document_type
     - field.field.node.pocam_extract.field_issues_for_consideration
     - field.field.node.pocam_extract.field_link
+    - field.field.node.pocam_extract.field_row
     - field.field.node.pocam_extract.field_see_also
     - field.field.node.pocam_extract.field_text
     - field.field.node.pocam_extract.field_theme
@@ -203,6 +204,15 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
+  field_row:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 10
+    region: first
   field_see_also:
     type: link
     label: above

@@ -26,21 +26,21 @@ class Import extends FormBase {
   /**
    * File system.
    *
-   * @var Drupal\Core\File\FileSystem
+   * @var \Drupal\Core\File\FileSystem
    */
   protected $fileSystem;
 
   /**
    * Entity Storage.
    *
-   * @var Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
    * Messenger.
    *
-   * @var Drupal\Core\Messenger\MessengerInterface
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 
@@ -76,20 +76,22 @@ class Import extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['xlsx'] = [
-      '#type' => 'file',
-      '#title' => $this->t('Upload xlsx file'),
-      '#description' => $this->t('Excel file containing extracts to import.'),
-    ];
     $form['strategy'] = [
       '#type' => 'radios',
       '#title' => $this->t('Import strategy'),
       '#required' => TRUE,
       '#options' => [
-        'overwrite' => $this->t('Remove all extracts and themes first'),
         'append' => $this->t('Append extracts and themes'),
+        'resume' => $this->t('Import missed rows'),
+        'overwrite' => $this->t('Remove all extracts and themes first'),
       ],
       '#default_value' => 'append',
+    ];
+
+    $form['xlsx'] = [
+      '#type' => 'file',
+      '#title' => $this->t('Upload xlsx file'),
+      '#description' => $this->t('Excel file containing extracts to import.'),
     ];
 
     $form['xlsx_res_prst'] = [
@@ -200,6 +202,35 @@ class Import extends FormBase {
       $this->pocamExtractDeleteContent();
     }
 
+    $last_imported_row = 0;
+    if ($form_state->getValue('strategy') === 'resume') {
+      // Allow import to resume.
+      $query = $this->entityTypeManager
+        ->getStorage('node')
+        ->getQuery()
+        ->condition('type', 'pocam_extract')
+        ->sort('field_row', 'DESC')
+        ->range(0, 1);
+      $ids = $query->execute();
+      $existing = $this->entityTypeManager
+        ->getStorage('node')
+        ->loadMultiple($ids);
+
+      if (!empty($existing)) {
+        /** @var \Drupal\Core\Entity\ContentEntityInterface $last */
+        $last = reset($existing);
+        if ($last->hasField('field_row')) {
+          $last_imported_row = $last->get('field_row')->value;
+
+          // Remove last imported one, might be incomplete.
+          $last->delete();
+
+          $last_imported_row--;
+          $last_imported_row = max(0, $last_imported_row);
+        }
+      }
+    }
+
     $reader = new Xlsx();
     // Needed to be able to handle merged cells.
     $reader->setReadDataOnly(FALSE);
@@ -240,10 +271,22 @@ class Import extends FormBase {
       // Make sure we have a title.
       if (!empty($contents) && !empty($contents[5])) {
         $contents[] = $row;
-        $operations[] = [
-          'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
-          [$contents, $res_prst_mapping],
-        ];
+
+        if ($form_state->getValue('strategy') === 'resume') {
+          // Only import new ones.
+          if ($row > $last_imported_row) {
+            $operations[] = [
+              'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
+              [$contents, $res_prst_mapping],
+            ];
+          }
+        }
+        else {
+          $operations[] = [
+            'Drupal\pocam_extract\Form\Import::pocamExtractImportCreate',
+            [$contents, $res_prst_mapping],
+          ];
+        }
 
         $previous_row = $contents;
       }
@@ -303,6 +346,7 @@ class Import extends FormBase {
         'value' => $issues,
         'format' => 'basic_html',
       ],
+      'field_row' => $index,
     ];
 
     $node = Node::create($data);
