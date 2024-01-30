@@ -1,0 +1,62 @@
+diff --git a/modules/tome_base/src/CommandBase.php b/modules/tome_base/src/CommandBase.php
+index 6b107f9..4627ee3 100644
+--- a/modules/tome_base/src/CommandBase.php
++++ b/modules/tome_base/src/CommandBase.php
+@@ -31,12 +31,21 @@ class CommandBase extends Command {
+    */
+   protected $executable;
+ 
++  /**
++   * Optional parameters passed to drush.
++   *
++   * @var string
++   * */
++  protected $parameters;
++
+   /**
+    * {@inheritdoc}
+    */
+   protected function initialize(InputInterface $input, OutputInterface $output) {
+     $this->io = new SymfonyStyle($input, $output);
+-    $this->executable = $this->findExecutable($input);
++    $executableAndParams[] = $this->findExecutable($input);
++    $this->executable = array_shift($executableAndParams);
++    $this->parameters = $executableAndParams;
+   }
+ 
+   /**
+diff --git a/modules/tome_base/src/ExecutableFinderTrait.php b/modules/tome_base/src/ExecutableFinderTrait.php
+index fc0e91f..647e39b 100644
+--- a/modules/tome_base/src/ExecutableFinderTrait.php
++++ b/modules/tome_base/src/ExecutableFinderTrait.php
+@@ -33,7 +33,7 @@ trait ExecutableFinderTrait {
+     if (isset($_SERVER['PWD']) && !is_file($args[0]) && is_file($_SERVER['PWD'] . '/' . $args[0])) {
+       $args[0] = $_SERVER['PWD'] . '/' . $args[0];
+     }
+-    return implode(' ', $args);
++    return $args;
+   }
+ 
+ }
+diff --git a/modules/tome_static/src/Commands/StaticCommand.php b/modules/tome_static/src/Commands/StaticCommand.php
+index 56d963b..905ff8f 100644
+--- a/modules/tome_static/src/Commands/StaticCommand.php
++++ b/modules/tome_static/src/Commands/StaticCommand.php
+@@ -129,7 +129,7 @@ class StaticCommand extends CommandBase {
+     $this->state->set(StaticGeneratorInterface::STATE_KEY_BUILDING, FALSE);
+ 
+     if ($options['run-server']) {
+-      $this->runCommand([$this->executable, 'tome:preview', '--port=' . $options['port']], NULL, NULL);
++      $this->runCommand(array_merge((array)$this->executable, $this->parameters, ['tome:preview', '--port=' . $options['port']]) , NULL, NULL);
+     }
+ 
+     return 0;
+@@ -168,7 +168,7 @@ class StaticCommand extends CommandBase {
+     $commands = [];
+     $chunks = array_chunk($paths, $path_count);
+     foreach ($chunks as $chunk) {
+-      $command = [$this->executable, 'tome:static-export-path', implode(',', $chunk), '--return-json', '--process-count=' . $process_count, '--uri=' . $uri];
++      $command = array_merge( (array)$this->executable, $this->parameters, ['tome:static-export-path', implode(',', $chunk), '--return-json', '--process-count=' . $process_count, '--uri=' . $uri]);
+       $commands[] = $command;
+     }
+ 

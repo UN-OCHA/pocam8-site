@@ -5,6 +5,9 @@
     },
     "drupal/azure_storage": {
       "https://www.drupal.org/project/azure_storage/issues/3261907": "https://git.drupalcode.org/project/azure_storage/-/merge_requests/1.diff"
+    },
+    "drupal/tome": {
+      "Static site generation via CLI is broken": "PATCHES/3334879-fix-static-site-generation.patch"
     }
   }
 }
