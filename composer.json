@@ -55,7 +55,7 @@
         "drupal/tome": "^1.5",
         "drupal/tome_static_azure": "1.0.x-dev",
         "drupal/views_data_export": "^1.0",
-        "drush/drush": "^10.3",
+        "drush/drush": "^11",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0.0",
         "phpoffice/phpspreadsheet": "^1.16",
@@ -99,6 +99,9 @@
             "oomphinc/composer-installers-extender": true,
             "symfony/flex": true,
             "drupal-composer/preserve-paths": true
+        },
+        "audit": {
+            "abandoned": "report"
         }
     },
     "scripts": {
