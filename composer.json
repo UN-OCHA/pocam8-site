@@ -40,7 +40,7 @@
         "drupal/field_group": "^3.0",
         "drupal/google_tag": "^1.4",
         "drupal/lunr": "^1.0",
-        "drupal/lunr_filters": "^1.0",
+        "drupal/lunr_filters": "^2.0",
         "drupal/maintenance200": "^1.0",
         "drupal/search_api": "^1.19",
         "drupal/seckit": "^2.0",
@@ -69,6 +69,7 @@
     "require-dev": {
         "drupal/coder": "^8.3",
         "drupal/console": "^1.0.2",
+        "drupal/dev_mode": "^2.6",
         "drupal/devel": "^4.1",
         "drupal/upgrade_status": "^3.7",
         "kint-php/kint": "^3.3",
