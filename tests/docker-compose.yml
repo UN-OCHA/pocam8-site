@@ -10,7 +10,7 @@ volumes:
 
 services:
   mysql:
-    image: public.ecr.aws/unocha/mysql:10.6
+    image: public.ecr.aws/unocha/mysql:10.11
     hostname: pocam-test-mysql
     container_name: pocam-test-mysql
     environment:
@@ -45,6 +45,8 @@ services:
       - ENVIRONMENT=dev
       - NGINX_SERVERNAME=pocam-test-site,localhost,127.0.0.1
       - NGINX_OVERRIDE_PROTOCOL=HTTP,pocam-test-site,localhost,127.0.0.1
+      - NGINX_LIMIT_BOTS=64r/s
+      - NGINX_BURST_BOTS=256 nodelay
       - DRUSH_OPTIONS_URI=http://pocam-test-site
       - DRUPAL_DB_DATABASE=pocam
       - DRUPAL_DB_USERNAME=pocam
