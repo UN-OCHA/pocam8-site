@@ -10,7 +10,7 @@ volumes:
 
 services:
   mysql:
-    image: public.ecr.aws/unocha/mysql:10.11
+    image: public.ecr.aws/unocha/mysql:11.4
     hostname: pocam-test-mysql
     container_name: pocam-test-mysql
     environment:
